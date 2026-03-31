@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Logomark, LogoText } from "@/components/icons/logo";
+import { LanguageSwitcher } from "@/components/ui/language-switcher";
 
 export default function AuthLayout({
   children,
@@ -31,8 +32,8 @@ export default function AuthLayout({
         />
       </div>
 
-      {/* Logo — same size as landing header */}
-      <div className="relative z-10 px-[16px] pt-[16px] lg:px-[40px] xl:px-[80px]">
+      {/* Header — logo + language switcher */}
+      <div className="relative z-20 flex items-center justify-between px-[16px] pt-[16px] lg:px-[40px] xl:px-[80px]">
         <Link
           href="/"
           aria-label="Go to homepage"
@@ -43,10 +44,11 @@ export default function AuthLayout({
             <LogoText className="h-[60%] w-auto" />
           </div>
         </Link>
+        <LanguageSwitcher />
       </div>
 
       {/* Content */}
-      <div className="relative z-10 flex flex-1 items-center justify-center px-4 py-8">
+      <div className="relative z-20 flex flex-1 items-center justify-center px-4 py-8">
         <div className="relative w-full max-w-[480px]">{children}</div>
       </div>
     </div>

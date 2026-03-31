@@ -63,7 +63,8 @@ export function Header() {
         });
 
         if (closest) {
-          setActiveSection((prev) => (prev === closest ? prev : closest!));
+          const next = closest;
+          setActiveSection((prev) => (prev === next ? prev : next));
         }
 
         ticking.current = false;

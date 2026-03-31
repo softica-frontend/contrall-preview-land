@@ -136,13 +136,16 @@ body {
 /* Section reveal: pause animations until visible */
 [data-visible="false"] *,
 [data-visible="false"] {
+  /* biome-ignore lint/complexity/noImportantStyles: must override inline animation states */
   animation-play-state: paused !important;
 }
 
 @media (prefers-reduced-motion: reduce) {
   [data-visible="false"] *,
   [data-visible="false"] {
+    /* biome-ignore lint/complexity/noImportantStyles: must force running state for reduced-motion */
     animation-play-state: running !important;
+    /* biome-ignore lint/complexity/noImportantStyles: must force 0s duration for reduced-motion */
     animation-duration: 0s !important;
   }
 }

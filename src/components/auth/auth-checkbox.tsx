@@ -7,12 +7,14 @@ interface AuthCheckboxProps
   label: React.ReactNode;
   checked?: boolean;
   onChange?: (checked: boolean) => void;
+  error?: boolean;
 }
 
 export function AuthCheckbox({
   label,
   checked: controlledChecked,
   onChange,
+  error,
   className,
   ...props
 }: AuthCheckboxProps) {
@@ -42,12 +44,21 @@ export function AuthCheckbox({
           ${
             isChecked
               ? "bg-[#2563EB] border-[#2563EB]"
-              : "bg-white border-[#D0D5DD]"
+              : error
+                ? "bg-white border-[#DA1E28] shadow-[0_0_0_1px_#DA1E28,0_0_0_4px_rgba(218,30,40,0.2)]"
+                : "bg-white border-[#D0D5DD]"
           }
         `}
       >
         {isChecked && (
-          <svg width="12" height="10" viewBox="0 0 12 10" fill="none" aria-label="Checked checkbox" role="img">
+          <svg
+            width="12"
+            height="10"
+            viewBox="0 0 12 10"
+            fill="none"
+            aria-label="Checked checkbox"
+            role="img"
+          >
             <path
               d="M1 5.5 4 8.5l7-7"
               stroke="#fff"

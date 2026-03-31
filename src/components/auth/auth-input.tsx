@@ -63,7 +63,10 @@ export function AuthInput({
 
   return (
     <div className="flex flex-col gap-1.5">
-      <label htmlFor={props.id} className="text-[14px] font-medium text-[#21272A] pl-1">
+      <label
+        htmlFor={props.id}
+        className="text-[14px] font-medium text-[#21272A] pl-1"
+      >
         {label}
       </label>
       <div className="relative">

@@ -7,9 +7,11 @@ import { AuthCheckbox } from "@/components/auth/auth-checkbox";
 import { AuthInput } from "@/components/auth/auth-input";
 import { Divider, SocialButtons } from "@/components/auth/social-buttons";
 import { Toast, type ToastData } from "@/components/auth/toast";
+import { useRouter } from "@/i18n/navigation";
 
 export default function LoginPage() {
   const t = useTranslations("Auth");
+  const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [remember, setRemember] = useState(false);
@@ -40,11 +42,16 @@ export default function LoginPage() {
       return;
     }
 
+    localStorage.setItem("auth_token", "mock-token");
+    localStorage.setItem("auth_email", email);
+
     setToast({
       type: "success",
       title: t("successLogin"),
       description: t("successLoginDesc"),
     });
+
+    setTimeout(() => router.push("/profile"), 1000);
   };
 
   return (

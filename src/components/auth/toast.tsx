@@ -116,7 +116,14 @@ export function Toast({ toast, onClose }: ToastProps) {
           }}
           className="shrink-0 text-[#98A2B3] hover:text-[#475467] transition-colors"
         >
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-label="Close notification" role="img">
+          <svg
+            width="16"
+            height="16"
+            viewBox="0 0 16 16"
+            fill="none"
+            aria-label="Close notification"
+            role="img"
+          >
             <path
               d="M4 4l8 8M12 4l-8 8"
               stroke="currentColor"

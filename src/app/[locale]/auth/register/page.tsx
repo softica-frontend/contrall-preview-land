@@ -8,9 +8,11 @@ import { AuthInput } from "@/components/auth/auth-input";
 import { PasswordRules } from "@/components/auth/password-rules";
 import { Divider, SocialButtons } from "@/components/auth/social-buttons";
 import { Toast, type ToastData } from "@/components/auth/toast";
+import { useRouter } from "@/i18n/navigation";
 
 export default function RegisterPage() {
   const t = useTranslations("Auth");
+  const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -48,11 +50,16 @@ export default function RegisterPage() {
       return;
     }
 
+    localStorage.setItem("auth_token", "mock-token");
+    localStorage.setItem("auth_email", email);
+
     setToast({
       type: "success",
       title: t("successRegister"),
       description: t("successRegisterDesc"),
     });
+
+    setTimeout(() => router.push("/profile"), 1000);
   };
 
   return (
@@ -117,6 +124,7 @@ export default function RegisterPage() {
         <div className="mt-1">
           <AuthCheckbox
             checked={agreed}
+            error={errors.agreed}
             onChange={(checked) => {
               setAgreed(checked);
               setErrors((prev) => ({ ...prev, agreed: false }));
