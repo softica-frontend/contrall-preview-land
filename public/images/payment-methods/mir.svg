@@ -1,0 +1,16 @@
+<svg width="124" height="35" viewBox="0 0 124 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- М (path7) x:0 w:44.45 -->
+  <path fill-rule="evenodd" clip-rule="evenodd" d="M33.4141 6.65916e-07V0.0152845C33.3988 0.0152845 28.5706 5.83043e-07 27.2831 4.60044C26.1028 8.81878 22.7768 20.4651 22.6848 20.786H21.7651C21.7651 20.786 18.3624 8.87991 17.1669 4.58515C15.8794 -0.0152833 11.0358 6.65916e-07 11.0358 6.65916e-07H0V35H11.0358V14.214H11.4957H11.9555L18.3931 35H26.0569L32.4944 14.2293H33.4141V35H44.4499V6.65916e-07H33.4141Z" fill="#4DB45E"/>
+  <!-- И (path11) x:49.2 w:34.95 -->
+  <path fill-rule="evenodd" clip-rule="evenodd" d="M73.7241 0C73.7241 0 70.49 0.290393 68.9726 3.66812L61.1555 20.786H60.2358V0H49.2V35H59.6227C59.6227 35 63.0101 34.6943 64.5276 31.3319L72.1913 14.214H73.111V35H84.1468V0H73.7241Z" fill="#4DB45E"/>
+  <!-- Р bottom (path15) x:89 w:34.26 -->
+  <path fill-rule="evenodd" clip-rule="evenodd" d="M89 15.8952V35H100.036V22.9476H112.0C117.2 22.9476 121.62 19.631 123.26 15.8952H89Z" fill="#4DB45E"/>
+  <!-- Р top (path24) x:87.5 w:36.5 -->
+  <path fill-rule="evenodd" clip-rule="evenodd" d="M112.039 0H87.5C88.7262 6.66376 93.7383 12.0131 100.222 13.7555C101.693 14.1528 103.241 14.3668 104.836 14.3668H123.75C123.918 13.5721 123.995 12.762 123.995 11.9214C123.995 5.33406 118.646 0 112.039 0Z" fill="url(#mir_gradient)"/>
+  <defs>
+    <linearGradient id="mir_gradient" x1="87.503" y1="7.18341" x2="123.995" y2="7.18341" gradientUnits="userSpaceOnUse">
+      <stop offset="0.3" stop-color="#00B4E6"/>
+      <stop offset="1" stop-color="#088CCB"/>
+    </linearGradient>
+  </defs>
+</svg>
