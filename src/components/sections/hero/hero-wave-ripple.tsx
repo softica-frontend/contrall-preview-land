@@ -29,7 +29,6 @@ export function triggerRipple(onDone: () => void) {
 export function HeroWaveRipple() {
   const containerRef = useRef<HTMLDivElement>(null);
   const ringsRef = useRef<SVGPathElement[] | null>(null);
-  const revealAnimsRef = useRef<Animation[]>([]);
   const busy = useRef(false);
 
   /* ── Mount: cache ring refs, run reveal ── */
@@ -50,45 +49,7 @@ export function HeroWaveRipple() {
     }
     ringsRef.current = ringPaths;
 
-    // ── Reveal: fade in ring paths only (overlays stay visible) ──
-    const DELAY_PER_RING = 25;
-    const DURATION = 400;
-    const BASE_DELAY = 500;
-    const anims: Animation[] = [];
-
-    busy.current = true;
-
-    for (let i = 0; i < total; i++) {
-      const ring = ringPaths[i];
-      ring.style.opacity = "0";
-
-      const reverseIdx = total - 1 - i;
-      const delay = BASE_DELAY + reverseIdx * DELAY_PER_RING;
-
-      const anim = ring.animate([{ opacity: "0" }, { opacity: "1" }], {
-        duration: DURATION,
-        delay,
-        easing: "cubic-bezier(0.25, 0.46, 0.45, 0.94)",
-        fill: "forwards",
-      });
-      anims.push(anim);
-    }
-
-    revealAnimsRef.current = anims;
-
-    // Cleanup after all reveals finish
-    const lastDelay = BASE_DELAY + (total - 1) * DELAY_PER_RING;
-    const timeout = setTimeout(
-      () => {
-        for (const ring of ringPaths) ring.style.opacity = "";
-        for (const a of revealAnimsRef.current) a.cancel();
-        revealAnimsRef.current = [];
-        busy.current = false;
-      },
-      lastDelay + DURATION + 50,
-    );
-
-    return () => clearTimeout(timeout);
+    // No reveal animation — rings visible immediately
   }, []);
 
   /* ── Click ripple: per-ring scale+opacity (original visual) ── */
