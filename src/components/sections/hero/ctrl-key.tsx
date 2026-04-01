@@ -1,53 +1,52 @@
 "use client";
 
-import { useCallback, useId, useRef, useState } from "react";
-import { CTRL_RIPPLE_EVENT } from "./hero-wave-ripple";
+import { useCallback, useId, useRef } from "react";
+import { triggerRipple } from "./hero-wave-ripple";
 
 /** 3D isometric Ctrl keyboard key — decorative element below the CTA */
 export function CtrlKey({ className }: { className?: string }) {
   const uid = useId();
   const g0 = `ctrl-grad0-${uid}`;
   const g1 = `ctrl-grad1-${uid}`;
-  const [pressed, setPressed] = useState(false);
+  const svgRef = useRef<SVGSVGElement>(null);
   const animating = useRef(false);
 
   const handleClick = useCallback(() => {
-    if (animating.current) return;
+    const svg = svgRef.current;
+    if (!svg || animating.current) return;
     animating.current = true;
-    setPressed(true);
-    window.dispatchEvent(new Event(CTRL_RIPPLE_EVENT));
 
+    svg.classList.add("ctrl-active", "ctrl-pressed");
+
+    // Key release after press
     setTimeout(() => {
-      setPressed(false);
+      svg.classList.remove("ctrl-pressed");
       setTimeout(() => {
-        animating.current = false;
+        svg.classList.remove("ctrl-active");
       }, 250);
     }, 180);
+
+    // Unlock only when ripple finishes
+    triggerRipple(() => {
+      animating.current = false;
+    });
   }, []);
 
   return (
     <button
       type="button"
-      className={`cursor-pointer ${className ?? "h-auto w-[276px] max-w-full"}`}
+      className={`cursor-pointer border-0 bg-transparent p-0 outline-none ${className ?? "h-auto w-[276px] max-w-full"}`}
       onClick={handleClick}
       aria-label="Ctrl"
     >
       <svg
+        ref={svgRef}
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 276 190"
         fill="none"
         role="img"
         aria-label="Ctrl key"
-        className="h-full w-full"
-        style={{
-          transform: pressed
-            ? "translateY(16px) scaleY(0.94) scaleX(0.99)"
-            : "translateY(0) scaleY(1) scaleX(1)",
-          transition: pressed
-            ? "transform 120ms cubic-bezier(0.2, 0, 0.4, 1)"
-            : "transform 250ms cubic-bezier(0.0, 0, 0.2, 1)",
-          transformOrigin: "center bottom",
-        }}
+        className="ctrl-key-svg h-full w-full"
       >
         {/* Side face */}
         <path

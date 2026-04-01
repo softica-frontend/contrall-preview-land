@@ -133,6 +133,21 @@ body {
   animation: hero-key-drop 0.8s cubic-bezier(0.34, 1.2, 0.64, 1) 0.45s both;
 }
 
+/* Ctrl key press — GPU-composited, 0 React re-renders */
+.ctrl-key-svg {
+  transform-origin: center bottom;
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.ctrl-active {
+  will-change: transform;
+}
+
+.ctrl-pressed {
+  transform: translateY(16px) scaleY(0.94) scaleX(0.99);
+  transition: transform 120ms cubic-bezier(0.2, 0, 0.4, 1);
+}
+
 /* Section reveal: pause animations until visible */
 [data-visible="false"] *,
 [data-visible="false"] {

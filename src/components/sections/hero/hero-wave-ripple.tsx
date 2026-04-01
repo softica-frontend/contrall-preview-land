@@ -3,98 +3,117 @@
 import { useCallback, useEffect, useRef } from "react";
 import { WaveBackground } from "./wave-bg";
 
-/** Custom event name dispatched by CtrlKey on click */
-export const CTRL_RIPPLE_EVENT = "ctrl-ripple";
+/**
+ * Module-level ripple trigger — direct function call, no DOM events.
+ * CtrlKey imports `triggerRipple` and calls it on click.
+ */
+let rippleFn: ((onDone: () => void) => void) | null = null;
+export function triggerRipple(onDone: () => void) {
+  if (rippleFn) {
+    rippleFn(onDone);
+  } else {
+    onDone();
+  }
+}
 
 /**
- * Thin client wrapper around WaveBackground.
- * On mount — reveals rings one-by-one from center outward.
- * On CTRL_RIPPLE_EVENT — animates ring paths outward via WAAPI.
+ * Wrapper around WaveBackground with two animations:
+ * 1. Reveal on mount — ring groups fade in from center outward (opacity on <g>)
+ * 2. Ripple on Ctrl click — ring paths only pulse outward (scale+opacity on path)
+ *
+ * <g> groups used for reveal (18 opacity anims instead of ~50).
+ * Ripple targets ring paths directly to match original visual (overlays stay still).
  */
 export function HeroWaveRipple() {
-  const ref = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const svgRef = useRef<SVGSVGElement | null>(null);
+  const groupsRef = useRef<SVGGElement[] | null>(null);
+  const ringsRef = useRef<SVGPathElement[] | null>(null);
+  const revealAnimsRef = useRef<Animation[] | null>(null);
   const busy = useRef(false);
-  const revealDone = useRef(false);
 
-  const getRings = useCallback(() => {
-    const svg = ref.current?.querySelector("svg");
-    if (!svg) return null;
-    const rings = svg.querySelectorAll<SVGPathElement>('path[fill="#FCFCFD"]');
-    return rings.length > 0 ? rings : null;
-  }, []);
-
-  /* ── Initial reveal: rings appear from center outward, after key drop lands ── */
+  /* ── Mount: wrap rings in <g>, cache refs, run reveal ── */
   useEffect(() => {
-    if (revealDone.current || !ref.current) return;
-    const rings = getRings();
-    if (!rings) return;
-    revealDone.current = true;
+    const svg = containerRef.current?.querySelector("svg");
+    if (!svg || groupsRef.current) return;
+    svgRef.current = svg;
 
-    const total = rings.length;
-    const DELAY_PER_RING = 40;
-    const DURATION = 600;
-    // Start just before key-drop finishes (0.45s delay + 0.8s duration = 1.25s end)
-    const BASE_DELAY = 700;
+    const ringPaths = Array.from(
+      svg.querySelectorAll<SVGPathElement>('path[fill="#FCFCFD"]'),
+    );
+    const total = ringPaths.length;
+    if (total === 0) return;
 
-    // Collect all paths (ring + its gradient overlays) grouped per ring
-    const groups: SVGPathElement[][] = [];
-    rings.forEach((ring) => {
-      groups.push([ring, ...getSiblingOverlays(ring)]);
-    });
-
-    // Hide everything instantly
-    for (const paths of groups) {
-      for (const p of paths) p.style.opacity = "0";
+    // Wrap each ring + its gradient overlay siblings into a <g> for reveal
+    const groups: SVGGElement[] = [];
+    for (const ring of ringPaths) {
+      const g = document.createElementNS("http://www.w3.org/2000/svg", "g");
+      const siblings = [ring, ...getSiblingOverlays(ring)];
+      ring.parentNode?.insertBefore(g, ring);
+      for (const p of siblings) g.appendChild(p);
+      groups.push(g);
     }
+    groupsRef.current = groups;
 
-    // Block ripple clicks until reveal is done
+    // Cache ring paths separately and pre-set transformOrigin for ripple
+    for (const ring of ringPaths) {
+      ring.style.transformOrigin = "864px 720px";
+    }
+    ringsRef.current = ringPaths;
+
+    // ── Reveal: fade in <g> groups from center outward ──
+    const DELAY_PER_RING = 25;
+    const DURATION = 400;
+    const BASE_DELAY = 500;
+
     busy.current = true;
+    const revealAnims: Animation[] = [];
 
-    // Animate from center outward; commit styles on finish & clean up
-    let finished = 0;
-    const totalAnims = groups.length;
+    for (let i = 0; i < groups.length; i++) {
+      const g = groups[i];
+      g.style.opacity = "0";
 
-    groups.forEach((paths, i) => {
       const reverseIdx = total - 1 - i;
       const delay = BASE_DELAY + reverseIdx * DELAY_PER_RING;
 
-      for (const p of paths) {
-        const anim = p.animate([{ opacity: "0" }, { opacity: "1" }], {
-          duration: DURATION,
-          delay,
-          easing: "cubic-bezier(0.25, 0.46, 0.45, 0.94)",
-          fill: "forwards",
-        });
+      const anim = g.animate([{ opacity: "0" }, { opacity: "1" }], {
+        duration: DURATION,
+        delay,
+        easing: "cubic-bezier(0.25, 0.46, 0.45, 0.94)",
+        fill: "forwards",
+      });
+      revealAnims.push(anim);
 
-        // Only track finish on the ring path (first in group)
-        if (p === paths[0]) {
-          anim.onfinish = () => {
-            // Commit final state to inline style & kill WAAPI animation
-            for (const el of paths) {
-              el.style.opacity = "";
-              // biome-ignore lint/suspicious/useIterableCallbackReturn: need to clean
-              el.getAnimations().forEach((a) => a.cancel());
-            }
-            finished++;
-            if (finished === totalAnims) busy.current = false;
-          };
-        }
+      // Track finish on the first group (highest delay = last to finish)
+      if (i === 0) {
+        anim.onfinish = () => {
+          for (const group of groups) group.style.opacity = "";
+          for (const a of revealAnims) a.cancel();
+          revealAnimsRef.current = null;
+          busy.current = false;
+        };
       }
-    });
-  }, [getRings]);
+    }
+    revealAnimsRef.current = revealAnims;
+  }, []);
 
-  /* ── Click ripple ── */
-  const ripple = useCallback(() => {
-    if (busy.current) return;
-    const rings = getRings();
-    if (!rings) return;
+  /* ── Click ripple: WAAPI on cached ring paths (not <g> groups) ── */
+  const ripple = useCallback((onDone: () => void) => {
+    const rings = ringsRef.current;
+    if (busy.current || !rings) {
+      onDone();
+      return;
+    }
 
     busy.current = true;
-    let done = 0;
     const total = rings.length;
 
-    rings.forEach((ring, i) => {
-      ring.style.transformOrigin = "864px 720px";
+    // Enable GPU compositing on SVG container (1 write instead of 18)
+    const svg = svgRef.current;
+    if (svg) svg.style.willChange = "contents";
+
+    for (let i = 0; i < total; i++) {
+      const ring = rings[i];
 
       const anim = ring.animate(
         [
@@ -110,27 +129,33 @@ export function HeroWaveRipple() {
         },
       );
 
-      anim.onfinish = () => {
-        done++;
-        if (done === total) busy.current = false;
-      };
-    });
-  }, [getRings]);
+      // Single onfinish on the last-to-finish ring (index 0, highest delay)
+      if (i === 0) {
+        anim.onfinish = () => {
+          if (svg) svg.style.willChange = "";
+          busy.current = false;
+          onDone();
+        };
+      }
+    }
+  }, []);
 
+  /* ── Register/unregister module-level trigger ── */
   useEffect(() => {
-    const handler = () => ripple();
-    window.addEventListener(CTRL_RIPPLE_EVENT, handler);
-    return () => window.removeEventListener(CTRL_RIPPLE_EVENT, handler);
+    rippleFn = ripple;
+    return () => {
+      rippleFn = null;
+    };
   }, [ripple]);
 
   return (
-    <div ref={ref} className="contents">
+    <div ref={containerRef} className="contents">
       <WaveBackground />
     </div>
   );
 }
 
-/** Get the next 1-2 sibling paths that are gradient overlays for a ring */
+/** Get the next sibling paths that are gradient overlays for a ring */
 function getSiblingOverlays(ring: SVGPathElement): SVGPathElement[] {
   const result: SVGPathElement[] = [];
   let el = ring.nextElementSibling;
