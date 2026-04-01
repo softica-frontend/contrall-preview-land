@@ -5,7 +5,7 @@ export const WaveBackground = () => {
       viewBox="0 0 1728 1439"
       fill="none"
       className="min-w-[1822px] min-h-[1163px] md:min-w-[2510px] md:min-h-[1601px] -mt-24 -z-10"
-      style={{ contain: "layout style paint" }}
+      style={{ contain: "layout style paint", transformOrigin: "center" }}
       role="img"
       aria-label="Wave background"
     >

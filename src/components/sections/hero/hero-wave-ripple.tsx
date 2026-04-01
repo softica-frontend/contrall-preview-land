@@ -28,6 +28,7 @@ export function triggerRipple(onDone: () => void) {
  */
 export function HeroWaveRipple() {
   const containerRef = useRef<HTMLDivElement>(null);
+  const svgRef = useRef<SVGSVGElement | null>(null);
   const ringsRef = useRef<SVGPathElement[] | null>(null);
   const revealAnimsRef = useRef<Animation[]>([]);
   const busy = useRef(false);
@@ -36,6 +37,7 @@ export function HeroWaveRipple() {
   useEffect(() => {
     const svg = containerRef.current?.querySelector("svg");
     if (!svg || ringsRef.current) return;
+    svgRef.current = svg;
 
     const ringPaths = Array.from(
       svg.querySelectorAll<SVGPathElement>('path[fill="#FCFCFD"]'),
@@ -86,10 +88,11 @@ export function HeroWaveRipple() {
     return () => clearTimeout(timeout);
   }, []);
 
-  /* ── Click ripple: opacity-only pulse on cached ring paths ── */
+  /* ── Click ripple: single scale on SVG + staggered opacity on rings ── */
   const ripple = useCallback((onDone: () => void) => {
     const rings = ringsRef.current;
-    if (busy.current || !rings) {
+    const svg = svgRef.current;
+    if (busy.current || !rings || !svg) {
       onDone();
       return;
     }
@@ -97,6 +100,21 @@ export function HeroWaveRipple() {
     busy.current = true;
     const total = rings.length;
 
+    // Single scale pulse on entire SVG (1 transform instead of 18)
+    svg.animate(
+      [
+        { transform: "scale(1)" },
+        { transform: "scale(1.015)", offset: 0.4 },
+        { transform: "scale(1)" },
+      ],
+      {
+        duration: 600,
+        easing: "cubic-bezier(0, 0, 0.2, 1)",
+        fill: "none",
+      },
+    );
+
+    // Staggered opacity pulse per ring (cheap — no transform)
     for (let i = 0; i < total; i++) {
       const ring = rings[i];
 
