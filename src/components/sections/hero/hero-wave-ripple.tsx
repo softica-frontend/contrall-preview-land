@@ -18,20 +18,21 @@ export function triggerRipple(onDone: () => void) {
 
 /**
  * Wrapper around WaveBackground with two animations:
- * 1. Reveal on mount — rings fade in from center outward
- * 2. Ripple on Ctrl click — rings pulse outward
+ * 1. Reveal on mount — ring paths fade in from center outward
+ * 2. Ripple on Ctrl click — ring paths pulse (opacity only, no scale)
  *
- * No DOM mutations — animates existing paths directly.
- * Ring refs cached at mount for zero querySelectorAll on click.
+ * Performance notes:
+ * - Only ring paths animated (18), overlay paths stay visible
+ * - Ripple uses opacity-only (no transform) to avoid SVG repaint
+ * - Ring refs cached at mount, transformOrigin not needed (no scale)
  */
 export function HeroWaveRipple() {
   const containerRef = useRef<HTMLDivElement>(null);
   const ringsRef = useRef<SVGPathElement[] | null>(null);
-  const overlayGroupsRef = useRef<SVGPathElement[][] | null>(null);
   const revealAnimsRef = useRef<Animation[]>([]);
   const busy = useRef(false);
 
-  /* ── Mount: cache ring refs, pre-set transformOrigin, run reveal ── */
+  /* ── Mount: cache ring refs, run reveal ── */
   useEffect(() => {
     const svg = containerRef.current?.querySelector("svg");
     if (!svg || ringsRef.current) return;
@@ -42,16 +43,9 @@ export function HeroWaveRipple() {
     const total = ringPaths.length;
     if (total === 0) return;
 
-    // Cache ring paths and their overlay siblings separately
-    const overlayGroups: SVGPathElement[][] = [];
-    for (const ring of ringPaths) {
-      ring.style.transformOrigin = "864px 720px";
-      overlayGroups.push(getSiblingOverlays(ring));
-    }
     ringsRef.current = ringPaths;
-    overlayGroupsRef.current = overlayGroups;
 
-    // ── Reveal: fade in rings + overlays from center outward ──
+    // ── Reveal: fade in ring paths only (overlays stay visible) ──
     const DELAY_PER_RING = 25;
     const DURATION = 400;
     const BASE_DELAY = 500;
@@ -61,43 +55,38 @@ export function HeroWaveRipple() {
 
     for (let i = 0; i < total; i++) {
       const ring = ringPaths[i];
-      const overlays = overlayGroups[i];
-      const allPaths = [ring, ...overlays];
+      ring.style.opacity = "0";
 
       const reverseIdx = total - 1 - i;
       const delay = BASE_DELAY + reverseIdx * DELAY_PER_RING;
 
-      for (const p of allPaths) {
-        p.style.opacity = "0";
-        const anim = p.animate([{ opacity: "0" }, { opacity: "1" }], {
-          duration: DURATION,
-          delay,
-          easing: "cubic-bezier(0.25, 0.46, 0.45, 0.94)",
-          fill: "forwards",
-        });
-        anims.push(anim);
-      }
+      const anim = ring.animate([{ opacity: "0" }, { opacity: "1" }], {
+        duration: DURATION,
+        delay,
+        easing: "cubic-bezier(0.25, 0.46, 0.45, 0.94)",
+        fill: "forwards",
+      });
+      anims.push(anim);
     }
 
     revealAnimsRef.current = anims;
 
-    // Cleanup after last ring finishes (index 0 has highest delay)
+    // Cleanup after all reveals finish
     const lastDelay = BASE_DELAY + (total - 1) * DELAY_PER_RING;
-    const cleanupTime = lastDelay + DURATION + 50;
-    const timeout = setTimeout(() => {
-      for (const ring of ringPaths) ring.style.opacity = "";
-      for (const group of overlayGroups) {
-        for (const p of group) p.style.opacity = "";
-      }
-      for (const a of revealAnimsRef.current) a.cancel();
-      revealAnimsRef.current = [];
-      busy.current = false;
-    }, cleanupTime);
+    const timeout = setTimeout(
+      () => {
+        for (const ring of ringPaths) ring.style.opacity = "";
+        for (const a of revealAnimsRef.current) a.cancel();
+        revealAnimsRef.current = [];
+        busy.current = false;
+      },
+      lastDelay + DURATION + 50,
+    );
 
     return () => clearTimeout(timeout);
   }, []);
 
-  /* ── Click ripple: WAAPI on cached ring paths ── */
+  /* ── Click ripple: opacity-only pulse on cached ring paths ── */
   const ripple = useCallback((onDone: () => void) => {
     const rings = ringsRef.current;
     if (busy.current || !rings) {
@@ -112,11 +101,7 @@ export function HeroWaveRipple() {
       const ring = rings[i];
 
       const anim = ring.animate(
-        [
-          { transform: "scale(1)", opacity: "1" },
-          { transform: "scale(1.03)", opacity: "0.45", offset: 0.4 },
-          { transform: "scale(1)", opacity: "1" },
-        ],
+        [{ opacity: "1" }, { opacity: "0.35", offset: 0.4 }, { opacity: "1" }],
         {
           duration: 500,
           delay: (total - 1 - i) * 40,
@@ -125,7 +110,6 @@ export function HeroWaveRipple() {
         },
       );
 
-      // Single onfinish on the last-to-finish ring (index 0, highest delay)
       if (i === 0) {
         anim.onfinish = () => {
           busy.current = false;
@@ -148,18 +132,4 @@ export function HeroWaveRipple() {
       <WaveBackground />
     </div>
   );
-}
-
-/** Get the next sibling paths that are gradient overlays for a ring */
-function getSiblingOverlays(ring: SVGPathElement): SVGPathElement[] {
-  const result: SVGPathElement[] = [];
-  let el = ring.nextElementSibling;
-  while (
-    el instanceof SVGPathElement &&
-    el.getAttribute("fill") !== "#FCFCFD"
-  ) {
-    result.push(el);
-    el = el.nextElementSibling;
-  }
-  return result;
 }
