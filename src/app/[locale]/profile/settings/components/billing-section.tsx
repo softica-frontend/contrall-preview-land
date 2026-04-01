@@ -1,0 +1,225 @@
+"use client";
+
+import { useTranslations } from "next-intl";
+import { StatusBadge } from "./status-badge";
+
+interface Transaction {
+  date: string;
+  time: string;
+  tracker: string;
+  amount: string;
+  status: string;
+  statusKey: string;
+  description: string;
+}
+
+const MOCK_DATA: Transaction[] = [
+  {
+    date: "28.03.2026",
+    time: "14:32",
+    tracker: "Contrall Pro",
+    amount: "$99.00",
+    status: "Completed",
+    statusKey: "completed",
+    description: "Ежемесячная подписка",
+  },
+  {
+    date: "28.02.2026",
+    time: "14:30",
+    tracker: "Contrall Pro",
+    amount: "$99.00",
+    status: "Completed",
+    statusKey: "completed",
+    description: "Ежемесячная подписка",
+  },
+  {
+    date: "28.01.2026",
+    time: "14:28",
+    tracker: "Contrall Pro",
+    amount: "$99.00",
+    status: "Completed",
+    statusKey: "completed",
+    description: "Ежемесячная подписка",
+  },
+  {
+    date: "28.12.2025",
+    time: "09:15",
+    tracker: "Contrall Pro",
+    amount: "$99.00",
+    status: "Completed",
+    statusKey: "completed",
+    description: "Ежемесячная подписка",
+  },
+  {
+    date: "15.12.2025",
+    time: "11:42",
+    tracker: "Contrall Pro",
+    amount: "$29.00",
+    status: "Completed",
+    statusKey: "completed",
+    description: "Доп. домен",
+  },
+  {
+    date: "28.11.2025",
+    time: "14:30",
+    tracker: "Contrall Pro",
+    amount: "$99.00",
+    status: "Completed",
+    statusKey: "completed",
+    description: "Ежемесячная подписка",
+  },
+  {
+    date: "28.10.2025",
+    time: "14:33",
+    tracker: "Contrall Pro",
+    amount: "$99.00",
+    status: "Completed",
+    statusKey: "completed",
+    description: "Ежемесячная подписка",
+  },
+  {
+    date: "28.09.2025",
+    time: "10:05",
+    tracker: "Contrall Starter",
+    amount: "$49.00",
+    status: "Completed",
+    statusKey: "completed",
+    description: "Ежемесячная подписка",
+  },
+  {
+    date: "15.09.2025",
+    time: "16:20",
+    tracker: "Contrall Pro",
+    amount: "$99.00",
+    status: "Cancelled",
+    statusKey: "cancelled",
+    description: "Отмена возврата",
+  },
+  {
+    date: "28.08.2025",
+    time: "14:30",
+    tracker: "Contrall Starter",
+    amount: "$49.00",
+    status: "Completed",
+    statusKey: "completed",
+    description: "Ежемесячная подписка",
+  },
+  {
+    date: "10.08.2025",
+    time: "08:45",
+    tracker: "Contrall Starter",
+    amount: "$49.00",
+    status: "Resolved",
+    statusKey: "resolved",
+    description: "Возврат средств",
+  },
+  {
+    date: "28.07.2025",
+    time: "14:31",
+    tracker: "Contrall Starter",
+    amount: "$49.00",
+    status: "Completed",
+    statusKey: "completed",
+    description: "Ежемесячная подписка",
+  },
+  {
+    date: "28.06.2025",
+    time: "14:29",
+    tracker: "Contrall Starter",
+    amount: "$49.00",
+    status: "Completed",
+    statusKey: "completed",
+    description: "Ежемесячная подписка",
+  },
+  {
+    date: "01.06.2025",
+    time: "12:00",
+    tracker: "Contrall Starter",
+    amount: "$0.00",
+    status: "Completed",
+    statusKey: "completed",
+    description: "Пробный период",
+  },
+];
+
+const COLUMNS = [
+  { key: "date", width: "w-[170px] shrink-0" },
+  { key: "tracker", width: "min-w-[140px] flex-[2]" },
+  { key: "amount", width: "w-[160px] shrink-0" },
+  { key: "status", width: "w-[150px] shrink-0" },
+  { key: "description", width: "min-w-[120px] flex-[2]" },
+] as const;
+
+function HeaderCell({
+  label,
+  className,
+}: {
+  label: string;
+  className: string;
+}) {
+  return (
+    <div className={`flex items-center px-2 ${className}`}>
+      <span className="whitespace-nowrap font-roboto text-[14px] leading-[1.4] text-[#667085]">
+        {label}
+      </span>
+    </div>
+  );
+}
+
+export function BillingSection() {
+  const t = useTranslations("Settings");
+
+  return (
+    <div className="flex h-full max-h-full flex-col overflow-hidden rounded-xl border border-[#E4E7EC] bg-[#FCFCFD] p-6">
+      <h2 className="mb-4 shrink-0 font-roboto text-[32px] font-bold leading-tight text-[#0C111D]">
+        {t("billing.title")}
+      </h2>
+
+      <div className="flex min-h-0 flex-1 flex-col overflow-x-auto">
+        {/* Header */}
+        <div className="sticky top-0 z-10 shrink-0 border-b border-[#E4E7EC] bg-[#FCFCFD]">
+          <div className="flex h-9 min-w-[700px]">
+            {COLUMNS.map((col) => (
+              <HeaderCell
+                key={col.key}
+                label={t(`billing.${col.key}`)}
+                className={col.width}
+              />
+            ))}
+          </div>
+        </div>
+
+        {/* Body */}
+        <div className="min-h-0 flex-1 overflow-y-auto">
+          {MOCK_DATA.map((tx, i) => (
+            <div
+              key={`row-${i}`}
+              className="flex h-12 min-w-[700px] border-b border-[#E4E7EC] last:border-b-0"
+            >
+              <div className="flex w-[170px] shrink-0 flex-col justify-center px-2">
+                <div className="font-roboto text-[14px] leading-[1.4] text-[#344054]">
+                  {tx.date}
+                </div>
+                <div className="font-roboto text-[12px] leading-[1.4] text-[#667085]">
+                  {tx.time}
+                </div>
+              </div>
+              <div className="flex min-w-[140px] flex-[2] items-center truncate px-2 font-roboto text-[14px] leading-[1.4] text-[#344054]">
+                {tx.tracker}
+              </div>
+              <div className="flex w-[160px] shrink-0 items-center px-2 font-roboto text-[14px] leading-[1.4] text-[#44BA3E]">
+                {tx.amount}
+              </div>
+              <div className="flex w-[150px] shrink-0 items-center px-2">
+                <StatusBadge status={tx.status} statusKey={tx.statusKey} />
+              </div>
+              <div className="flex min-w-[120px] flex-[2] items-center truncate px-2 font-roboto text-[14px] leading-[1.4] text-[#344054]">
+                {tx.description}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}

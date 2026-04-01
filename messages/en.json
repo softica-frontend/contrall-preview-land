@@ -209,6 +209,40 @@
     "title": "Contrall — Your assistant for maximum profit",
     "description": "A tracker you can earn with, not worry about problems."
   },
+  "Settings": {
+    "sidebar": {
+      "personal": "Personal Data",
+      "privacy": "Privacy",
+      "billing": "Payments & Billing"
+    },
+    "personal": {
+      "name": "Name",
+      "change": "Change",
+      "timezone": "Time Zone",
+      "userSince": "User since",
+      "october": "October",
+      "cancel": "Cancel",
+      "save": "Save"
+    },
+    "privacy": {
+      "currentPassword": "Current Password",
+      "forgotPassword": "Forgot Password",
+      "newPassword": "New Password",
+      "newPasswordPlaceholder": "Enter new password",
+      "confirmPassword": "Confirm New Password",
+      "confirmPasswordPlaceholder": "Enter new password again",
+      "changeButton": "Change"
+    },
+    "billing": {
+      "title": "History",
+      "date": "Transaction date",
+      "tracker": "Tracker",
+      "amount": "Amount",
+      "status": "Status",
+      "description": "Description"
+    },
+    "comingSoon": "This section is under development."
+  },
   "Profile": {
     "title": "My Profile",
     "welcome": "Welcome, {email}",

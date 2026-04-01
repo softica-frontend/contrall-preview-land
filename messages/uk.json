@@ -209,6 +209,40 @@
     "title": "Contrall — Ваш асистент для максимального прибутку",
     "description": "Трекер, з яким можна заробляти, а не думати про проблеми."
   },
+  "Settings": {
+    "sidebar": {
+      "personal": "Персональні Дані",
+      "privacy": "Конфіденційність",
+      "billing": "Оплати та Білінг"
+    },
+    "personal": {
+      "name": "Ім'я",
+      "change": "Змінити",
+      "timezone": "Часовий Пояс",
+      "userSince": "Користувач з",
+      "october": "Жовтня",
+      "cancel": "Скасувати",
+      "save": "Зберегти"
+    },
+    "privacy": {
+      "currentPassword": "Поточний пароль",
+      "forgotPassword": "Забув Пароль",
+      "newPassword": "Новий Пароль",
+      "newPasswordPlaceholder": "Введіть новий пароль",
+      "confirmPassword": "Підтвердіть Новий Пароль",
+      "confirmPasswordPlaceholder": "Введіть ще раз новий пароль",
+      "changeButton": "Змінити"
+    },
+    "billing": {
+      "title": "Історія",
+      "date": "Дата транзакції",
+      "tracker": "Трекер",
+      "amount": "Сума",
+      "status": "Статус",
+      "description": "Опис"
+    },
+    "comingSoon": "Цей розділ знаходиться у розробці."
+  },
   "Profile": {
     "title": "Мій профіль",
     "welcome": "Ласкаво просимо, {email}",

@@ -1,19 +1,29 @@
 "use client";
 
-import { useTranslations } from "next-intl";
+import { useEffect, useState } from "react";
+import { BillingSection } from "./components/billing-section";
+import { PersonalInfoSection } from "./components/personal-info-section";
+import { PrivacySection } from "./components/privacy-section";
+import { SettingsSidebar } from "./components/settings-sidebar";
 
 export default function SettingsPage() {
-  const t = useTranslations("Profile");
+  const [activeSection, setActiveSection] = useState("personal");
+  const [email, setEmail] = useState("");
+
+  useEffect(() => {
+    setEmail(localStorage.getItem("auth_email") ?? "");
+  }, []);
 
   return (
-    <div className="w-full max-w-[480px] rounded-2xl bg-white p-8 shadow-[0_4px_24px_rgba(0,0,0,0.08)]">
-      <h1 className="text-center text-[28px] font-bold text-[#1D2939]">
-        {t("nav.settings")}
-      </h1>
-      <div className="mt-8 rounded-xl bg-[#F9FAFB] p-6">
-        <p className="text-center text-[14px] text-[#667085]">
-          {t("placeholder")}
-        </p>
+    <div className="flex h-full w-full max-w-[1366px] items-start gap-6 overflow-hidden">
+      <SettingsSidebar
+        activeSection={activeSection}
+        onSectionChange={setActiveSection}
+      />
+      <div className="h-full min-h-0 min-w-0 flex-1">
+        {activeSection === "personal" && <PersonalInfoSection email={email} />}
+        {activeSection === "privacy" && <PrivacySection />}
+        {activeSection === "billing" && <BillingSection />}
       </div>
     </div>
   );
