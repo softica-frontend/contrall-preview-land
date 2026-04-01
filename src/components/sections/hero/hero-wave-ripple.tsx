@@ -42,10 +42,7 @@ export function HeroWaveRipple() {
     const total = ringPaths.length;
     if (total === 0) return;
 
-    // Pre-set transformOrigin once (no permanent will-change to save GPU memory)
-    for (const ring of ringPaths) {
-      ring.style.transformOrigin = "864px 720px";
-    }
+    // No transformOrigin needed — opacity-only animation avoids subpixel jank
     ringsRef.current = ringPaths;
 
     // No reveal animation — rings visible immediately
@@ -66,11 +63,7 @@ export function HeroWaveRipple() {
       const ring = rings[i];
 
       const anim = ring.animate(
-        [
-          { transform: "scale(1)", opacity: "1" },
-          { transform: "scale(1.03)", opacity: "0.45", offset: 0.4 },
-          { transform: "scale(1)", opacity: "1" },
-        ],
+        [{ opacity: "1" }, { opacity: "0.4", offset: 0.4 }, { opacity: "1" }],
         {
           duration: 500,
           delay: (total - 1 - i) * 40,
