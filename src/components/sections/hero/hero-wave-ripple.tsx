@@ -3,10 +3,6 @@
 import { useCallback, useEffect, useRef } from "react";
 import { WaveBackground } from "./wave-bg";
 
-/**
- * Module-level ripple trigger — direct function call, no DOM events.
- * CtrlKey imports `triggerRipple` and calls it on click.
- */
 let rippleFn: ((onDone: () => void) => void) | null = null;
 export function triggerRipple(onDone: () => void) {
   if (rippleFn) {
@@ -16,72 +12,104 @@ export function triggerRipple(onDone: () => void) {
   }
 }
 
-/**
- * Wrapper around WaveBackground with two animations:
- * 1. Reveal on mount — ring paths fade in from center outward
- * 2. Ripple on Ctrl click — ring paths pulse (opacity only, no scale)
- *
- * Performance notes:
- * - Only ring paths animated (18), overlay paths stay visible
- * - Ripple uses opacity-only (no transform) to avoid SVG repaint
- * - Ring refs cached at mount, transformOrigin not needed (no scale)
- */
 export function HeroWaveRipple() {
-  const containerRef = useRef<HTMLDivElement>(null);
+  const ref = useRef<HTMLDivElement>(null);
   const ringsRef = useRef<SVGPathElement[] | null>(null);
   const busy = useRef(false);
 
-  /* ── Mount: cache ring refs, run reveal ── */
-  useEffect(() => {
-    const svg = containerRef.current?.querySelector("svg");
-    if (!svg || ringsRef.current) return;
-
-    const ringPaths = Array.from(
+  const getRings = useCallback(() => {
+    if (ringsRef.current) return ringsRef.current;
+    const svg = ref.current?.querySelector("svg");
+    if (!svg) return null;
+    const rings = Array.from(
       svg.querySelectorAll<SVGPathElement>('path[fill="#FCFCFD"]'),
     );
-    const total = ringPaths.length;
-    if (total === 0) return;
-
-    // No transformOrigin needed — opacity-only animation avoids subpixel jank
-    ringsRef.current = ringPaths;
-
-    // No reveal animation — rings visible immediately
+    if (rings.length === 0) return null;
+    ringsRef.current = rings;
+    return rings;
   }, []);
 
-  /* ── Click ripple: per-ring scale+opacity (original visual) ── */
-  const ripple = useCallback((onDone: () => void) => {
-    const rings = ringsRef.current;
-    if (busy.current || !rings) {
-      onDone();
-      return;
-    }
+  useEffect(() => {
+    getRings();
+  }, [getRings]);
 
-    busy.current = true;
-    const total = rings.length;
+  const ripple = useCallback(
+    (onDone: () => void) => {
+      const rings = getRings();
+      if (busy.current || !rings) {
+        onDone();
+        return;
+      }
 
-    for (let i = 0; i < total; i++) {
-      const ring = rings[i];
+      busy.current = true;
+      const cachedRings = rings;
+      const total = cachedRings.length;
+      const DURATION = 500;
+      const STAGGER = 40;
+      const start = performance.now();
+      const totalTime = (total - 1) * STAGGER + DURATION;
 
-      const anim = ring.animate(
-        [{ opacity: "1" }, { opacity: "0.4", offset: 0.4 }, { opacity: "1" }],
-        {
-          duration: 500,
-          delay: (total - 1 - i) * 40,
-          easing: "cubic-bezier(0, 0, 0.2, 1)",
-          fill: "none",
-        },
-      );
+      function tick(now: number) {
+        const elapsed = now - start;
+        let allDone = true;
 
-      if (i === 0) {
-        anim.onfinish = () => {
+        for (let i = 0; i < total; i++) {
+          const delay = (total - 1 - i) * STAGGER;
+          const t = (elapsed - delay) / DURATION;
+
+          if (t < 0) {
+            allDone = false;
+            continue;
+          }
+
+          if (t >= 1) {
+            cachedRings[i].removeAttribute("transform");
+            cachedRings[i].style.opacity = "";
+            continue;
+          }
+
+          allDone = false;
+          const eased = easeOutCubic(t);
+
+          // Keyframe: 0→0.4 ramp up, 0.4→1 ramp down
+          let scaleFactor: number;
+          let opacity: number;
+          if (eased <= 0.4) {
+            const p = eased / 0.4;
+            scaleFactor = 1 + 0.03 * p;
+            opacity = 1 - 0.55 * p;
+          } else {
+            const p = (eased - 0.4) / 0.6;
+            scaleFactor = 1.03 - 0.03 * p;
+            opacity = 0.45 + 0.55 * p;
+          }
+
+          // SVG transform attribute — operates in viewBox coordinates, no subpixel jank
+          cachedRings[i].setAttribute(
+            "transform",
+            `translate(864 720) scale(${scaleFactor}) translate(-864 -720)`,
+          );
+          cachedRings[i].style.opacity = String(opacity);
+        }
+
+        if (allDone || elapsed >= totalTime + 50) {
+          // Final cleanup
+          for (const ring of cachedRings) {
+            ring.removeAttribute("transform");
+            ring.style.opacity = "";
+          }
           busy.current = false;
           onDone();
-        };
+        } else {
+          requestAnimationFrame(tick);
+        }
       }
-    }
-  }, []);
 
-  /* ── Register/unregister module-level trigger ── */
+      requestAnimationFrame(tick);
+    },
+    [getRings],
+  );
+
   useEffect(() => {
     rippleFn = ripple;
     return () => {
@@ -90,8 +118,13 @@ export function HeroWaveRipple() {
   }, [ripple]);
 
   return (
-    <div ref={containerRef} className="contents">
+    <div ref={ref} className="contents">
       <WaveBackground />
     </div>
   );
+}
+
+/** cubic-bezier(0, 0, 0.2, 1) approximation — strong ease-out */
+function easeOutCubic(t: number): number {
+  return 1 - (1 - t) * (1 - t) * (1 - t);
 }
