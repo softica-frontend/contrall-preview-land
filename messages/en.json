@@ -253,5 +253,65 @@
       "my-trackers": "My Trackers",
       "settings": "Settings"
     }
+  },
+  "MyTrackers": {
+    "title": "Trackers",
+    "add": "Add",
+    "emptyMessage": "You haven't added any Trackers yet",
+    "searchPlaceholder": "Search trackers...",
+    "viewGrid": "Grid view",
+    "viewList": "List view",
+    "nextBilling": "Next Billing",
+    "status": {
+      "active": "Active",
+      "paused": "Paused",
+      "stopped": "Stopped"
+    },
+    "actions": {
+      "upgrade": "Upgrade Plan",
+      "settings": "Settings",
+      "pause": "Pause",
+      "users": "Users",
+      "delete": "Delete",
+      "open": "Open"
+    },
+    "modal": {
+      "title": "Add Tracker",
+      "cancel": "Cancel",
+      "back": "Back",
+      "next": "Next",
+      "finish": "Finish",
+      "nameAndRegion": "Name and Region",
+      "description": "Description",
+      "teamSize": "Team size",
+      "vertical": "Vertical",
+      "configuration": "Configuration",
+      "configPlaceholder": "Configuration settings will be available soon.",
+      "payment": "Payment",
+      "paymentPlaceholder": "Payment settings will be available soon.",
+      "steps": {
+        "general": "General",
+        "team": "Team",
+        "configuration": "Configuration",
+        "payment": "Payment"
+      }
+    },
+    "table": {
+      "name": "Name",
+      "team": "Team",
+      "nextBilling": "Next billing",
+      "plan": "Plan",
+      "status": "Status",
+      "actions": "Actions"
+    },
+    "confirm": {
+      "deleteTitle": "Delete tracker?",
+      "deleteMessage": "By clicking delete you stop the tracker from working",
+      "deleteConfirm": "Delete",
+      "pauseTitle": "Pause tracker?",
+      "pauseMessage": "By clicking pause you stop the tracker from working, billing will also be paused",
+      "pauseConfirm": "Pause",
+      "cancel": "Cancel"
+    }
   }
 }

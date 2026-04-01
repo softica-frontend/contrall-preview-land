@@ -253,5 +253,65 @@
       "my-trackers": "Мої трекери",
       "settings": "Налаштування"
     }
+  },
+  "MyTrackers": {
+    "title": "Трекери",
+    "add": "Додати",
+    "emptyMessage": "Ви ще не додали жодного Трекера",
+    "searchPlaceholder": "Пошук трекерів...",
+    "viewGrid": "Сітка",
+    "viewList": "Список",
+    "nextBilling": "Next Billing",
+    "status": {
+      "active": "Активний",
+      "paused": "На паузі",
+      "stopped": "Зупинений"
+    },
+    "actions": {
+      "upgrade": "Покращити план",
+      "settings": "Налаштування",
+      "pause": "Пауза",
+      "users": "Користувачі",
+      "delete": "Видалити",
+      "open": "Відкрити"
+    },
+    "modal": {
+      "title": "Додати трекер",
+      "cancel": "Скасувати",
+      "back": "Назад",
+      "next": "Далі",
+      "finish": "Готово",
+      "nameAndRegion": "Назва та Регіон",
+      "description": "Опис",
+      "teamSize": "Кількість людей",
+      "vertical": "Вертикаль",
+      "configuration": "Конфігурація",
+      "configPlaceholder": "Налаштування конфігурації скоро будуть доступні.",
+      "payment": "Оплата",
+      "paymentPlaceholder": "Налаштування оплати скоро будуть доступні.",
+      "steps": {
+        "general": "Основне",
+        "team": "Команда",
+        "configuration": "Конфігурація",
+        "payment": "Оплата"
+      }
+    },
+    "table": {
+      "name": "Назва",
+      "team": "Команда",
+      "nextBilling": "Наступна транзакція",
+      "plan": "Тариф",
+      "status": "Статус",
+      "actions": "Дії"
+    },
+    "confirm": {
+      "deleteTitle": "Видалити трекер?",
+      "deleteMessage": "Натиснувши видалити ви зупиняєте роботу трекера",
+      "deleteConfirm": "Видалити",
+      "pauseTitle": "Призупинити трекер?",
+      "pauseMessage": "Натиснувши призупинити ви зупиняєте роботу трекера, оплата також буде призупинена",
+      "pauseConfirm": "Призупинити",
+      "cancel": "Скасувати"
+    }
   }
 }

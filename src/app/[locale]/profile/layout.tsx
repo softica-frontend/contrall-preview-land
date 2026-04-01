@@ -38,9 +38,7 @@ export default function ProfileLayout({
       }}
     >
       <ProfileHeader />
-      <main className="flex h-[calc(100dvh-var(--profile-header-h))] items-start justify-center overflow-hidden px-4 py-8 [--profile-header-h:107px] md:[--profile-header-h:82px] lg:[--profile-header-h:92px] xl:[--profile-header-h:107px]">
-        {children}
-      </main>
+      <main className="flex flex-1 flex-col">{children}</main>
     </div>
   );
 }
