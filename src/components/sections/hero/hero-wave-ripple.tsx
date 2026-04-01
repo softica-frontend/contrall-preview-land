@@ -42,10 +42,9 @@ export function HeroWaveRipple() {
     const total = ringPaths.length;
     if (total === 0) return;
 
-    // Pre-set transformOrigin + promote to compositor layers once
+    // Pre-set transformOrigin once (no permanent will-change to save GPU memory)
     for (const ring of ringPaths) {
       ring.style.transformOrigin = "864px 720px";
-      ring.style.willChange = "transform, opacity";
     }
     ringsRef.current = ringPaths;
 
