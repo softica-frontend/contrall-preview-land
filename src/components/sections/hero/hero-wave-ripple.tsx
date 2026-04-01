@@ -28,7 +28,6 @@ export function triggerRipple(onDone: () => void) {
  */
 export function HeroWaveRipple() {
   const containerRef = useRef<HTMLDivElement>(null);
-  const svgRef = useRef<SVGSVGElement | null>(null);
   const ringsRef = useRef<SVGPathElement[] | null>(null);
   const revealAnimsRef = useRef<Animation[]>([]);
   const busy = useRef(false);
@@ -37,7 +36,6 @@ export function HeroWaveRipple() {
   useEffect(() => {
     const svg = containerRef.current?.querySelector("svg");
     if (!svg || ringsRef.current) return;
-    svgRef.current = svg;
 
     const ringPaths = Array.from(
       svg.querySelectorAll<SVGPathElement>('path[fill="#FCFCFD"]'),
@@ -45,6 +43,11 @@ export function HeroWaveRipple() {
     const total = ringPaths.length;
     if (total === 0) return;
 
+    // Pre-set transformOrigin + promote to compositor layers once
+    for (const ring of ringPaths) {
+      ring.style.transformOrigin = "864px 720px";
+      ring.style.willChange = "transform, opacity";
+    }
     ringsRef.current = ringPaths;
 
     // ── Reveal: fade in ring paths only (overlays stay visible) ──
@@ -88,11 +91,10 @@ export function HeroWaveRipple() {
     return () => clearTimeout(timeout);
   }, []);
 
-  /* ── Click ripple: single scale on SVG + staggered opacity on rings ── */
+  /* ── Click ripple: per-ring scale+opacity (original visual) ── */
   const ripple = useCallback((onDone: () => void) => {
     const rings = ringsRef.current;
-    const svg = svgRef.current;
-    if (busy.current || !rings || !svg) {
+    if (busy.current || !rings) {
       onDone();
       return;
     }
@@ -100,26 +102,15 @@ export function HeroWaveRipple() {
     busy.current = true;
     const total = rings.length;
 
-    // Single scale pulse on entire SVG (1 transform instead of 18)
-    svg.animate(
-      [
-        { transform: "scale(1)" },
-        { transform: "scale(1.015)", offset: 0.4 },
-        { transform: "scale(1)" },
-      ],
-      {
-        duration: 600,
-        easing: "cubic-bezier(0, 0, 0.2, 1)",
-        fill: "none",
-      },
-    );
-
-    // Staggered opacity pulse per ring (cheap — no transform)
     for (let i = 0; i < total; i++) {
       const ring = rings[i];
 
       const anim = ring.animate(
-        [{ opacity: "1" }, { opacity: "0.35", offset: 0.4 }, { opacity: "1" }],
+        [
+          { transform: "scale(1)", opacity: "1" },
+          { transform: "scale(1.03)", opacity: "0.45", offset: 0.4 },
+          { transform: "scale(1)", opacity: "1" },
+        ],
         {
           duration: 500,
           delay: (total - 1 - i) * 40,
