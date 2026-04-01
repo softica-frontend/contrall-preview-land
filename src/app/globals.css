@@ -136,11 +136,8 @@ body {
 /* Ctrl key press — GPU-composited, 0 React re-renders */
 .ctrl-key-svg {
   transform-origin: center bottom;
+  transform: translateZ(0);
   transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
-}
-
-.ctrl-active {
-  will-change: transform;
 }
 
 .ctrl-pressed {

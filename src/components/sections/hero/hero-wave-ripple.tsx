@@ -18,25 +18,23 @@ export function triggerRipple(onDone: () => void) {
 
 /**
  * Wrapper around WaveBackground with two animations:
- * 1. Reveal on mount — ring groups fade in from center outward (opacity on <g>)
- * 2. Ripple on Ctrl click — ring paths only pulse outward (scale+opacity on path)
+ * 1. Reveal on mount — rings fade in from center outward
+ * 2. Ripple on Ctrl click — rings pulse outward
  *
- * <g> groups used for reveal (18 opacity anims instead of ~50).
- * Ripple targets ring paths directly to match original visual (overlays stay still).
+ * No DOM mutations — animates existing paths directly.
+ * Ring refs cached at mount for zero querySelectorAll on click.
  */
 export function HeroWaveRipple() {
   const containerRef = useRef<HTMLDivElement>(null);
-  const svgRef = useRef<SVGSVGElement | null>(null);
-  const groupsRef = useRef<SVGGElement[] | null>(null);
   const ringsRef = useRef<SVGPathElement[] | null>(null);
-  const revealAnimsRef = useRef<Animation[] | null>(null);
+  const overlayGroupsRef = useRef<SVGPathElement[][] | null>(null);
+  const revealAnimsRef = useRef<Animation[]>([]);
   const busy = useRef(false);
 
-  /* ── Mount: wrap rings in <g>, cache refs, run reveal ── */
+  /* ── Mount: cache ring refs, pre-set transformOrigin, run reveal ── */
   useEffect(() => {
     const svg = containerRef.current?.querySelector("svg");
-    if (!svg || groupsRef.current) return;
-    svgRef.current = svg;
+    if (!svg || ringsRef.current) return;
 
     const ringPaths = Array.from(
       svg.querySelectorAll<SVGPathElement>('path[fill="#FCFCFD"]'),
@@ -44,60 +42,62 @@ export function HeroWaveRipple() {
     const total = ringPaths.length;
     if (total === 0) return;
 
-    // Wrap each ring + its gradient overlay siblings into a <g> for reveal
-    const groups: SVGGElement[] = [];
-    for (const ring of ringPaths) {
-      const g = document.createElementNS("http://www.w3.org/2000/svg", "g");
-      const siblings = [ring, ...getSiblingOverlays(ring)];
-      ring.parentNode?.insertBefore(g, ring);
-      for (const p of siblings) g.appendChild(p);
-      groups.push(g);
-    }
-    groupsRef.current = groups;
-
-    // Cache ring paths separately and pre-set transformOrigin for ripple
+    // Cache ring paths and their overlay siblings separately
+    const overlayGroups: SVGPathElement[][] = [];
     for (const ring of ringPaths) {
       ring.style.transformOrigin = "864px 720px";
+      overlayGroups.push(getSiblingOverlays(ring));
     }
     ringsRef.current = ringPaths;
+    overlayGroupsRef.current = overlayGroups;
 
-    // ── Reveal: fade in <g> groups from center outward ──
+    // ── Reveal: fade in rings + overlays from center outward ──
     const DELAY_PER_RING = 25;
     const DURATION = 400;
     const BASE_DELAY = 500;
+    const anims: Animation[] = [];
 
     busy.current = true;
-    const revealAnims: Animation[] = [];
 
-    for (let i = 0; i < groups.length; i++) {
-      const g = groups[i];
-      g.style.opacity = "0";
+    for (let i = 0; i < total; i++) {
+      const ring = ringPaths[i];
+      const overlays = overlayGroups[i];
+      const allPaths = [ring, ...overlays];
 
       const reverseIdx = total - 1 - i;
       const delay = BASE_DELAY + reverseIdx * DELAY_PER_RING;
 
-      const anim = g.animate([{ opacity: "0" }, { opacity: "1" }], {
-        duration: DURATION,
-        delay,
-        easing: "cubic-bezier(0.25, 0.46, 0.45, 0.94)",
-        fill: "forwards",
-      });
-      revealAnims.push(anim);
-
-      // Track finish on the first group (highest delay = last to finish)
-      if (i === 0) {
-        anim.onfinish = () => {
-          for (const group of groups) group.style.opacity = "";
-          for (const a of revealAnims) a.cancel();
-          revealAnimsRef.current = null;
-          busy.current = false;
-        };
+      for (const p of allPaths) {
+        p.style.opacity = "0";
+        const anim = p.animate([{ opacity: "0" }, { opacity: "1" }], {
+          duration: DURATION,
+          delay,
+          easing: "cubic-bezier(0.25, 0.46, 0.45, 0.94)",
+          fill: "forwards",
+        });
+        anims.push(anim);
       }
     }
-    revealAnimsRef.current = revealAnims;
+
+    revealAnimsRef.current = anims;
+
+    // Cleanup after last ring finishes (index 0 has highest delay)
+    const lastDelay = BASE_DELAY + (total - 1) * DELAY_PER_RING;
+    const cleanupTime = lastDelay + DURATION + 50;
+    const timeout = setTimeout(() => {
+      for (const ring of ringPaths) ring.style.opacity = "";
+      for (const group of overlayGroups) {
+        for (const p of group) p.style.opacity = "";
+      }
+      for (const a of revealAnimsRef.current) a.cancel();
+      revealAnimsRef.current = [];
+      busy.current = false;
+    }, cleanupTime);
+
+    return () => clearTimeout(timeout);
   }, []);
 
-  /* ── Click ripple: WAAPI on cached ring paths (not <g> groups) ── */
+  /* ── Click ripple: WAAPI on cached ring paths ── */
   const ripple = useCallback((onDone: () => void) => {
     const rings = ringsRef.current;
     if (busy.current || !rings) {
@@ -107,10 +107,6 @@ export function HeroWaveRipple() {
 
     busy.current = true;
     const total = rings.length;
-
-    // Enable GPU compositing on SVG container (1 write instead of 18)
-    const svg = svgRef.current;
-    if (svg) svg.style.willChange = "contents";
 
     for (let i = 0; i < total; i++) {
       const ring = rings[i];
@@ -132,7 +128,6 @@ export function HeroWaveRipple() {
       // Single onfinish on the last-to-finish ring (index 0, highest delay)
       if (i === 0) {
         anim.onfinish = () => {
-          if (svg) svg.style.willChange = "";
           busy.current = false;
           onDone();
         };
