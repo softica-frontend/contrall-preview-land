@@ -2,8 +2,10 @@
 
 import { useTranslations } from "next-intl";
 import { useState } from "react";
-import type { Tracker } from "./mock-data";
-import { PLAN_COLORS } from "./mock-data";
+import { MenuIcon } from "@/components/icons/profile-icons";
+import { PlanBadge } from "@/components/ui/plan-badge";
+import { StatusIndicator } from "@/components/ui/status-indicator";
+import type { Tracker } from "./types";
 
 interface TrackerTableProps {
   trackers: Tracker[];
@@ -49,6 +51,7 @@ export function TrackerTable({
           tracker={tracker}
           onDelete={onDelete}
           onPause={onPause}
+          t={t}
         />
       ))}
     </div>
@@ -59,20 +62,21 @@ function TableRow({
   tracker,
   onDelete,
   onPause,
+  t,
 }: {
   tracker: Tracker;
   onDelete: (id: string) => void;
   onPause: (id: string) => void;
+  t: ReturnType<typeof useTranslations<"MyTrackers">>;
 }) {
-  const t = useTranslations("MyTrackers");
   const [menuOpen, setMenuOpen] = useState(false);
-  const planColor = PLAN_COLORS[tracker.plan];
-  const isActive = tracker.status === "active";
 
   return (
     <div className="relative flex h-[48px] border-b border-[#E4E7EC]">
-      <div className="flex flex-[2] items-center overflow-hidden text-ellipsis whitespace-nowrap p-2 text-[16px] leading-[1.4] text-[#344054]">
-        {tracker.name}
+      <div className="flex flex-[2] items-center p-2">
+        <span className="block overflow-hidden text-ellipsis whitespace-nowrap text-[16px] leading-[1.4] text-[#344054]">
+          {tracker.name}
+        </span>
       </div>
       <div className="flex w-[160px] shrink-0 items-center p-2 text-[16px] leading-[1.4] text-[#344054]">
         —
@@ -81,92 +85,61 @@ function TableRow({
         {tracker.nextBillingDate}
       </div>
       <div className="flex w-[200px] shrink-0 items-center p-2">
-        <span
-          className="rounded-full px-3 py-1 text-[14px] font-bold leading-[1.1] text-[#FCFCFD]"
-          style={{ backgroundColor: planColor }}
-        >
-          {tracker.plan}
-        </span>
+        <PlanBadge plan={tracker.plan} />
       </div>
-      <div className="flex flex-[2] items-center gap-1.5 p-2">
-        <span
-          className="size-[6px] rounded-full"
-          style={{ backgroundColor: isActive ? "#44BA3E" : "#98A2B3" }}
+      <div className="flex flex-[2] items-center p-2">
+        <StatusIndicator
+          status={tracker.status}
+          label={t(`status.${tracker.status}`)}
         />
-        <span
-          className="text-[14px] font-medium leading-none tracking-[0.5px]"
-          style={{ color: isActive ? "#44BA3E" : "#98A2B3" }}
-        >
-          {t(`status.${tracker.status}`)}
-        </span>
       </div>
       <div className="flex w-[100px] shrink-0 items-center justify-end p-2">
         <button
           type="button"
           onClick={() => setMenuOpen(!menuOpen)}
+          aria-haspopup="menu"
+          aria-expanded={menuOpen}
           className="flex size-[28px] cursor-pointer items-center justify-center rounded-full text-[#667085] transition-colors duration-150 hover:bg-[#F2F4F7] hover:text-[#0C111D]"
         >
-          <svg
-            width="12"
-            height="12"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            aria-hidden="true"
-          >
-            <path d="M4 6h16M4 12h16M4 18h16" />
-          </svg>
+          <MenuIcon />
         </button>
 
         {menuOpen && (
           <>
             {/* biome-ignore lint/a11y/noStaticElementInteractions: click-away dismiss */}
-            {/* biome-ignore lint/a11y/useKeyWithClickEvents: supplementary dismiss */}
+            {/* biome-ignore lint/a11y/useKeyWithClickEvents: Escape handled via onKeyDown on menu */}
             <div
               className="fixed inset-0 z-10"
               onClick={() => setMenuOpen(false)}
             />
-            <div className="absolute right-2 top-[42px] z-20 flex flex-col rounded-lg border border-[#E4E7EC] bg-[#FCFCFD] py-1 shadow-[0px_0px_6px_0px_rgba(12,17,29,0.02),0px_2px_4px_0px_rgba(16,24,40,0.08)]">
-              <MenuButton
-                onClick={() => {
-                  setMenuOpen(false);
-                }}
-              >
+            <div
+              role="menu"
+              className="absolute right-2 top-[42px] z-20 flex flex-col rounded-lg border border-[#E4E7EC] bg-[#FCFCFD] py-1 shadow-[0px_0px_6px_0px_rgba(12,17,29,0.02),0px_2px_4px_0px_rgba(16,24,40,0.08)]"
+              onKeyDown={(e) => {
+                if (e.key === "Escape") setMenuOpen(false);
+              }}
+            >
+              <DropdownItem onClick={() => setMenuOpen(false)}>
                 {t("actions.upgrade")}
-              </MenuButton>
-              <MenuButton
-                onClick={() => {
-                  setMenuOpen(false);
-                }}
-              >
+              </DropdownItem>
+              <DropdownItem onClick={() => setMenuOpen(false)}>
                 {t("actions.settings")}
-              </MenuButton>
-              <MenuButton
+              </DropdownItem>
+              <DropdownItem
                 onClick={() => {
                   setMenuOpen(false);
                   onPause(tracker.id);
                 }}
               >
                 {t("actions.pause")}
-              </MenuButton>
-              <MenuButton
-                onClick={() => {
-                  setMenuOpen(false);
-                }}
-              >
+              </DropdownItem>
+              <DropdownItem onClick={() => setMenuOpen(false)}>
                 {t("actions.users")}
-              </MenuButton>
-              <MenuButton
-                onClick={() => {
-                  setMenuOpen(false);
-                }}
-              >
+              </DropdownItem>
+              <DropdownItem onClick={() => setMenuOpen(false)}>
                 {t("actions.open")}
-              </MenuButton>
-              <MenuButton
+              </DropdownItem>
+              <DropdownItem
                 onClick={() => {
                   setMenuOpen(false);
                   onDelete(tracker.id);
@@ -174,7 +147,7 @@ function TableRow({
                 danger
               >
                 {t("actions.delete")}
-              </MenuButton>
+              </DropdownItem>
             </div>
           </>
         )}
@@ -183,7 +156,7 @@ function TableRow({
   );
 }
 
-function MenuButton({
+function DropdownItem({
   children,
   onClick,
   danger,

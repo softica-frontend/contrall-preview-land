@@ -16,14 +16,11 @@ export function CtrlKey({ className }: { className?: string }) {
     if (!svg || animating.current) return;
     animating.current = true;
 
-    svg.classList.add("ctrl-active", "ctrl-pressed");
+    svg.classList.add("ctrl-pressed");
 
     // Key release after press
     setTimeout(() => {
       svg.classList.remove("ctrl-pressed");
-      setTimeout(() => {
-        svg.classList.remove("ctrl-active");
-      }, 250);
     }, 180);
 
     // Unlock only when ripple finishes

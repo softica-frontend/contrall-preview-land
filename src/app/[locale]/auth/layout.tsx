@@ -33,7 +33,7 @@ export default function AuthLayout({
       </div>
 
       {/* Header — logo + language switcher */}
-      <div className="relative z-20 flex items-center justify-between px-[16px] pt-[16px] lg:px-[40px] xl:px-[80px]">
+      <div className="relative z-30 flex items-center justify-between px-[16px] pt-[16px] lg:px-[40px] xl:px-[80px]">
         <Link
           href="/"
           aria-label="Go to homepage"

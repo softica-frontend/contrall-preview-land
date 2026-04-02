@@ -1,6 +1,11 @@
 "use client";
 
 import { useTranslations } from "next-intl";
+import {
+  CreditCardIcon,
+  ShieldIcon,
+  UserIcon,
+} from "@/components/icons/profile-icons";
 
 const SECTIONS = [
   { key: "personal", icon: UserIcon },
@@ -40,106 +45,5 @@ export function SettingsSidebar({
         })}
       </nav>
     </aside>
-  );
-}
-
-function UserIcon({ className }: { className?: string }) {
-  return (
-    <svg
-      className={className}
-      viewBox="0 0 14 14"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      aria-hidden="true"
-    >
-      <circle
-        cx="7"
-        cy="4.667"
-        r="2.333"
-        stroke="currentColor"
-        strokeWidth="1.17"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-      <path
-        d="M2.333 12.833v-.583a4.667 4.667 0 0 1 9.334 0v.583"
-        stroke="currentColor"
-        strokeWidth="1.17"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
-}
-
-function ShieldIcon({ className }: { className?: string }) {
-  return (
-    <svg
-      className={className}
-      viewBox="0 0 14 14"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      aria-hidden="true"
-    >
-      <path
-        d="M7 1.167 2.333 3.5v3.5c0 3.033 1.993 5.867 4.667 6.417 2.674-.55 4.667-3.384 4.667-6.417V3.5L7 1.167Z"
-        stroke="currentColor"
-        strokeWidth="1.17"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-      <path
-        d="M7 1.167v12.25M2.333 7h9.334"
-        stroke="currentColor"
-        strokeWidth="1.17"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
-}
-
-function CreditCardIcon({ className }: { className?: string }) {
-  return (
-    <svg
-      className={className}
-      viewBox="0 0 14 14"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      aria-hidden="true"
-    >
-      <rect
-        x="1.167"
-        y="2.917"
-        width="11.667"
-        height="8.167"
-        rx="1.167"
-        stroke="currentColor"
-        strokeWidth="1.17"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-      <path
-        d="M1.167 5.833h11.667"
-        stroke="currentColor"
-        strokeWidth="1.17"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-      <path
-        d="M4.083 8.75h.583"
-        stroke="currentColor"
-        strokeWidth="1.17"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-      <path
-        d="M6.417 8.75h1.166"
-        stroke="currentColor"
-        strokeWidth="1.17"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
   );
 }

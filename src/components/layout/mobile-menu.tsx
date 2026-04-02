@@ -52,7 +52,7 @@ export function MobileMenu({
         type="button"
         aria-label="Закрыть меню"
         onClick={onToggle}
-        className="flex size-[44px] items-center justify-center rounded-full bg-[#2575ff] text-[#fcfcfd] hover:opacity-70 transition-opacity duration-200"
+        className="flex size-[44px] items-center justify-center rounded-full bg-[#2575ff] text-[#fcfcfd] outline-none hover:opacity-70 transition-opacity duration-200"
       >
         <CloseIcon />
       </button>

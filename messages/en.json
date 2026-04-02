@@ -239,7 +239,27 @@
       "tracker": "Tracker",
       "amount": "Amount",
       "status": "Status",
-      "description": "Description"
+      "description": "Description",
+      "statuses": {
+        "completed": "Completed",
+        "pending": "Pending",
+        "failed": "Failed",
+        "cancelled": "Cancelled",
+        "in_progress": "In Progress",
+        "on_hold": "On Hold",
+        "scheduled": "Scheduled",
+        "acknowledged": "Acknowledged",
+        "resolved": "Resolved",
+        "not_found": "Not Found",
+        "awaiting_feedback": "Awaiting Feedback"
+      },
+      "descriptions": {
+        "monthlySubscription": "Monthly subscription",
+        "additionalDomain": "Additional domain",
+        "refundCancellation": "Refund cancellation",
+        "refund": "Refund",
+        "trialPeriod": "Trial period"
+      }
     },
     "comingSoon": "This section is under development."
   },
@@ -261,6 +281,8 @@
     "searchPlaceholder": "Search trackers...",
     "viewGrid": "Grid view",
     "viewList": "List view",
+    "ip": "Ip",
+    "noResults": "No trackers found",
     "nextBilling": "Next Billing",
     "status": {
       "active": "Active",

@@ -1,12 +1,14 @@
+import type { ReactNode } from "react";
+
 interface SettingsCardProps {
-  children: React.ReactNode;
+  children: ReactNode;
   className?: string;
 }
 
 export function SettingsCard({ children, className }: SettingsCardProps) {
   return (
     <div
-      className={`rounded-xl border border-[#E4E7EC] bg-[#FCFCFD] overflow-hidden pt-6 px-6 ${className ?? ""}`}
+      className={`overflow-hidden rounded-xl border border-[#E4E7EC] bg-[#FCFCFD] px-6 pt-6 ${className ?? ""}`}
     >
       {children}
     </div>

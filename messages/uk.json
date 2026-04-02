@@ -239,7 +239,27 @@
       "tracker": "Трекер",
       "amount": "Сума",
       "status": "Статус",
-      "description": "Опис"
+      "description": "Опис",
+      "statuses": {
+        "completed": "Завершено",
+        "pending": "Очікування",
+        "failed": "Помилка",
+        "cancelled": "Скасовано",
+        "in_progress": "В процесі",
+        "on_hold": "На утриманні",
+        "scheduled": "Заплановано",
+        "acknowledged": "Підтверджено",
+        "resolved": "Вирішено",
+        "not_found": "Не знайдено",
+        "awaiting_feedback": "Очікування відповіді"
+      },
+      "descriptions": {
+        "monthlySubscription": "Щомісячна підписка",
+        "additionalDomain": "Додатковий домен",
+        "refundCancellation": "Скасування повернення",
+        "refund": "Повернення коштів",
+        "trialPeriod": "Пробний період"
+      }
     },
     "comingSoon": "Цей розділ знаходиться у розробці."
   },
@@ -261,6 +281,8 @@
     "searchPlaceholder": "Пошук трекерів...",
     "viewGrid": "Сітка",
     "viewList": "Список",
+    "ip": "Ip",
+    "noResults": "Трекери не знайдено",
     "nextBilling": "Next Billing",
     "status": {
       "active": "Активний",
