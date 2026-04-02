@@ -4,29 +4,37 @@ import { useEffect, useState } from "react";
 import { ProfileHeader } from "@/components/layout/profile-header";
 import { useRouter } from "@/i18n/navigation";
 
+function getAuthToken() {
+  if (typeof window === "undefined") return null;
+  return localStorage.getItem("auth_token");
+}
+
 export default function ProfileLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
   const router = useRouter();
-  const [loading, setLoading] = useState(true);
+  const [authState, setAuthState] = useState<
+    "checking" | "authenticated" | "unauthenticated"
+  >(() => {
+    const token = getAuthToken();
+    if (token) return "authenticated";
+    return typeof window === "undefined" ? "checking" : "unauthenticated";
+  });
 
   useEffect(() => {
-    const token = localStorage.getItem("auth_token");
-    if (!token) {
-      router.replace("/auth/login");
-      return;
+    if (authState === "checking") {
+      const token = getAuthToken();
+      setAuthState(token ? "authenticated" : "unauthenticated");
     }
-    setLoading(false);
-  }, [router]);
+    if (authState === "unauthenticated") {
+      router.replace("/auth/login");
+    }
+  }, [authState, router]);
 
-  if (loading) {
-    return (
-      <div className="flex min-h-screen items-center justify-center">
-        <div className="h-8 w-8 animate-spin rounded-full border-4 border-[#2575FF] border-t-transparent" />
-      </div>
-    );
+  if (authState !== "authenticated") {
+    return null;
   }
 
   return (
