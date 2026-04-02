@@ -1,6 +1,10 @@
 @import "tailwindcss";
 @import "tailwind-animations";
 
+/* Height-based breakpoints for auth forms */
+@custom-variant h-md (@media (min-height: 800px));
+@custom-variant h-lg (@media (min-height: 950px));
+
 :root {
   --background: #fcfcfd;
   --foreground: #1d2939;
@@ -26,6 +30,52 @@ body {
 
 .font-inter {
   font-family: var(--font-inter), "Inter", sans-serif;
+}
+
+/* ── Auth form staggered children ── */
+
+.auth-form > * {
+  opacity: 0;
+  animation: auth-field-in 0.5s ease-out forwards;
+}
+
+.auth-form > *:nth-child(1) {
+  animation-delay: 0.15s;
+}
+.auth-form > *:nth-child(2) {
+  animation-delay: 0.25s;
+}
+.auth-form > *:nth-child(3) {
+  animation-delay: 0.35s;
+}
+.auth-form > *:nth-child(4) {
+  animation-delay: 0.45s;
+}
+.auth-form > *:nth-child(5) {
+  animation-delay: 0.5s;
+}
+.auth-form > *:nth-child(6) {
+  animation-delay: 0.55s;
+}
+.auth-form > *:nth-child(7) {
+  animation-delay: 0.6s;
+}
+.auth-form > *:nth-child(8) {
+  animation-delay: 0.65s;
+}
+.auth-form > *:nth-child(9) {
+  animation-delay: 0.7s;
+}
+
+@keyframes auth-field-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* ── Hero entrance animations ── */

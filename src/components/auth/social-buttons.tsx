@@ -50,17 +50,17 @@ function AppleIcon() {
 
 export function SocialButtons() {
   return (
-    <div className="flex items-center justify-center gap-4">
+    <div className="flex items-center justify-center gap-3 h-lg:gap-4">
       <button
         type="button"
-        className="flex items-center justify-center w-[50px] h-[50px] rounded-[16px] bg-[#fcfcfd] cursor-pointer shadow-[0_1px_2px_rgba(16,24,40,0.06),0_1px_3px_rgba(16,24,40,0.1),0_0_0_1px_rgba(16,24,40,0.04)] hover:shadow-[0_2px_4px_rgba(16,24,40,0.08),0_2px_6px_rgba(16,24,40,0.12),0_0_0_1px_rgba(16,24,40,0.06)] transition-shadow"
+        className="flex items-center justify-center w-[42px] h-[42px] h-lg:w-[50px] h-lg:h-[50px] rounded-[12px] h-lg:rounded-[16px] bg-[#fcfcfd] cursor-pointer shadow-[0_1px_2px_rgba(16,24,40,0.06),0_1px_3px_rgba(16,24,40,0.1),0_0_0_1px_rgba(16,24,40,0.04)] hover:shadow-[0_2px_4px_rgba(16,24,40,0.08),0_2px_6px_rgba(16,24,40,0.12),0_0_0_1px_rgba(16,24,40,0.06)] transition-shadow"
         aria-label="Sign in with Google"
       >
         <GoogleIcon />
       </button>
       <button
         type="button"
-        className="flex items-center justify-center w-[50px] h-[50px] rounded-[16px] bg-[#fcfcfd] cursor-pointer shadow-[0_1px_2px_rgba(16,24,40,0.06),0_1px_3px_rgba(16,24,40,0.1),0_0_0_1px_rgba(16,24,40,0.04)] hover:shadow-[0_2px_4px_rgba(16,24,40,0.08),0_2px_6px_rgba(16,24,40,0.12),0_0_0_1px_rgba(16,24,40,0.06)] transition-shadow"
+        className="flex items-center justify-center w-[42px] h-[42px] h-lg:w-[50px] h-lg:h-[50px] rounded-[12px] h-lg:rounded-[16px] bg-[#fcfcfd] cursor-pointer shadow-[0_1px_2px_rgba(16,24,40,0.06),0_1px_3px_rgba(16,24,40,0.1),0_0_0_1px_rgba(16,24,40,0.04)] hover:shadow-[0_2px_4px_rgba(16,24,40,0.08),0_2px_6px_rgba(16,24,40,0.12),0_0_0_1px_rgba(16,24,40,0.06)] transition-shadow"
         aria-label="Sign in with Apple"
       >
         <AppleIcon />

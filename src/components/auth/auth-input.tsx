@@ -74,8 +74,8 @@ export function AuthInput({
           {...props}
           type={isPassword && showPassword ? "text" : type}
           className={`
-            w-full h-[44px] px-6 rounded-full border bg-white
-            text-[14px] text-[#1B2D45] placeholder:text-[#98A2B3]
+            w-full h-[38px] h-md:h-[40px] h-lg:h-[44px] px-4 h-lg:px-6 rounded-full border bg-white
+            text-[13px] h-lg:text-[14px] text-[#1B2D45] placeholder:text-[#98A2B3]
             outline-none transition-all
             ${
               error

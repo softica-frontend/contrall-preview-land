@@ -5,16 +5,13 @@ import {
   NoCardIcon,
   TwoMinIcon,
 } from "@/components/icons/cta-footer-icons";
+import { CtaButton } from "@/components/sections/cta-footer/cta-button";
+import { GlassOverlay } from "@/components/ui/glass-overlay";
 import { GradientLabel } from "@/components/ui/gradient-label";
 import { SectionReveal } from "@/components/ui/section-reveal";
+import { CTA_CARD_GLASS_BG as CARD_GLASS_BG } from "@/components/ui/shadows";
 
 const BENEFIT_ICONS = [NoCardIcon, TwoMinIcon, EmailIcon];
-
-import { GlassOverlay } from "@/components/ui/glass-overlay";
-import {
-  CTA_BUTTON_GLASS_BG as BUTTON_GLASS_BG,
-  CTA_CARD_GLASS_BG as CARD_GLASS_BG,
-} from "@/components/ui/shadows";
 
 export async function CtaFooter() {
   const t = await getTranslations("CtaFooter");
@@ -87,20 +84,8 @@ export async function CtaFooter() {
 
         {/* CTA + Benefits */}
         <div className="animate-fade-in-up animate-fill-mode-both animate-delay-300 relative flex w-full flex-col items-center gap-[24px] px-[8px] md:gap-[32px] md:px-[32px]">
-          {/* CTA button — glass pill track */}
-          <a
-            href="/auth/register"
-            className="relative flex w-full items-center overflow-hidden rounded-[100px] p-[4px] md:p-[8px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2575ff] focus-visible:ring-offset-2"
-          >
-            {/* Button glass layers */}
-            <GlassOverlay
-              gradientSvg={BUTTON_GLASS_BG}
-              insetShadow="inset -0.5px -1px 1px 0px rgba(37,117,255,0.8), inset 0.5px 1px 1px 0px rgba(37,117,255,0.8)"
-            />
-            <span className="relative inline-flex h-[44px] items-center justify-center rounded-[1000px] bg-[#2575ff] px-[24px] text-[14px] font-medium leading-none tracking-[0.5px] text-[#fcfcfd] transition-colors hover:bg-[#1a63e0] active:bg-[#1a5acc] md:h-auto md:px-[54px] md:py-[24px] md:text-[32px] md:leading-[1.1] md:tracking-normal">
-              {t("cta")}
-            </span>
-          </a>
+          {/* CTA button — glass pill track with slide animation */}
+          <CtaButton label={t("cta")} />
 
           {/* Benefits row */}
           <div className="flex w-full items-start justify-center gap-[16px] md:gap-[32px] md:px-[96px]">
