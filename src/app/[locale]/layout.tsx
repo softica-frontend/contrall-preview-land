@@ -9,7 +9,7 @@ import {
 } from "next-intl/server";
 import { SECTION_REVEAL_SCRIPT } from "@/components/ui/section-reveal-observer";
 import { routing } from "@/i18n/routing";
-import "../globals.css";
+import "@/styles/global.css";
 
 const roboto = Roboto({
   variable: "--font-roboto",
@@ -64,7 +64,7 @@ export default async function LocaleLayout({
       <body className="flex min-h-full flex-col">
         <a
           href="#main"
-          className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[9999] focus:rounded-lg focus:bg-[#2575ff] focus:px-4 focus:py-2 focus:text-white"
+          className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[9999] focus:rounded-lg focus:bg-primary focus:px-4 focus:py-2 focus:text-white"
         >
           Skip to main content
         </a>

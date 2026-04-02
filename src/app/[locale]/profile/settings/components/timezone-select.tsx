@@ -107,7 +107,7 @@ export function TimezoneSelect({ value, onChange }: TimezoneSelectProps) {
         onClick={() => setOpen(!open)}
         className="flex cursor-pointer items-center gap-1.5"
       >
-        <span className="rounded-full bg-[#EBECFE] px-3 py-1 font-roboto text-[14px] font-medium leading-5 tracking-[0.5px] text-[#2575FF]">
+        <span className="rounded-full bg-bg-section px-3 py-1 font-roboto text-[14px] font-medium leading-5 tracking-[0.5px] text-primary">
           {selected?.label ?? value}
         </span>
         <span
@@ -137,7 +137,7 @@ export function TimezoneSelect({ value, onChange }: TimezoneSelectProps) {
             ref={dropdownRef}
             role="listbox"
             aria-label="Select timezone"
-            className={`fixed z-[9999] max-h-[240px] min-w-[140px] origin-top overflow-y-auto rounded-xl bg-white shadow-[0_4px_24px_rgba(0,0,0,0.08)] transition-all duration-200 ease-out ${
+            className={`fixed z-[9999] max-h-[240px] min-w-[140px] origin-top overflow-y-auto rounded-xl bg-white shadow-dropdown transition-all duration-200 ease-out ${
               visible ? "scale-y-100 opacity-100" : "scale-y-0 opacity-0"
             }`}
             style={{ top: position.top, left: position.left }}
@@ -161,8 +161,8 @@ export function TimezoneSelect({ value, onChange }: TimezoneSelectProps) {
                 }}
                 className={`flex w-full cursor-pointer items-center px-4 py-2.5 text-[14px] transition-colors duration-150 hover:bg-[#f0f4ff] ${
                   value === tz.value
-                    ? "font-medium text-[#2575ff]"
-                    : "text-[#1d2939]"
+                    ? "font-medium text-primary"
+                    : "text-text-primary"
                 }`}
               >
                 {tz.label}

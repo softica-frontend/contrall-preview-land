@@ -33,11 +33,11 @@ export async function Hero() {
       <div className="relative z-10 hidden md:flex flex-col items-center pt-[40px] pb-[200px] lg:pb-[400px] px-[80px]">
         <HeroTitle
           text={t("title")}
-          className="text-center text-[42px] font-bold leading-[1.1] text-[#0c111d]"
+          className="text-center text-[42px] font-bold leading-[1.1] text-text-heading"
         />
         <a
           href="/auth/register"
-          className="hero-cta mt-[32px] inline-flex items-center justify-center rounded-[1000px] bg-[#2370e8] px-[54px] py-[24px] text-[20px] font-medium leading-none tracking-[0.5px] text-white transition-colors duration-200 hover:bg-[#1a63e0] active:bg-[#1a5acc] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2575ff] focus-visible:ring-offset-2"
+          className="hero-cta mt-[32px] inline-flex items-center justify-center rounded-[1000px] bg-primary-alt px-[54px] py-[24px] text-[20px] font-medium leading-none tracking-[0.5px] text-white transition-colors duration-200 hover:bg-primary-hover active:bg-primary-active focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2575ff] focus-visible:ring-offset-2"
         >
           {t("cta")}
         </a>
@@ -106,11 +106,11 @@ export async function Hero() {
       <div className="relative z-10 flex flex-col items-center gap-[24px] px-[8px] py-[24px] md:hidden">
         <HeroTitle
           text={t("title")}
-          className="text-center text-[24px] font-bold leading-[1.1] text-[#0c111d]"
+          className="text-center text-[24px] font-bold leading-[1.1] text-text-heading"
         />
         <a
           href="/auth/register"
-          className="hero-cta flex items-center gap-[4px] h-[44px] rounded-[1000px] bg-[#2370e8] px-[24px] text-[14px] font-medium leading-none tracking-[0.5px] text-white transition-colors duration-200 hover:bg-[#1a63e0] active:bg-[#1a5acc] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2575ff] focus-visible:ring-offset-2"
+          className="hero-cta flex items-center gap-[4px] h-[44px] rounded-[1000px] bg-primary-alt px-[24px] text-[14px] font-medium leading-none tracking-[0.5px] text-white transition-colors duration-200 hover:bg-primary-hover active:bg-primary-active focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2575ff] focus-visible:ring-offset-2"
         >
           {t("cta")}
         </a>

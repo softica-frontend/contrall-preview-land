@@ -52,13 +52,13 @@ export function MobileMenu({
         type="button"
         aria-label={t("closeMenu")}
         onClick={onToggle}
-        className="flex size-[44px] items-center justify-center rounded-full bg-[#2575ff] text-[#fcfcfd] outline-none hover:opacity-70 transition-opacity duration-200"
+        className="flex size-[44px] items-center justify-center rounded-full bg-primary text-surface outline-none hover:opacity-70 transition-opacity duration-200"
       >
         <CloseIcon />
       </button>
 
       <span
-        className="flex h-[44px] items-center justify-center rounded-[1000px] px-[24px] py-[8px] text-[14px] font-medium leading-none tracking-[0.5px] text-[#2575ff]"
+        className="flex h-[44px] items-center justify-center rounded-[1000px] px-[24px] py-[8px] text-[14px] font-medium leading-none tracking-[0.5px] text-primary"
         style={{
           background: "rgba(252,252,253,0.5)",
           boxShadow:
@@ -74,7 +74,7 @@ export function MobileMenu({
             key={id}
             type="button"
             onClick={() => onNavigate(id)}
-            className="cursor-pointer text-center text-[18px] leading-[1.4] text-[#1d2939] transition-colors hover:text-[#2575ff] active:text-[#1a63e0]"
+            className="cursor-pointer text-center text-[18px] leading-[1.4] text-text-primary transition-colors hover:text-primary active:text-primary-hover"
           >
             {t(`nav.${id}`)}
           </button>

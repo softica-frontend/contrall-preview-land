@@ -69,7 +69,7 @@ export default function MyTrackersPage() {
         {trackers.length === 0 ? (
           <EmptyState onAdd={() => setModalOpen(true)} />
         ) : filteredTrackers.length === 0 ? (
-          <p className="py-20 text-center text-[16px] text-[#667085]">
+          <p className="py-20 text-center text-[16px] text-text-subtle">
             {t("noResults")}
           </p>
         ) : viewMode === "grid" ? (

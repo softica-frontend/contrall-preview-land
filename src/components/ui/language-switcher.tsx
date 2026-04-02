@@ -55,7 +55,7 @@ export function LanguageSwitcher({ className }: { className?: string }) {
         onClick={() => setOpen(!open)}
         className="flex h-[48px] cursor-pointer items-center gap-[6px] px-[8px] lg:px-[12px] xl:px-[16px] hover:opacity-70 transition-opacity duration-200"
       >
-        <span className="pl-[4px] text-[15px] leading-[18px] tracking-[0.2px] text-[#1d2939]">
+        <span className="pl-[4px] text-[15px] leading-[18px] tracking-[0.2px] text-text-primary">
           {t("language")}
         </span>
         <span
@@ -69,7 +69,7 @@ export function LanguageSwitcher({ className }: { className?: string }) {
       <div
         role="listbox"
         aria-label="Select language"
-        className={`absolute right-0 top-full z-50 mt-1 min-w-[140px] origin-top overflow-hidden rounded-[12px] bg-white shadow-[0_4px_24px_rgba(0,0,0,0.08)] transition-all duration-200 ease-out ${
+        className={`absolute right-0 top-full z-50 mt-1 min-w-[140px] origin-top overflow-hidden rounded-[12px] bg-white shadow-dropdown transition-all duration-200 ease-out ${
           open
             ? "scale-y-100 opacity-100"
             : "pointer-events-none scale-y-0 opacity-0"
@@ -82,10 +82,10 @@ export function LanguageSwitcher({ className }: { className?: string }) {
             role="option"
             aria-selected={locale === item.code}
             onClick={() => switchLocale(item.code)}
-            className={`flex w-full cursor-pointer items-center px-[16px] py-[10px] text-[14px] transition-colors duration-150 hover:bg-[#f0f4ff] ${
+            className={`flex w-full cursor-pointer items-center px-[16px] py-[10px] text-[14px] transition-colors duration-150 hover:bg-bg-hover ${
               locale === item.code
-                ? "font-medium text-[#2575ff]"
-                : "text-[#1d2939]"
+                ? "font-medium text-primary"
+                : "text-text-primary"
             }`}
           >
             {item.label}

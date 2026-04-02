@@ -12,9 +12,9 @@ export function SettingsFormField({
   rightContent,
 }: SettingsFormFieldProps) {
   return (
-    <div className="flex h-12 border-b border-[#E4E7EC]">
+    <div className="flex h-12 border-b border-border-light">
       <div className="flex w-[319px] shrink-0 items-center px-2">
-        <span className="font-roboto text-[16px] leading-[1.4] text-[#344054]">
+        <span className="font-roboto text-[16px] leading-[1.4] text-text-body">
           {label}
         </span>
       </div>

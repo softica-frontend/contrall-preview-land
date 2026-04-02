@@ -61,7 +61,7 @@ export function PricingSlider({ children }: PricingSliderProps) {
             onClick={() => scrollTo(i)}
             aria-label={`Slide ${i + 1}`}
             className={`h-[8px] rounded-full transition-all duration-300 hover:opacity-70 ${
-              active === i ? "w-[24px] bg-[#2575ff]" : "w-[8px] bg-[#d0d5dd]"
+              active === i ? "w-[24px] bg-primary" : "w-[8px] bg-border"
             }`}
           />
         ))}

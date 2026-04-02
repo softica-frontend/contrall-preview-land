@@ -33,7 +33,7 @@ export function PrivacySection() {
         rightContent={
           <Link
             href="/auth/forgot-password"
-            className="flex h-7 shrink-0 items-center justify-center rounded-[40px] px-2.5 py-1 font-roboto text-[14px] font-medium tracking-[0.5px] text-[#2575FF] transition-opacity hover:opacity-70"
+            className="flex h-7 shrink-0 items-center justify-center rounded-[40px] px-2.5 py-1 font-roboto text-[14px] font-medium tracking-[0.5px] text-primary transition-opacity hover:opacity-70"
           >
             {t("privacy.forgotPassword")}
           </Link>

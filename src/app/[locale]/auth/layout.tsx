@@ -35,7 +35,7 @@ export default function AuthLayout({
       {/* Foreground */}
       <div className="relative z-10 flex min-h-[90vh] flex-col">
         {/* Header — matches landing header style */}
-        <div className="flex shrink-0 items-center justify-between px-[16px] py-[16px] backdrop-blur-md lg:px-[40px] xl:px-[80px]">
+        <div className="flex shrink-0 items-center justify-between px-[16px] py-[16px] lg:px-[40px] xl:px-[80px]">
           <Link
             href="/"
             aria-label="Go to homepage"

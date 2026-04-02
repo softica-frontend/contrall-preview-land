@@ -39,10 +39,10 @@ export async function AboutProduct() {
       <div className="mx-auto flex w-full max-w-[1280px] flex-col items-center gap-[48px]">
         {/* Section Text */}
         <SectionReveal className="flex w-full flex-col items-center gap-[24px]">
-          <h2 className="animate-fade-in-up animate-fill-mode-both max-w-[900px] whitespace-pre-line text-center text-[32px] font-bold leading-[1.1] text-[#0c111d] md:text-[42px] xl:text-[54px]">
+          <h2 className="animate-fade-in-up animate-fill-mode-both max-w-[900px] whitespace-pre-line text-center text-[32px] font-bold leading-[1.1] text-text-heading md:text-[42px] xl:text-[54px]">
             {t("title")}
           </h2>
-          <p className="animate-fade-in-up animate-fill-mode-both animate-delay-150 max-w-[800px] whitespace-pre-line text-center text-[16px] leading-[1.4] text-[#21272a] md:text-[18px]">
+          <p className="animate-fade-in-up animate-fill-mode-both animate-delay-150 max-w-[800px] whitespace-pre-line text-center text-[16px] leading-[1.4] text-text-secondary md:text-[18px]">
             {t("subtitle")}
           </p>
         </SectionReveal>
@@ -60,7 +60,7 @@ export async function AboutProduct() {
                 animationDelay: `${i * 120}ms`,
               }}
             >
-              <div className="flex h-[75px] w-[75px] items-center justify-center rounded-full bg-[#2575ff]">
+              <div className="flex h-[75px] w-[75px] items-center justify-center rounded-full bg-primary">
                 <card.icon className="text-white" />
               </div>
               <div className="mt-[48px] flex flex-col gap-[4px] md:mt-auto">
@@ -77,7 +77,7 @@ export async function AboutProduct() {
 
         {/* Bottom Quote */}
         <SectionReveal className="flex justify-center">
-          <p className="animate-fade-in animate-fill-mode-both max-w-[751px] text-center text-[28px] font-bold leading-[1.1] text-[#2575ff] md:text-[42px]">
+          <p className="animate-fade-in animate-fill-mode-both max-w-[751px] text-center text-[28px] font-bold leading-[1.1] text-primary md:text-[42px]">
             {t("quote")}
           </p>
         </SectionReveal>

@@ -67,7 +67,7 @@ export function Modal({ open, onClose, children, className }: ModalProps) {
         aria-modal="true"
         className={
           className ??
-          "flex max-h-[95vh] w-[1051px] max-w-[95vw] flex-col overflow-hidden rounded-xl border border-[#E4E7EC] bg-[#FCFCFD]"
+          "flex max-h-[95vh] w-[1051px] max-w-[95vw] flex-col overflow-hidden rounded-xl border border-border-light bg-surface"
         }
         style={{
           opacity: visible ? 1 : 0,
@@ -85,7 +85,7 @@ export function Modal({ open, onClose, children, className }: ModalProps) {
 
 function Header({ children }: { children: React.ReactNode }) {
   return (
-    <div className="flex items-center justify-between border-b border-[#E4E7EC] px-4 py-3">
+    <div className="flex items-center justify-between border-b border-border-light px-4 py-3">
       {children}
     </div>
   );
@@ -101,7 +101,7 @@ function Body({ children }: { children: React.ReactNode }) {
 
 function Footer({ children }: { children: React.ReactNode }) {
   return (
-    <div className="flex items-center justify-end gap-3 border-t border-[#E4E7EC] px-4 py-3">
+    <div className="flex items-center justify-end gap-3 border-t border-border-light px-4 py-3">
       {children}
     </div>
   );
@@ -112,7 +112,7 @@ function CloseButton({ onClick }: { onClick: () => void }) {
     <button
       type="button"
       onClick={onClick}
-      className="flex size-7 cursor-pointer items-center justify-center rounded-full text-[#667085] transition-colors duration-150 hover:bg-[#F2F4F7] hover:text-[#0C111D]"
+      className="flex size-7 cursor-pointer items-center justify-center rounded-full text-text-subtle transition-colors duration-150 hover:bg-[#F2F4F7] hover:text-text-heading"
       aria-label="Close"
     >
       <svg
@@ -155,17 +155,17 @@ function ConfirmModal({
     <Modal
       open={open}
       onClose={onClose}
-      className="flex w-[440px] max-w-[95vw] flex-col items-end gap-[12px] overflow-hidden rounded-[8px] border border-[#D0D5DD] bg-[#FCFCFD] shadow-[0px_0px_6px_0px_rgba(12,17,29,0.02),0px_2px_4px_0px_rgba(16,24,40,0.08)]"
+      className="flex w-[440px] max-w-[95vw] flex-col items-end gap-[12px] overflow-hidden rounded-[8px] border border-border bg-surface shadow-card"
     >
       {/* Header */}
-      <div className="flex w-full items-center justify-between border-b border-[#D0D5DD] p-[12px]">
-        <span className="text-[24px] font-bold leading-[1.1] text-[#0C111D]">
+      <div className="flex w-full items-center justify-between border-b border-border p-[12px]">
+        <span className="text-[24px] font-bold leading-[1.1] text-text-heading">
           {title}
         </span>
         <button
           type="button"
           onClick={onClose}
-          className="flex size-[12px] shrink-0 cursor-pointer items-center justify-center text-[#667085]"
+          className="flex size-[12px] shrink-0 cursor-pointer items-center justify-center text-text-subtle"
           aria-label="Close"
         >
           <svg
@@ -186,24 +186,24 @@ function ConfirmModal({
 
       {/* Body */}
       <div className="flex w-full flex-1 items-center justify-center px-[12px]">
-        <p className="flex-1 text-[12px] leading-[16px] tracking-[0.5px] text-[#475467]">
+        <p className="flex-1 text-[12px] leading-[16px] tracking-[0.5px] text-text-muted">
           {message}
         </p>
       </div>
 
       {/* Footer */}
-      <div className="flex w-full items-center justify-end gap-[6px] border-t border-[#D0D5DD] p-[12px]">
+      <div className="flex w-full items-center justify-end gap-[6px] border-t border-border p-[12px]">
         <button
           type="button"
           onClick={onClose}
-          className="flex h-[32px] cursor-pointer items-center justify-center rounded-[40px] px-[10px] py-[4px] text-[14px] font-medium leading-none tracking-[0.5px] text-[#344054]"
+          className="flex h-[32px] cursor-pointer items-center justify-center rounded-[40px] px-[10px] py-[4px] text-[14px] font-medium leading-none tracking-[0.5px] text-text-body"
         >
           {cancelLabel}
         </button>
         <button
           type="button"
           onClick={onConfirm}
-          className="flex h-[32px] cursor-pointer items-center justify-center rounded-[1000px] bg-[#2575FF] px-[10px] py-[4px] text-[14px] font-medium leading-none tracking-[0.5px] text-[#FCFCFD] transition-colors duration-200 hover:bg-[#1a63e0]"
+          className="flex h-[32px] cursor-pointer items-center justify-center rounded-[1000px] bg-primary px-[10px] py-[4px] text-[14px] font-medium leading-none tracking-[0.5px] text-surface transition-colors duration-200 hover:bg-primary-hover"
         >
           {confirmLabel}
         </button>

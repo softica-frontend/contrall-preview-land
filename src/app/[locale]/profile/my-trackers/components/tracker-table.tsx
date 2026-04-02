@@ -23,23 +23,23 @@ export function TrackerTable({
   return (
     <div className="w-full pt-6">
       {/* Header */}
-      <div className="flex h-[36px] border-b border-[#E4E7EC]">
-        <div className="flex flex-[2] items-center p-2 text-[14px] leading-[1.4] text-[#667085]">
+      <div className="flex h-[36px] border-b border-border-light">
+        <div className="flex flex-[2] items-center p-2 text-[14px] leading-[1.4] text-text-subtle">
           {t("table.name")}
         </div>
-        <div className="flex w-[160px] shrink-0 items-center p-2 text-[14px] leading-[1.4] text-[#667085]">
+        <div className="flex w-[160px] shrink-0 items-center p-2 text-[14px] leading-[1.4] text-text-subtle">
           {t("table.team")}
         </div>
-        <div className="flex flex-[2] items-center p-2 text-[14px] leading-[1.4] text-[#667085]">
+        <div className="flex flex-[2] items-center p-2 text-[14px] leading-[1.4] text-text-subtle">
           {t("table.nextBilling")}
         </div>
-        <div className="flex w-[200px] shrink-0 items-center p-2 text-[14px] leading-[1.4] text-[#667085]">
+        <div className="flex w-[200px] shrink-0 items-center p-2 text-[14px] leading-[1.4] text-text-subtle">
           {t("table.plan")}
         </div>
-        <div className="flex flex-[2] items-center p-2 text-[14px] leading-[1.4] text-[#667085]">
+        <div className="flex flex-[2] items-center p-2 text-[14px] leading-[1.4] text-text-subtle">
           {t("table.status")}
         </div>
-        <div className="flex w-[100px] shrink-0 items-center p-2 text-[14px] leading-[1.4] text-[#667085]">
+        <div className="flex w-[100px] shrink-0 items-center p-2 text-[14px] leading-[1.4] text-text-subtle">
           {t("table.actions")}
         </div>
       </div>
@@ -72,16 +72,16 @@ function TableRow({
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <div className="relative flex h-[48px] border-b border-[#E4E7EC]">
+    <div className="relative flex h-[48px] border-b border-border-light">
       <div className="flex flex-[2] items-center p-2">
-        <span className="block overflow-hidden text-ellipsis whitespace-nowrap text-[16px] leading-[1.4] text-[#344054]">
+        <span className="block overflow-hidden text-ellipsis whitespace-nowrap text-[16px] leading-[1.4] text-text-body">
           {tracker.name}
         </span>
       </div>
-      <div className="flex w-[160px] shrink-0 items-center p-2 text-[16px] leading-[1.4] text-[#344054]">
+      <div className="flex w-[160px] shrink-0 items-center p-2 text-[16px] leading-[1.4] text-text-body">
         —
       </div>
-      <div className="flex flex-[2] items-center p-2 text-[16px] leading-[1.4] text-[#344054]">
+      <div className="flex flex-[2] items-center p-2 text-[16px] leading-[1.4] text-text-body">
         {tracker.nextBillingDate}
       </div>
       <div className="flex w-[200px] shrink-0 items-center p-2">
@@ -99,7 +99,7 @@ function TableRow({
           onClick={() => setMenuOpen(!menuOpen)}
           aria-haspopup="menu"
           aria-expanded={menuOpen}
-          className="flex size-[28px] cursor-pointer items-center justify-center rounded-full text-[#667085] transition-colors duration-150 hover:bg-[#F2F4F7] hover:text-[#0C111D]"
+          className="flex size-[28px] cursor-pointer items-center justify-center rounded-full text-text-subtle transition-colors duration-150 hover:bg-[#F2F4F7] hover:text-text-heading"
         >
           <MenuIcon />
         </button>
@@ -114,7 +114,7 @@ function TableRow({
             />
             <div
               role="menu"
-              className="absolute right-2 top-[42px] z-20 flex flex-col rounded-lg border border-[#E4E7EC] bg-[#FCFCFD] py-1 shadow-[0px_0px_6px_0px_rgba(12,17,29,0.02),0px_2px_4px_0px_rgba(16,24,40,0.08)]"
+              className="absolute right-2 top-[42px] z-20 flex flex-col rounded-lg border border-border-light bg-surface py-1 shadow-card"
               onKeyDown={(e) => {
                 if (e.key === "Escape") setMenuOpen(false);
               }}
@@ -170,7 +170,7 @@ function DropdownItem({
       type="button"
       onClick={onClick}
       className={`cursor-pointer whitespace-nowrap px-4 py-2 text-left text-[14px] leading-[1.4] transition-colors duration-100 hover:bg-[#F2F4F7] ${
-        danger ? "text-[#D92D20]" : "text-[#344054]"
+        danger ? "text-[#D92D20]" : "text-text-body"
       }`}
     >
       {children}

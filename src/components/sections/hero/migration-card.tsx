@@ -125,7 +125,7 @@ export function MigrationCard({
             {text}
           </p>
           <p
-            className={`${desktop ? "text-[18px]" : "text-[14px]"} mt-[4px] font-normal text-[#667085]`}
+            className={`${desktop ? "text-[18px]" : "text-[14px]"} mt-[4px] font-normal text-text-subtle`}
           >
             {time}
           </p>

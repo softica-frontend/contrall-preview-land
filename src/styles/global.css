@@ -1,0 +1,14 @@
+@import "tailwindcss";
+@import "tailwind-animations";
+@import "./variables.css";
+@import "./animations.css";
+
+body {
+  background: var(--color-bg);
+  color: var(--color-text-primary);
+  font-family: var(--font-roboto), "Roboto", sans-serif;
+}
+
+.font-inter {
+  font-family: var(--font-inter), "Inter", sans-serif;
+}

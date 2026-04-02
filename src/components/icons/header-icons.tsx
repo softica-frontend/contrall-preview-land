@@ -5,7 +5,7 @@ export function HamburgerIcon() {
       height="18"
       viewBox="0 0 24 18"
       fill="none"
-      className="text-[#2575ff]"
+      className="text-primary"
       aria-label="Hamburger"
       role="img"
     >
@@ -27,7 +27,7 @@ export function UserCircleIcon() {
       height="24"
       viewBox="0 0 24 24"
       fill="none"
-      className="text-[#fcfcfd]"
+      className="text-surface"
       aria-label="User Circle"
       role="img"
     >

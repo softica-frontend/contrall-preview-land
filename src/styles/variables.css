@@ -1,0 +1,155 @@
+/* ── Design Tokens ── */
+
+:root {
+  /* Brand */
+  --color-primary: #2575ff;
+  --color-primary-hover: #1a63e0;
+  --color-primary-active: #1a5acc;
+  --color-primary-alt: #2370e8;
+
+  /* Text */
+  --color-text-heading: #0c111d;
+  --color-text-primary: #1d2939;
+  --color-text-secondary: #21272a;
+  --color-text-body: #344054;
+  --color-text-muted: #475467;
+  --color-text-subtle: #667085;
+  --color-text-placeholder: #98a2b3;
+  --color-text-field: #1b2d45;
+
+  /* Backgrounds */
+  --color-bg: #fcfcfd;
+  --color-bg-hover: #f0f4ff;
+  --color-bg-light-blue: #e8eeff;
+  --color-bg-section: #ebecfe;
+  --color-bg-pale-blue: #eff6ff;
+  --color-bg-sky: #dbeafe;
+  --color-bg-glass: #dce3ff;
+  --color-bg-cta: #dadcff;
+
+  /* Borders */
+  --color-border: #d0d5dd;
+  --color-border-light: #e4e7ec;
+  --color-border-accent: #dadcff;
+  --color-border-section: #ebecfe;
+
+  /* Status */
+  --color-error: #da1e28;
+  --color-success: #44ba3e;
+  --color-success-alt: #12b76a;
+
+  /* Accent / Gradients */
+  --color-accent-blue: #7491ff;
+  --color-accent-light: #91b9fe;
+  --color-accent-periwinkle: #b6bdff;
+  --color-accent-lavender: #c5c8f0;
+
+  /* Blue depth scale (logo, ctrl key, gradients) */
+  --color-blue-900: #0c111d;
+  --color-blue-800: #192548;
+  --color-blue-700: #213b78;
+  --color-blue-600: #2651ac;
+  --color-blue-500: #2769e3;
+  --color-blue-400: #2575ff;
+  --color-blue-300: #7491ff;
+
+  /* Checkbox */
+  --color-checkbox-active: #2563eb;
+
+  /* Indicator */
+  --color-indicator: #101828;
+  --color-indicator-success: #5bad5e;
+
+  /* Badge */
+  --color-badge-amber: #f59e0b;
+  --color-badge-cyan: #0effde;
+
+  /* Shadows */
+  --shadow-card:
+    0px 0px 6px 0px rgba(12, 17, 29, 0.02), 0px 2px 4px 0px
+    rgba(16, 24, 40, 0.08);
+  --shadow-dropdown: 0 4px 24px rgba(0, 0, 0, 0.08);
+  --shadow-elevated:
+    0 4px 12px rgba(16, 24, 40, 0.1), 0 0 6px rgba(12, 17, 29, 0.04);
+  --shadow-button:
+    0 1px 2px rgba(16, 24, 40, 0.06), 0 1px 3px rgba(16, 24, 40, 0.1), 0 0 0 1px
+    rgba(16, 24, 40, 0.04);
+  --shadow-button-hover:
+    0 2px 4px rgba(16, 24, 40, 0.08), 0 2px 6px rgba(16, 24, 40, 0.12), 0 0 0
+    1px rgba(16, 24, 40, 0.06);
+  --shadow-focus-error: 0 0 0 1px #da1e28, 0 0 0 4px rgba(218, 30, 40, 0.2);
+  --shadow-focus-primary: 0 0 0 1px #3b82f6, 0 0 0 4px rgba(59, 130, 246, 0.2);
+  --shadow-inset-glow:
+    inset -0.5px -1px 1px 0px rgba(37, 117, 255, 0.8), inset 0.5px 1px 1px 0px
+    rgba(37, 117, 255, 0.8);
+}
+
+/* ── Tailwind Theme Registration ── */
+
+@theme inline {
+  /* Brand */
+  --color-primary: var(--color-primary);
+  --color-primary-hover: var(--color-primary-hover);
+  --color-primary-active: var(--color-primary-active);
+  --color-primary-alt: var(--color-primary-alt);
+
+  /* Text */
+  --color-text-heading: var(--color-text-heading);
+  --color-text-primary: var(--color-text-primary);
+  --color-text-secondary: var(--color-text-secondary);
+  --color-text-body: var(--color-text-body);
+  --color-text-muted: var(--color-text-muted);
+  --color-text-subtle: var(--color-text-subtle);
+  --color-text-placeholder: var(--color-text-placeholder);
+  --color-text-field: var(--color-text-field);
+
+  /* Backgrounds */
+  --color-background: var(--color-bg);
+  --color-bg-hover: var(--color-bg-hover);
+  --color-bg-light-blue: var(--color-bg-light-blue);
+  --color-bg-section: var(--color-bg-section);
+  --color-bg-pale-blue: var(--color-bg-pale-blue);
+  --color-bg-sky: var(--color-bg-sky);
+  --color-bg-glass: var(--color-bg-glass);
+  --color-bg-cta: var(--color-bg-cta);
+  --color-foreground: var(--color-text-primary);
+  --color-surface: var(--color-bg);
+
+  /* Borders */
+  --color-border: var(--color-border);
+  --color-border-light: var(--color-border-light);
+  --color-border-accent: var(--color-border-accent);
+  --color-border-section: var(--color-border-section);
+
+  /* Status */
+  --color-error: var(--color-error);
+  --color-success: var(--color-success);
+  --color-success-alt: var(--color-success-alt);
+
+  /* Accent */
+  --color-accent-blue: var(--color-accent-blue);
+  --color-accent-light: var(--color-accent-light);
+  --color-accent-periwinkle: var(--color-accent-periwinkle);
+  --color-accent-lavender: var(--color-accent-lavender);
+
+  /* Checkbox */
+  --color-checkbox-active: var(--color-checkbox-active);
+
+  /* Indicator */
+  --color-indicator: var(--color-indicator);
+  --color-indicator-success: var(--color-indicator-success);
+
+  /* Shadows */
+  --shadow-card: var(--shadow-card);
+  --shadow-dropdown: var(--shadow-dropdown);
+  --shadow-elevated: var(--shadow-elevated);
+  --shadow-button: var(--shadow-button);
+  --shadow-button-hover: var(--shadow-button-hover);
+  --shadow-focus-error: var(--shadow-focus-error);
+  --shadow-focus-primary: var(--shadow-focus-primary);
+  --shadow-inset-glow: var(--shadow-inset-glow);
+
+  /* Fonts */
+  --font-roboto: var(--font-roboto);
+  --font-inter: var(--font-inter);
+}

@@ -25,7 +25,7 @@ export async function PaymentMethods() {
   return (
     <section className="w-full px-[8px] pb-[16px] pt-[10px] md:px-[40px] md:pb-[60px] md:pt-[30px] xl:px-[80px] xl:pb-[80px] xl:pt-[40px]">
       <SectionReveal className="mx-auto flex w-full max-w-[1280px] flex-col items-center gap-[24px] md:gap-[48px]">
-        <h2 className="animate-fade-in-up animate-fill-mode-both whitespace-pre-line text-center text-[24px] font-bold leading-[1.1] text-[#1d2939] md:text-[36px] xl:text-[42px]">
+        <h2 className="animate-fade-in-up animate-fill-mode-both whitespace-pre-line text-center text-[24px] font-bold leading-[1.1] text-text-primary md:text-[36px] xl:text-[42px]">
           {t("title")}
         </h2>
 
@@ -78,8 +78,8 @@ export async function PaymentMethods() {
               key={feature}
               className="flex items-center gap-[6px] rounded-[10px] px-[4px] pb-[2px] pt-[1px] md:rounded-[12px] md:py-[2px] md:pl-[8px] md:pr-[12px]"
             >
-              <div className="h-[6px] w-[6px] shrink-0 rounded-full bg-[#12B76A]" />
-              <span className="whitespace-nowrap text-[12px] leading-[1.4] text-[#101828] md:text-[14px]">
+              <div className="h-[6px] w-[6px] shrink-0 rounded-full bg-success-alt" />
+              <span className="whitespace-nowrap text-[12px] leading-[1.4] text-indicator md:text-[14px]">
                 {feature}
               </span>
             </div>

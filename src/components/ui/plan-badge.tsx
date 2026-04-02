@@ -9,7 +9,7 @@ interface PlanBadgeProps {
 export function PlanBadge({ plan, className }: PlanBadgeProps) {
   return (
     <span
-      className={`rounded-full px-3 py-1 text-[14px] font-bold leading-[1.1] text-[#FCFCFD] ${className ?? ""}`}
+      className={`rounded-full px-3 py-1 text-[14px] font-bold leading-[1.1] text-surface ${className ?? ""}`}
       style={{ backgroundColor: PLAN_COLORS[plan] }}
     >
       {plan}
