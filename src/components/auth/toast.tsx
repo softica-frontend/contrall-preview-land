@@ -83,26 +83,26 @@ export function Toast({ toast, onClose }: ToastProps) {
   return (
     <div
       className={`
-        absolute left-1/2 -translate-x-1/2 -top-32 z-50
-        w-full max-w-[305px] bg-white rounded-lg overflow-hidden
+        fixed left-1/2 -translate-x-1/2 top-3 h-md:top-4 z-50
+        w-[calc(100%-32px)] max-w-[305px] bg-white rounded-lg overflow-hidden
         shadow-[0_0_6px_rgba(12,17,29,0.02),0_2px_4px_rgba(16,24,40,0.08)]
-        transition-all duration-300 pointer-events-auto
-        ${visible ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4"}
+        transition-all duration-300 ease-out pointer-events-auto
+        ${visible ? "opacity-100 translate-y-0 shadow-[0_4px_12px_rgba(16,24,40,0.1),0_0_6px_rgba(12,17,29,0.04)]" : "opacity-0 -translate-y-4 shadow-none"}
       `}
       role="alert"
       aria-live="assertive"
       style={{ borderBottom: `2px solid ${borderColor}` }}
     >
-      <div className="flex items-start gap-3 px-4 py-3">
+      <div className="flex items-start gap-2.5 h-md:gap-3 px-3 h-md:px-4 py-2.5 h-md:py-3">
         <div className="mt-0.5 shrink-0">
           {toast.type === "error" ? <ErrorIcon /> : <SuccessIcon />}
         </div>
         <div className="flex-1 min-w-0">
-          <p className="text-[14px] font-medium text-[#1D2939]">
+          <p className="text-[13px] h-md:text-[14px] font-medium text-[#1D2939]">
             {toast.title}
           </p>
           {toast.description && (
-            <p className="text-[13px] text-[#475467] mt-0.5">
+            <p className="text-[12px] h-md:text-[13px] text-[#475467] mt-0.5">
               {toast.description}
             </p>
           )}

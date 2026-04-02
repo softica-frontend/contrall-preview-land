@@ -66,16 +66,19 @@ export default function RegisterPage() {
     <>
       <Toast toast={toast} onClose={clearToast} />
 
-      <div className="text-center mb-8">
-        <h1 className="text-[42px] font-bold text-[#1D2939] leading-tight">
+      <div className="text-center mb-2 h-md:mb-4 h-lg:mb-6 animate-fade-in animate-duration-500">
+        <h1 className="text-[26px] h-md:text-[32px] h-lg:text-[42px] font-bold text-[#1D2939] leading-tight">
           {t("registerTitle")}
         </h1>
-        <p className="text-[18px] text-[#1D2939] mt-3">
+        <p className="text-[13px] h-md:text-[15px] h-lg:text-[18px] text-[#1D2939] mt-1.5 h-lg:mt-3">
           {t("registerSubtitle")}
         </p>
       </div>
 
-      <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+      <form
+        onSubmit={handleSubmit}
+        className="auth-form flex flex-col gap-2 h-md:gap-2.5 h-lg:gap-4"
+      >
         <AuthInput
           label={t("email")}
           type="email"
@@ -89,7 +92,7 @@ export default function RegisterPage() {
           aria-invalid={!!errors.email}
         />
 
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-1.5">
           <AuthInput
             label={t("password")}
             type="password"
@@ -121,7 +124,7 @@ export default function RegisterPage() {
           aria-invalid={!!errors.confirmPassword}
         />
 
-        <div className="mt-1">
+        <div>
           <AuthCheckbox
             checked={agreed}
             error={errors.agreed}
@@ -142,7 +145,7 @@ export default function RegisterPage() {
 
         <button
           type="submit"
-          className="mt-2 h-12 w-full rounded-full bg-[#2575FF] cursor-pointer text-[14px] font-medium tracking-[0.5px] text-[#FCFCFD] hover:bg-[#1a63e0] transition-colors"
+          className="mt-0.5 h-md:mt-1 h-lg:mt-2 h-9 h-md:h-10 h-lg:h-12 w-full rounded-full bg-[#2575FF] cursor-pointer text-[13px] h-lg:text-[14px] font-medium tracking-[0.5px] text-[#FCFCFD] hover:bg-[#1a63e0] active:scale-[0.98] transition-all duration-200"
         >
           {t("registerButton")}
         </button>
@@ -150,7 +153,7 @@ export default function RegisterPage() {
         <Divider label={t("or")} />
         <SocialButtons />
 
-        <p className="mt-2 text-center text-[14px] text-[#475467]">
+        <p className="mt-0.5 h-lg:mt-2 text-center text-[13px] h-lg:text-[14px] text-[#475467]">
           {t("hasAccount")}{" "}
           <Link
             href="/auth/login"

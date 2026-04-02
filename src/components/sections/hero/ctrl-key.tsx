@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useId, useRef } from "react";
+import { useCallback, useEffect, useId, useRef } from "react";
 import { triggerRipple } from "./hero-wave-ripple";
 
 /** 3D isometric Ctrl keyboard key — decorative element below the CTA */
@@ -28,6 +28,11 @@ export function CtrlKey({ className }: { className?: string }) {
       animating.current = false;
     });
   }, []);
+
+  useEffect(() => {
+    const timer = setTimeout(() => handleClick(), 1000);
+    return () => clearTimeout(timer);
+  }, [handleClick]);
 
   return (
     <button

@@ -58,14 +58,19 @@ export default function LoginPage() {
     <>
       <Toast toast={toast} onClose={clearToast} />
 
-      <div className="text-center mb-8">
-        <h1 className="text-[42px] font-bold text-[#1D2939] leading-tight">
+      <div className="text-center mb-3 h-md:mb-5 h-lg:mb-8 animate-fade-in animate-duration-500">
+        <h1 className="text-[28px] h-md:text-[36px] h-lg:text-[42px] font-bold text-[#1D2939] leading-tight">
           {t("loginTitle")}
         </h1>
-        <p className="text-[18px] text-[#1D2939] mt-3">{t("loginSubtitle")}</p>
+        <p className="text-[14px] h-md:text-[16px] h-lg:text-[18px] text-[#1D2939] mt-2 h-lg:mt-3">
+          {t("loginSubtitle")}
+        </p>
       </div>
 
-      <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+      <form
+        onSubmit={handleSubmit}
+        className="auth-form flex flex-col gap-2.5 h-md:gap-3 h-lg:gap-4"
+      >
         <AuthInput
           label={t("email")}
           type="email"
@@ -108,7 +113,7 @@ export default function LoginPage() {
 
         <button
           type="submit"
-          className="mt-2 h-12 w-full rounded-full bg-[#2575FF] cursor-pointer text-[14px] font-medium tracking-[0.5px] text-[#FCFCFD] hover:bg-[#1a63e0] transition-colors"
+          className="mt-1 h-lg:mt-2 h-10 h-lg:h-12 w-full rounded-full bg-[#2575FF] cursor-pointer text-[13px] h-lg:text-[14px] font-medium tracking-[0.5px] text-[#FCFCFD] hover:bg-[#1a63e0] active:scale-[0.98] transition-all duration-200"
         >
           {t("loginButton")}
         </button>
