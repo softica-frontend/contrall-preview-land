@@ -13,7 +13,7 @@ export async function TeamCluster() {
   return (
     <div className="relative mb-[24px] h-[240px] w-[240px]">
       {/* Central circle */}
-      <div className="absolute left-1/2 top-1/2 flex h-[64px] w-[64px] -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-[#2575ff]">
+      <div className="absolute left-1/2 top-1/2 flex h-[64px] w-[64px] -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-primary">
         <TeamIcon />
       </div>
 
@@ -30,10 +30,10 @@ export async function TeamCluster() {
               transform: `translate(calc(-50% + ${x}px), calc(-50% + ${y}px))`,
             }}
           >
-            <div className="flex h-[44px] w-[44px] items-center justify-center rounded-full bg-[#dbeafe] text-[18px]">
+            <div className="flex h-[44px] w-[44px] items-center justify-center rounded-full bg-bg-sky text-[18px]">
               {role.icon}
             </div>
-            <span className="rounded-[8px] bg-[#eff6ff] px-[8px] py-[2px] text-[11px] font-semibold text-[#2575ff]">
+            <span className="rounded-[8px] bg-bg-pale-blue px-[8px] py-[2px] text-[11px] font-semibold text-primary">
               {t(role.key)}
             </span>
           </div>

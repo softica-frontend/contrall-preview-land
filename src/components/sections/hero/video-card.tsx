@@ -30,7 +30,7 @@ export function VideoCard({
           }}
         >
           {/* Play button */}
-          <div className="relative z-10 flex h-[50px] w-[50px] items-center justify-center rounded-full bg-[#2575ff]">
+          <div className="relative z-10 flex h-[50px] w-[50px] items-center justify-center rounded-full bg-primary">
             <svg
               width="16"
               height="18"

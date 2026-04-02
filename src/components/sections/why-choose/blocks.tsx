@@ -74,10 +74,10 @@ async function FeatureText({
   const t = await getTranslations("WhyChoose");
   return (
     <div className={`px-[16px] ${className ?? ""}`}>
-      <h3 className="text-[20px] font-bold leading-[1.1] text-[#101828] xl:text-[24px]">
+      <h3 className="text-[20px] font-bold leading-[1.1] text-indicator xl:text-[24px]">
         {t(titleKey)}
       </h3>
-      <p className="mt-[4px] text-[14px] leading-[1.4] text-[#344054] md:text-[16px] xl:text-[18px]">
+      <p className="mt-[4px] text-[14px] leading-[1.4] text-text-body md:text-[16px] xl:text-[18px]">
         {t(descKey)}
       </p>
     </div>
@@ -198,7 +198,7 @@ export async function QuoteText({ className }: { className?: string }) {
   const t = await getTranslations("WhyChoose");
   return (
     <div className={`ml-4 ${className ?? ""}`}>
-      <p className="max-w-[500px] text-left text-[20px] font-bold leading-[1.1] text-[#2575ff] md:text-[24px]">
+      <p className="max-w-[500px] text-left text-[20px] font-bold leading-[1.1] text-primary md:text-[24px]">
         {t("quoteText")}
       </p>
     </div>
@@ -212,7 +212,7 @@ export async function CtaButton({ className }: { className?: string }) {
     <div className={`flex justify-center ${className ?? ""}`}>
       <a
         href="/auth/register"
-        className="inline-flex -rotate-[4deg] items-center justify-center rounded-[1000px] bg-[#2575ff] px-[32px] py-[16px] text-[16px] font-medium tracking-[0.5px] text-white transition-colors hover:bg-[#1a63e0] active:bg-[#1a5acc] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2575ff] focus-visible:ring-offset-2 md:px-[40px] md:py-[20px] md:text-[18px]"
+        className="inline-flex -rotate-[4deg] items-center justify-center rounded-[1000px] bg-primary px-[32px] py-[16px] text-[16px] font-medium tracking-[0.5px] text-white transition-colors hover:bg-primary-hover active:bg-primary-active focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2575ff] focus-visible:ring-offset-2 md:px-[40px] md:py-[20px] md:text-[18px]"
       >
         {t("ctaButton")}
       </a>

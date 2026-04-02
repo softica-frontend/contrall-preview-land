@@ -35,7 +35,7 @@ function OverlappingLogos({
         logo.icon ? (
           <div
             key={logo.alt}
-            className="-mr-[44px] flex h-[75px] w-[75px] shrink-0 items-center justify-center rounded-full bg-[#fcfcfd] shadow-[0px_0px_6px_0px_rgba(12,17,29,0.02),0px_2px_4px_0px_rgba(16,24,40,0.08)]"
+            className="-mr-[44px] flex h-[75px] w-[75px] shrink-0 items-center justify-center rounded-full bg-surface shadow-card"
             style={{ zIndex: i }}
           >
             <Image
@@ -72,13 +72,13 @@ export async function ToolsSection() {
   return (
     <div className="mx-auto w-full max-w-[1280px] px-[16px]">
       <SectionReveal className="flex flex-col items-center">
-        <p className="animate-fade-in animate-fill-mode-both mb-[16px] text-center text-[12px] font-semibold uppercase tracking-[2px] text-[#2575ff] md:text-[14px]">
+        <p className="animate-fade-in animate-fill-mode-both mb-[16px] text-center text-[12px] font-semibold uppercase tracking-[2px] text-primary md:text-[14px]">
           {t("sectionLabel")}
         </p>
-        <h2 className="animate-fade-in-up animate-fill-mode-both animate-delay-100 mx-auto mb-[16px] max-w-[800px] text-center text-[28px] font-bold leading-[1.1] text-[#0c111d] md:text-[36px] xl:text-[42px]">
+        <h2 className="animate-fade-in-up animate-fill-mode-both animate-delay-100 mx-auto mb-[16px] max-w-[800px] text-center text-[28px] font-bold leading-[1.1] text-text-heading md:text-[36px] xl:text-[42px]">
           {t("title")}
         </h2>
-        <div className="animate-fade-in-up animate-fill-mode-both animate-delay-200 mx-auto mb-[40px] text-center text-[16px] leading-normal text-[#475467] md:mb-[48px] md:text-[18px]">
+        <div className="animate-fade-in-up animate-fill-mode-both animate-delay-200 mx-auto mb-[40px] text-center text-[16px] leading-normal text-text-muted md:mb-[48px] md:text-[18px]">
           <p>{t("subtitle1")}</p>
           <p>{t("subtitle2")}</p>
         </div>
@@ -93,10 +93,10 @@ export async function ToolsSection() {
         >
           <OverlappingLogos logos={AD_SYSTEM_LOGOS} />
           <div className="flex flex-col gap-[8px] px-[4px]">
-            <h3 className="text-[24px] font-bold leading-[1.1] text-[#101828]">
+            <h3 className="text-[24px] font-bold leading-[1.1] text-indicator">
               {t("adSystemsTitle")}
             </h3>
-            <p className="text-[18px] leading-[1.4] text-[#344054]">
+            <p className="text-[18px] leading-[1.4] text-text-body">
               {t("adSystemsDesc")}
             </p>
           </div>
@@ -109,10 +109,10 @@ export async function ToolsSection() {
         >
           <OverlappingLogos logos={PARTNER_LOGOS} />
           <div className="flex flex-col gap-[8px] px-[4px]">
-            <h3 className="text-[24px] font-bold leading-[1.1] text-[#101828]">
+            <h3 className="text-[24px] font-bold leading-[1.1] text-indicator">
               {t("partnerTitle")}
             </h3>
-            <p className="text-[18px] leading-[1.4] text-[#344054]">
+            <p className="text-[18px] leading-[1.4] text-text-body">
               {t("partnerDesc")}
             </p>
           </div>
@@ -125,7 +125,7 @@ export async function ToolsSection() {
         <div className="pointer-events-none absolute inset-0 hidden overflow-visible md:block">
           {/* Analyst — left side, cursor top-right */}
           <div className="absolute -left-[140px] top-[105px] flex items-end">
-            <span className="rounded-full bg-[#75FFE5] px-[18px] py-[3px] text-[21px] text-[#101828]">
+            <span className="rounded-full bg-[#75FFE5] px-[18px] py-[3px] text-[21px] text-indicator">
               {t("analyst")}
             </span>
             <svg
@@ -166,7 +166,7 @@ export async function ToolsSection() {
                 strokeLinejoin="round"
               />
             </svg>
-            <span className="rounded-full bg-[#D0D5DD] px-[18px] py-[3px] text-[21px] text-[#101828]">
+            <span className="rounded-full bg-border px-[18px] py-[3px] text-[21px] text-indicator">
               {t("manager")}
             </span>
           </div>
@@ -203,7 +203,7 @@ export async function ToolsSection() {
                 strokeLinejoin="round"
               />
             </svg>
-            <span className="rounded-full bg-[#B6BDFF] px-[18px] py-[3px] text-[21px] text-[#101828]">
+            <span className="rounded-full bg-[#B6BDFF] px-[18px] py-[3px] text-[21px] text-indicator">
               {t("owner")}
             </span>
           </div>
@@ -225,10 +225,10 @@ export async function ToolsSection() {
           </div>
           {/* Text */}
           <div className="flex flex-col gap-[12px] px-[4px]">
-            <h3 className="text-[24px] font-bold leading-[1.1] text-[#101828]">
+            <h3 className="text-[24px] font-bold leading-[1.1] text-indicator">
               {t("teamTitle")}
             </h3>
-            <p className="text-[18px] leading-[1.4] text-[#344054]">
+            <p className="text-[18px] leading-[1.4] text-text-body">
               {t("teamDesc")}
             </p>
           </div>

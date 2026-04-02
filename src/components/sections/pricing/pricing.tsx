@@ -72,11 +72,11 @@ export async function Pricing() {
             <GradientLabel className="animate-fade-in animate-fill-mode-both text-[14px] md:text-[20px]">
               {t("sectionLabel")}
             </GradientLabel>
-            <h2 className="animate-fade-in-up animate-fill-mode-both animate-delay-100 max-w-[900px] whitespace-pre-line text-[32px] font-bold leading-[1.1] text-[#0c111d] md:text-[42px] xl:text-[54px]">
+            <h2 className="animate-fade-in-up animate-fill-mode-both animate-delay-100 max-w-[900px] whitespace-pre-line text-[32px] font-bold leading-[1.1] text-text-heading md:text-[42px] xl:text-[54px]">
               {t("title")}
             </h2>
           </div>
-          <p className="animate-fade-in-up animate-fill-mode-both animate-delay-200 whitespace-pre-line text-[16px] leading-[1.4] text-[#21272a] md:text-[18px]">
+          <p className="animate-fade-in-up animate-fill-mode-both animate-delay-200 whitespace-pre-line text-[16px] leading-[1.4] text-text-secondary md:text-[18px]">
             {t("subtitle")}
           </p>
         </SectionReveal>

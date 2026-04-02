@@ -39,13 +39,13 @@ export function ProfileHeader() {
               <Link
                 key={item.key}
                 href={item.href}
-                className={`relative flex h-[32px] items-center justify-center whitespace-nowrap px-[6px] py-[4px] font-inter text-[12px] font-medium leading-none transition-colors duration-200 hover:text-[#2575ff] lg:px-[8px] lg:text-[13px] xl:px-[12px] xl:text-[14px] ${
-                  isActive ? "text-[#2575ff]" : "text-[#0c111d]"
+                className={`relative flex h-[32px] items-center justify-center whitespace-nowrap px-[6px] py-[4px] font-inter text-[12px] font-medium leading-none transition-colors duration-200 hover:text-primary lg:px-[8px] lg:text-[13px] xl:px-[12px] xl:text-[14px] ${
+                  isActive ? "text-primary" : "text-text-heading"
                 }`}
               >
                 {t(`nav.${item.key}`)}
                 {isActive && (
-                  <span className="absolute bottom-0 left-0 h-[2px] w-full rounded-full bg-[#2575ff]" />
+                  <span className="absolute bottom-0 left-0 h-[2px] w-full rounded-full bg-primary" />
                 )}
               </Link>
             );
@@ -58,7 +58,7 @@ export function ProfileHeader() {
             type="button"
             onClick={handleLogout}
             aria-label={t("logout")}
-            className="flex size-[40px] cursor-pointer items-center justify-center rounded-lg border border-[#D0D5DD] text-[#667085] hover:border-[#DA1E28] hover:text-[#DA1E28] transition-colors duration-200"
+            className="flex size-[40px] cursor-pointer items-center justify-center rounded-lg border border-border text-text-subtle hover:border-[#DA1E28] hover:text-[#DA1E28] transition-colors duration-200"
           >
             <svg
               width="20"
@@ -94,13 +94,13 @@ export function ProfileHeader() {
               <Link
                 key={item.key}
                 href={item.href}
-                className={`relative flex shrink-0 items-center justify-center whitespace-nowrap px-[10px] py-[8px] font-inter text-[13px] font-medium leading-none transition-colors duration-200 hover:text-[#2575ff] ${
-                  isActive ? "text-[#2575ff]" : "text-[#0c111d]"
+                className={`relative flex shrink-0 items-center justify-center whitespace-nowrap px-[10px] py-[8px] font-inter text-[13px] font-medium leading-none transition-colors duration-200 hover:text-primary ${
+                  isActive ? "text-primary" : "text-text-heading"
                 }`}
               >
                 {t(`nav.${item.key}`)}
                 {isActive && (
-                  <span className="absolute bottom-0 left-0 h-[2px] w-full rounded-full bg-[#2575ff]" />
+                  <span className="absolute bottom-0 left-0 h-[2px] w-full rounded-full bg-primary" />
                 )}
               </Link>
             );
@@ -113,7 +113,7 @@ export function ProfileHeader() {
             type="button"
             onClick={handleLogout}
             aria-label={t("logout")}
-            className="flex size-[36px] cursor-pointer items-center justify-center rounded-lg border border-[#D0D5DD] text-[#667085] hover:border-[#DA1E28] hover:text-[#DA1E28] transition-colors duration-200"
+            className="flex size-[36px] cursor-pointer items-center justify-center rounded-lg border border-border text-text-subtle hover:border-[#DA1E28] hover:text-[#DA1E28] transition-colors duration-200"
           >
             <svg
               width="20"

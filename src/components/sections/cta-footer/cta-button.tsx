@@ -48,7 +48,7 @@ export function CtaButton({ label }: CtaButtonProps) {
       />
       <span
         ref={pillRef}
-        className="relative inline-flex h-[44px] items-center justify-center rounded-[1000px] bg-[#2575ff] px-[24px] text-[14px] font-medium leading-none tracking-[0.5px] text-[#fcfcfd] transition-transform duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] md:h-auto md:px-[54px] md:py-[24px] md:text-[32px] md:leading-[1.1] md:tracking-normal hover:bg-[#1a63e0] active:bg-[#1a5acc]"
+        className="relative inline-flex h-[44px] items-center justify-center rounded-[1000px] bg-primary px-[24px] text-[14px] font-medium leading-none tracking-[0.5px] text-surface transition-transform duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] md:h-auto md:px-[54px] md:py-[24px] md:text-[32px] md:leading-[1.1] md:tracking-normal hover:bg-primary-hover active:bg-primary-active"
       >
         {label}
       </span>

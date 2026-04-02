@@ -32,7 +32,7 @@ export function DarkFeatureCard({
           "0 8px 32px rgba(0,0,0,0.3), inset 0 1px 0 rgba(37,117,255,0.1)",
       }}
     >
-      <div className="flex h-[48px] w-[48px] items-center justify-center rounded-full bg-[#2575ff]">
+      <div className="flex h-[48px] w-[48px] items-center justify-center rounded-full bg-primary">
         {icon}
       </div>
       <h4 className="text-[18px] font-bold leading-[1.2] text-white md:text-[20px]">
@@ -65,12 +65,12 @@ function FeatureCard({
       }}
     >
       {/* Icon circle */}
-      <div className="absolute -top-[30px] left-1/2 z-10 flex h-[60px] w-[60px] -translate-x-1/2 items-center justify-center overflow-hidden rounded-full border-t-2 border-[#7491ff] bg-[#fcfcfd] p-[4px] sm:-top-[38px] sm:h-[75px] sm:w-[75px]">
+      <div className="absolute -top-[30px] left-1/2 z-10 flex h-[60px] w-[60px] -translate-x-1/2 items-center justify-center overflow-hidden rounded-full border-t-2 border-accent-blue bg-surface p-[4px] sm:-top-[38px] sm:h-[75px] sm:w-[75px]">
         <Image src={iconSrc} alt="" width={32} height={32} />
       </div>
 
       <div className="flex flex-1 flex-col gap-[16px] sm:gap-[24px]">
-        <p className="px-[8px] text-center text-[20px] font-bold leading-[1.1] text-[#fcfcfd] sm:px-[16px] sm:text-[24px] xl:text-[20px] 2xl:text-[24px]">
+        <p className="px-[8px] text-center text-[20px] font-bold leading-[1.1] text-surface sm:px-[16px] sm:text-[24px] xl:text-[20px] 2xl:text-[24px]">
           {title}
         </p>
         <div className="relative flex-1 overflow-hidden rounded-t-[24px] sm:rounded-t-[32px]">
@@ -85,12 +85,12 @@ function FeatureCard({
       </div>
 
       <div className="rounded-b-[20px] p-[16px] backdrop-blur-[20px] sm:rounded-b-[32px] sm:p-[24px] xl:rounded-b-[16px] xl:bg-[rgba(252,252,253,0.3)]">
-        <p className="max-w-[90%] text-[15px] font-medium leading-normal text-[#fcfcfd] sm:text-[18px] xl:text-[15px] xl:text-[#1d2939] 2xl:text-[18px]">
+        <p className="max-w-[90%] text-[15px] font-medium leading-normal text-surface sm:text-[18px] xl:text-[15px] xl:text-text-primary 2xl:text-[18px]">
           {description}
         </p>
       </div>
 
-      <div className="pointer-events-none absolute inset-0 rounded-[inherit] shadow-[inset_-0.5px_-1px_1px_0px_rgba(37,117,255,0.8),inset_0.5px_1px_1px_0px_rgba(37,117,255,0.8)]" />
+      <div className="pointer-events-none absolute inset-0 rounded-[inherit] shadow-inset-glow" />
     </div>
   );
 }

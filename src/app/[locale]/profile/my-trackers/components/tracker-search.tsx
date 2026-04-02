@@ -36,7 +36,7 @@ export function TrackerSearch({
       <button
         type="button"
         onClick={() => onOpenChange(true)}
-        className="flex size-14 cursor-pointer items-center justify-center rounded-full text-[#667085] transition-colors duration-200 hover:text-[#0C111D]"
+        className="flex size-14 cursor-pointer items-center justify-center rounded-full text-text-subtle transition-colors duration-200 hover:text-text-heading"
         aria-label={placeholder}
         style={{
           opacity: open ? 0 : 1,
@@ -62,13 +62,13 @@ export function TrackerSearch({
           value={query}
           onChange={(e) => onQueryChange(e.target.value)}
           placeholder={placeholder}
-          className="w-full min-w-0 bg-transparent text-[14px] text-[#0C111D] outline-none placeholder:text-[#98A2B3]"
+          className="w-full min-w-0 bg-transparent text-[14px] text-text-heading outline-none placeholder:text-text-placeholder"
           tabIndex={open ? 0 : -1}
         />
         <button
           type="button"
           onClick={handleClose}
-          className="shrink-0 cursor-pointer text-[#98A2B3] transition-colors duration-150 hover:text-[#0C111D]"
+          className="shrink-0 cursor-pointer text-text-placeholder transition-colors duration-150 hover:text-text-heading"
           tabIndex={open ? 0 : -1}
         >
           <CloseIcon />

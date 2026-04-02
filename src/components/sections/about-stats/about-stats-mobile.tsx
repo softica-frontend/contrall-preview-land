@@ -15,21 +15,21 @@ export async function AboutStatsMobile() {
           <GradientLabel className="text-[16px]">
             {t("sectionLabel")}
           </GradientLabel>
-          <h2 className="mt-[8px] text-[32px] font-bold leading-[1.1] text-[#0c111d]">
+          <h2 className="mt-[8px] text-[32px] font-bold leading-[1.1] text-text-heading">
             {t("title")}
           </h2>
         </div>
 
         {/* $15,200 — horizontal card */}
         <div
-          className="relative mb-[16px] min-h-[120px] overflow-hidden rounded-[16px] bg-[#fcfcfd] pr-[130px]"
+          className="relative mb-[16px] min-h-[120px] overflow-hidden rounded-[16px] bg-surface pr-[130px]"
           style={{ boxShadow: CARD_SHADOW_SM }}
         >
           <div className="flex flex-col gap-[8px] p-[16px]">
-            <span className="text-[24px] font-bold leading-[1.1] text-[#0c111d]">
+            <span className="text-[24px] font-bold leading-[1.1] text-text-heading">
               {t("stat1Value")}
             </span>
-            <p className="text-[14px] font-medium leading-[1.2] text-[#1d2939]">
+            <p className="text-[14px] font-medium leading-[1.2] text-text-primary">
               {t("stat1Desc")}
             </p>
           </div>
@@ -91,7 +91,7 @@ export async function AboutStatsMobile() {
 
           {/* 47 мін — right-aligned */}
           <div
-            className="relative z-[1] ml-auto mb-[12px] h-[200px] w-[50%] overflow-hidden rounded-[16px] bg-[#fcfcfd]"
+            className="relative z-[1] ml-auto mb-[12px] h-[200px] w-[50%] overflow-hidden rounded-[16px] bg-surface"
             style={{ boxShadow: CARD_SHADOW_SM }}
           >
             <Image
@@ -110,7 +110,7 @@ export async function AboutStatsMobile() {
               sizes="50vw"
             />
             <div className="relative z-[1] p-[14px]">
-              <p className="text-[14px] font-medium leading-[1.2] text-[#1d2939]">
+              <p className="text-[14px] font-medium leading-[1.2] text-text-primary">
                 {t("stat2Desc")}
               </p>
             </div>
@@ -120,7 +120,7 @@ export async function AboutStatsMobile() {
           <div className="relative z-[1] mt-[70px] flex gap-[10px]">
             {/* 1,892 */}
             <div
-              className="relative flex-1 overflow-hidden rounded-[16px] bg-[#fcfcfd]"
+              className="relative flex-1 overflow-hidden rounded-[16px] bg-surface"
               style={{ boxShadow: CARD_SHADOW_SM }}
             >
               <Image
@@ -132,10 +132,10 @@ export async function AboutStatsMobile() {
                 aria-hidden="true"
               />
               <div className="relative flex flex-col gap-[6px] p-[12px]">
-                <span className="text-[20px] font-bold leading-[1.1] text-[#0c111d]">
+                <span className="text-[20px] font-bold leading-[1.1] text-text-heading">
                   {t("stat4Value")}
                 </span>
-                <p className="text-[12px] font-medium leading-[1.2] text-[#1d2939]">
+                <p className="text-[12px] font-medium leading-[1.2] text-text-primary">
                   {t("stat4Desc")}
                 </p>
                 <div className="mt-[4px] h-[70px]">
@@ -152,7 +152,7 @@ export async function AboutStatsMobile() {
             </div>
             {/* 99,98% */}
             <div
-              className="relative flex-1 overflow-hidden rounded-[16px] bg-[#fcfcfd] mt-10"
+              className="relative flex-1 overflow-hidden rounded-[16px] bg-surface mt-10"
               style={{ boxShadow: CARD_SHADOW_SM }}
             >
               <Image
@@ -164,14 +164,14 @@ export async function AboutStatsMobile() {
                 aria-hidden="true"
               />
               <div className="relative flex flex-col gap-[6px] p-[12px] pb-0">
-                <span className="text-[20px] font-bold leading-[1.1] text-[#0c111d]">
+                <span className="text-[20px] font-bold leading-[1.1] text-text-heading">
                   {t("stat3Value")}
                 </span>
                 <div className="flex flex-col gap-[2px]">
-                  <p className="text-[12px] font-bold leading-[1.2] text-[#1d2939]">
+                  <p className="text-[12px] font-bold leading-[1.2] text-text-primary">
                     {t("stat3Title")}
                   </p>
-                  <p className="text-[10px] leading-[1.3] text-[#344054]">
+                  <p className="text-[10px] leading-[1.3] text-text-body">
                     {t("stat3Subtitle")}
                   </p>
                 </div>
@@ -192,7 +192,7 @@ export async function AboutStatsMobile() {
           {/* Team section — side by side like Figma */}
           <div className="relative z-[1] mt-[20px] flex items-end gap-[8px]">
             <div className="w-[40%] shrink-0">
-              <p className="text-[12px] leading-[1.4] text-[#344054]">
+              <p className="text-[12px] leading-[1.4] text-text-body">
                 {t("teamText")}
               </p>
             </div>

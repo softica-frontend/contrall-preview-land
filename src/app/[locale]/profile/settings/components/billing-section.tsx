@@ -139,21 +139,21 @@ export function BillingSection() {
   const t = useTranslations("Settings");
 
   return (
-    <div className="flex h-full max-h-full flex-col overflow-hidden rounded-xl border border-[#E4E7EC] bg-[#FCFCFD] p-6">
-      <h2 className="mb-4 shrink-0 font-roboto text-[32px] font-bold leading-tight text-[#0C111D]">
+    <div className="flex h-full max-h-full flex-col overflow-hidden rounded-xl border border-border-light bg-surface p-6">
+      <h2 className="mb-4 shrink-0 font-roboto text-[32px] font-bold leading-tight text-text-heading">
         {t("billing.title")}
       </h2>
 
       <div className="flex min-h-0 flex-1 flex-col overflow-x-auto">
         {/* Header */}
-        <div className="sticky top-0 z-10 shrink-0 border-b border-[#E4E7EC] bg-[#FCFCFD]">
+        <div className="sticky top-0 z-10 shrink-0 border-b border-border-light bg-surface">
           <div className="flex h-9 min-w-[700px]">
             {COLUMNS.map((col) => (
               <div
                 key={col.key}
                 className={`flex items-center px-2 ${col.width}`}
               >
-                <span className="whitespace-nowrap font-roboto text-[14px] leading-[1.4] text-[#667085]">
+                <span className="whitespace-nowrap font-roboto text-[14px] leading-[1.4] text-text-subtle">
                   {t(`billing.${col.key}`)}
                 </span>
               </div>
@@ -166,26 +166,26 @@ export function BillingSection() {
           {MOCK_DATA.map((tx) => (
             <div
               key={`${tx.date}-${tx.time}-${tx.tracker}`}
-              className="flex h-12 min-w-[700px] border-b border-[#E4E7EC] last:border-b-0"
+              className="flex h-12 min-w-[700px] border-b border-border-light last:border-b-0"
             >
               <div className="flex w-[170px] shrink-0 flex-col justify-center px-2">
-                <div className="font-roboto text-[14px] leading-[1.4] text-[#344054]">
+                <div className="font-roboto text-[14px] leading-[1.4] text-text-body">
                   {tx.date}
                 </div>
-                <div className="font-roboto text-[12px] leading-[1.4] text-[#667085]">
+                <div className="font-roboto text-[12px] leading-[1.4] text-text-subtle">
                   {tx.time}
                 </div>
               </div>
-              <div className="flex min-w-[140px] flex-[2] items-center truncate px-2 font-roboto text-[14px] leading-[1.4] text-[#344054]">
+              <div className="flex min-w-[140px] flex-[2] items-center truncate px-2 font-roboto text-[14px] leading-[1.4] text-text-body">
                 {tx.tracker}
               </div>
-              <div className="flex w-[160px] shrink-0 items-center px-2 font-roboto text-[14px] leading-[1.4] text-[#44BA3E]">
+              <div className="flex w-[160px] shrink-0 items-center px-2 font-roboto text-[14px] leading-[1.4] text-success">
                 {tx.amount}
               </div>
               <div className="flex w-[150px] shrink-0 items-center px-2">
                 <StatusBadge statusKey={tx.statusKey} />
               </div>
-              <div className="flex min-w-[120px] flex-[2] items-center truncate px-2 font-roboto text-[14px] leading-[1.4] text-[#344054]">
+              <div className="flex min-w-[120px] flex-[2] items-center truncate px-2 font-roboto text-[14px] leading-[1.4] text-text-body">
                 {t(`billing.descriptions.${tx.descriptionKey}`)}
               </div>
             </div>

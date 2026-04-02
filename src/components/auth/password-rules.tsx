@@ -29,12 +29,12 @@ export function PasswordRules({ password, labels }: PasswordRulesProps) {
         >
           <div
             className={`w-1.5 h-1.5 rounded-full transition-colors ${
-              rule.met ? "bg-[#44BA3E]" : "bg-[#98A2B3]"
+              rule.met ? "bg-success" : "bg-text-placeholder"
             }`}
           />
           <span
             className={`text-[13px] transition-colors ${
-              rule.met ? "text-[#44BA3E]" : "text-[#475467]"
+              rule.met ? "text-success" : "text-text-muted"
             }`}
           >
             {rule.label}

@@ -18,14 +18,14 @@ export async function Footer() {
         <div className="animate-fade-in-up animate-fill-mode-both animate-delay-100 group w-full max-w-max text-center text-[7.5vw] font-bold leading-[1.1] min-[520px]:text-[40px] md:text-[80px] xl:text-[110px]">
           <a
             href={`mailto:${t("email")}`}
-            className="text-[#dadcff] transition-colors duration-200 group-hover:text-[#2575ff]"
+            className="text-border-accent transition-colors duration-200 group-hover:text-primary"
           >
             support@Contrall
           </a>
           <span className="relative inline-block">
             <a
               href={`mailto:${t("email")}`}
-              className="text-[#dadcff] transition-colors duration-200 group-hover:text-[#2575ff]"
+              className="text-border-accent transition-colors duration-200 group-hover:text-primary"
             >
               .
             </a>
@@ -45,25 +45,25 @@ export async function Footer() {
           </span>
           <a
             href={`mailto:${t("email")}`}
-            className="text-[#dadcff] transition-colors duration-200 group-hover:text-[#2575ff]"
+            className="text-border-accent transition-colors duration-200 group-hover:text-primary"
           >
             com
           </a>
         </div>
 
         {/* Bottom bar */}
-        <div className="animate-fade-in animate-fill-mode-both animate-delay-200 flex w-full flex-col items-center gap-[16px] border-t border-[#98a2b3] pt-[24px] text-center text-[12px] font-medium leading-none md:flex-row md:items-center md:justify-between md:pt-[48px] md:text-[16px]">
-          <p className="text-[#344054]">{t("copyright")}</p>
-          <div className="flex flex-col items-center gap-[16px] text-[#667085] md:flex-row md:gap-[32px]">
+        <div className="animate-fade-in animate-fill-mode-both animate-delay-200 flex w-full flex-col items-center gap-[16px] border-t border-text-placeholder pt-[24px] text-center text-[12px] font-medium leading-none md:flex-row md:items-center md:justify-between md:pt-[48px] md:text-[16px]">
+          <p className="text-text-body">{t("copyright")}</p>
+          <div className="flex flex-col items-center gap-[16px] text-text-subtle md:flex-row md:gap-[32px]">
             <a
               href="/privacy"
-              className="underline hover:text-[#2575ff] transition-colors duration-200"
+              className="underline hover:text-primary transition-colors duration-200"
             >
               {t("privacyPolicy")}
             </a>
             <a
               href="/terms"
-              className="underline hover:text-[#2575ff] transition-colors duration-200"
+              className="underline hover:text-primary transition-colors duration-200"
             >
               {t("terms")}
             </a>

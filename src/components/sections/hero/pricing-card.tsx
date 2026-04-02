@@ -37,7 +37,7 @@ export function PricingCard({
           {/* Badge */}
           <div className="relative">
             <span
-              className={`inline-block rounded-[12px] px-[12px] py-[2px] ${desktop ? "text-[18px]" : "text-[12px]"} font-normal text-[#101828]`}
+              className={`inline-block rounded-[12px] px-[12px] py-[2px] ${desktop ? "text-[18px]" : "text-[12px]"} font-normal text-indicator`}
               style={{ background: "rgba(252,252,253,0.7)" }}
             >
               {badge}
@@ -46,12 +46,12 @@ export function PricingCard({
           {/* Price */}
           <div className="relative flex items-end gap-[2px]">
             <span
-              className={`${desktop ? "text-[42px]" : "text-[24px]"} font-bold leading-[1.1] text-[#1d2939]`}
+              className={`${desktop ? "text-[42px]" : "text-[24px]"} font-bold leading-[1.1] text-text-primary`}
             >
               $99
             </span>
             <span
-              className={`${desktop ? "text-[24px]" : "text-[18px]"} font-bold leading-[1.1] text-[#344054]`}
+              className={`${desktop ? "text-[24px]" : "text-[18px]"} font-bold leading-[1.1] text-text-body`}
             >
               {period}
             </span>
@@ -59,7 +59,7 @@ export function PricingCard({
         </div>
         {/* Compare text */}
         <p
-          className={`${desktop ? "text-[18px] px-[24px]" : "text-[14px] px-[4px]"} font-medium leading-[normal] text-[#101828]`}
+          className={`${desktop ? "text-[18px] px-[24px]" : "text-[14px] px-[4px]"} font-medium leading-[normal] text-indicator`}
         >
           {compare}
         </p>

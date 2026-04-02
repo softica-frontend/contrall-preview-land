@@ -23,7 +23,7 @@ export function HeroWaveRipple() {
     if (!svg) return null;
     const rings = Array.from(
       svg.querySelectorAll<SVGPathElement>('path[fill="#FCFCFD"]'),
-    );
+    ).slice(-14);
     if (rings.length === 0) return null;
     ringsRef.current = rings;
     return rings;

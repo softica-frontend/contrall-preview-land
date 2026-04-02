@@ -39,7 +39,7 @@ export function AddTrackerModal({ open, onClose }: AddTrackerModalProps) {
     <Modal
       open={open}
       onClose={handleClose}
-      className="flex h-[727px] max-h-[95vh] w-[1051px] max-w-[95vw] flex-col overflow-hidden rounded-xl border border-[#E4E7EC] bg-[#FCFCFD]"
+      className="flex h-[727px] max-h-[95vh] w-[1051px] max-w-[95vw] flex-col overflow-hidden rounded-xl border border-border-light bg-surface"
     >
       <Modal.Header>
         <span className="text-[14px] leading-[1.4] text-transparent select-none">
@@ -84,14 +84,14 @@ export function AddTrackerModal({ open, onClose }: AddTrackerModalProps) {
         <button
           type="button"
           onClick={currentStep === 0 ? handleClose : handleBack}
-          className="flex h-8 cursor-pointer items-center justify-center rounded-[40px] px-2.5 py-1 text-[14px] font-medium tracking-[0.5px] text-[#667085] transition-colors duration-150 hover:text-[#0C111D]"
+          className="flex h-8 cursor-pointer items-center justify-center rounded-[40px] px-2.5 py-1 text-[14px] font-medium tracking-[0.5px] text-text-subtle transition-colors duration-150 hover:text-text-heading"
         >
           {currentStep === 0 ? t("modal.cancel") : t("modal.back")}
         </button>
         <button
           type="button"
           onClick={handleNext}
-          className="flex h-8 cursor-pointer items-center justify-center rounded-full bg-[#2575FF] px-3 py-1 text-[14px] font-medium tracking-[0.5px] text-[#FCFCFD] transition-colors duration-200 hover:bg-[#1a63e0]"
+          className="flex h-8 cursor-pointer items-center justify-center rounded-full bg-primary px-3 py-1 text-[14px] font-medium tracking-[0.5px] text-surface transition-colors duration-200 hover:bg-primary-hover"
         >
           {currentStep === STEPS.length - 1
             ? t("modal.finish")
@@ -109,7 +109,7 @@ function GeneralStep() {
     <div className="flex flex-col gap-6">
       <div className="flex w-[416px] flex-col gap-1">
         <div className="flex flex-col gap-2">
-          <span className="text-[14px] font-medium leading-[1.1] text-[#21272A]">
+          <span className="text-[14px] font-medium leading-[1.1] text-text-secondary">
             {t("modal.nameAndRegion")}
           </span>
           <div className="flex gap-2">
@@ -121,7 +121,7 @@ function GeneralStep() {
               <input
                 type="text"
                 placeholder="**** **** **** ****"
-                className="w-full bg-transparent text-[14px] leading-[1.4] text-[#0C111D] outline-none placeholder:text-[rgba(27,45,69,0.5)]"
+                className="w-full bg-transparent text-[14px] leading-[1.4] text-text-heading outline-none placeholder:text-[rgba(27,45,69,0.5)]"
               />
               <ChevronDownIcon className="shrink-0 stroke-[#667085]" />
             </div>
@@ -131,12 +131,12 @@ function GeneralStep() {
 
       <div className="flex w-[416px] flex-col gap-1">
         <div className="flex flex-col gap-2">
-          <span className="text-[14px] font-medium leading-[1.1] text-[#21272A]">
+          <span className="text-[14px] font-medium leading-[1.1] text-text-secondary">
             {t("modal.description")}
           </span>
           <textarea
             placeholder={t("modal.description")}
-            className="h-24 w-full resize rounded-xl border border-[#D0D5DD] bg-white px-4 py-2 text-[14px] leading-[1.4] text-[#0C111D] outline-none placeholder:text-[rgba(27,45,69,0.5)] focus:border-[#2575FF]"
+            className="h-24 w-full resize rounded-xl border border-border bg-white px-4 py-2 text-[14px] leading-[1.4] text-text-heading outline-none placeholder:text-[rgba(27,45,69,0.5)] focus:border-primary"
           />
         </div>
       </div>
@@ -151,7 +151,7 @@ function TeamStep() {
     <div className="flex flex-col gap-6">
       <div className="flex w-[416px] flex-col gap-1">
         <div className="flex flex-col gap-2">
-          <span className="text-[14px] font-medium leading-[1.1] text-[#21272A]">
+          <span className="text-[14px] font-medium leading-[1.1] text-text-secondary">
             {t("modal.teamSize")}
           </span>
           <div className="flex h-11 items-center rounded-full border border-[rgba(27,45,69,0.3)] bg-white px-6 py-2">
@@ -165,11 +165,11 @@ function TeamStep() {
 
       <div className="flex w-[416px] flex-col gap-1">
         <div className="flex flex-col gap-2">
-          <span className="text-[14px] font-medium leading-[1.1] text-[#21272A]">
+          <span className="text-[14px] font-medium leading-[1.1] text-text-secondary">
             {t("modal.vertical")}
           </span>
           <div className="flex h-11 items-center justify-between rounded-full border border-[rgba(27,45,69,0.3)] bg-white pl-2 pr-6 py-2">
-            <span className="rounded-full bg-[#D0D5DD] px-3 py-1 text-[14px] font-medium leading-[20px] tracking-[0.5px] text-[#475467]">
+            <span className="rounded-full bg-border px-3 py-1 text-[14px] font-medium leading-[20px] tracking-[0.5px] text-text-body">
               Gambling
             </span>
             <ChevronDownIcon className="shrink-0 stroke-[#667085]" />
@@ -179,12 +179,12 @@ function TeamStep() {
 
       <div className="flex w-[416px] flex-col gap-1">
         <div className="flex flex-col gap-2">
-          <span className="text-[14px] font-medium leading-[1.1] text-[#21272A]">
+          <span className="text-[14px] font-medium leading-[1.1] text-text-secondary">
             {t("modal.description")}
           </span>
           <textarea
             placeholder="**** **** **** ****"
-            className="h-24 w-full resize rounded-xl border border-[#D0D5DD] bg-white px-4 py-2 text-[14px] leading-[1.4] text-[#0C111D] outline-none placeholder:text-[rgba(27,45,69,0.5)] focus:border-[#2575FF]"
+            className="h-24 w-full resize rounded-xl border border-border bg-white px-4 py-2 text-[14px] leading-[1.4] text-text-heading outline-none placeholder:text-[rgba(27,45,69,0.5)] focus:border-primary"
           />
         </div>
       </div>
@@ -199,10 +199,10 @@ function ConfigurationStep() {
     <div className="flex flex-col gap-6">
       <div className="flex w-[416px] flex-col gap-1">
         <div className="flex flex-col gap-2">
-          <span className="text-[14px] font-medium leading-[1.1] text-[#21272A]">
+          <span className="text-[14px] font-medium leading-[1.1] text-text-secondary">
             {t("modal.configuration")}
           </span>
-          <p className="text-[14px] leading-[1.4] text-[#98A2B3]">
+          <p className="text-[14px] leading-[1.4] text-text-placeholder">
             {t("modal.configPlaceholder")}
           </p>
         </div>
@@ -218,10 +218,10 @@ function PaymentStep() {
     <div className="flex flex-col gap-6">
       <div className="flex w-[416px] flex-col gap-1">
         <div className="flex flex-col gap-2">
-          <span className="text-[14px] font-medium leading-[1.1] text-[#21272A]">
+          <span className="text-[14px] font-medium leading-[1.1] text-text-secondary">
             {t("modal.payment")}
           </span>
-          <p className="text-[14px] leading-[1.4] text-[#98A2B3]">
+          <p className="text-[14px] leading-[1.4] text-text-placeholder">
             {t("modal.paymentPlaceholder")}
           </p>
         </div>

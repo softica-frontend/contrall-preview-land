@@ -141,7 +141,7 @@ export function Header() {
         <div className="animate-fade-in-down animate-fill-mode-both animate-duration-500 animate-delay-100 flex items-center">
           <a
             href="/auth/register"
-            className="flex shrink-0 items-center justify-center whitespace-nowrap rounded-[1000px] bg-[#2370e8] px-[12px] py-[10px] text-[12px] font-medium leading-none tracking-[0.5px] text-white transition-colors hover:bg-[#1a63e0] lg:px-[16px] lg:py-[12px] lg:text-[14px] xl:px-[20px] xl:py-[14px] xl:text-[16px]"
+            className="flex shrink-0 items-center justify-center whitespace-nowrap rounded-[1000px] bg-primary-alt px-[12px] py-[10px] text-[12px] font-medium leading-none tracking-[0.5px] text-white transition-colors hover:bg-primary-hover lg:px-[16px] lg:py-[12px] lg:text-[14px] xl:px-[20px] xl:py-[14px] xl:text-[16px]"
           >
             <span className="lg:hidden">{t("loginShort")}</span>
             <span className="hidden lg:inline">{t("login")}</span>
@@ -182,7 +182,7 @@ export function Header() {
           <button
             type="button"
             aria-label={t("account")}
-            className="flex size-[50px] items-center justify-center rounded-full bg-[#2575ff] hover:opacity-70 transition-opacity duration-200"
+            className="flex size-[50px] items-center justify-center rounded-full bg-primary hover:opacity-70 transition-opacity duration-200"
           >
             <UserCircleIcon />
           </button>

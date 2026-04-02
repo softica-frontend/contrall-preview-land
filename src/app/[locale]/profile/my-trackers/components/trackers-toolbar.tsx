@@ -64,7 +64,7 @@ export function TrackersToolbar({
         <button
           type="button"
           onClick={onAdd}
-          className="flex cursor-pointer items-center gap-1 rounded-full bg-[#2575FF] px-5 py-3.5 text-[16px] font-medium leading-none tracking-[0.5px] text-[#FCFCFD] transition-colors duration-200 hover:bg-[#1a63e0]"
+          className="flex cursor-pointer items-center gap-1 rounded-full bg-primary px-5 py-3.5 text-[16px] font-medium leading-none tracking-[0.5px] text-surface transition-colors duration-200 hover:bg-primary-hover"
         >
           <PlusIcon />
           {t("add")}
@@ -90,7 +90,7 @@ function ViewToggleButton({
       type="button"
       onClick={onClick}
       className={`flex size-14 cursor-pointer items-center justify-center rounded-full transition-colors duration-150 ${
-        active ? "text-[#2575FF]" : "text-[#667085] hover:text-[#0C111D]"
+        active ? "text-primary" : "text-text-subtle hover:text-text-heading"
       }`}
       aria-label={label}
     >

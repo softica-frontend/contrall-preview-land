@@ -55,7 +55,7 @@ export function NavTabs({
       className={`relative flex items-center gap-px rounded-[100px] p-[2px] lg:gap-[2px] xl:gap-[4px] ${className ?? ""}`}
     >
       <div
-        className="absolute bottom-[2px] h-[2px] rounded-full bg-[#2575ff] transition-all duration-300 ease-out"
+        className="absolute bottom-[2px] h-[2px] rounded-full bg-primary transition-all duration-300 ease-out"
         style={{ left: indicator.left, width: indicator.width }}
       />
       {navItems.map((id) => (
@@ -65,8 +65,8 @@ export function NavTabs({
           data-section={id}
           aria-current={activeSection === id ? "true" : undefined}
           onClick={() => onNavigate(id)}
-          className={`flex h-[32px] cursor-pointer items-center justify-center whitespace-nowrap px-[6px] py-[4px] font-inter text-[12px] font-medium leading-none transition-colors duration-200 hover:text-[#2575ff] lg:px-[8px] lg:text-[13px] xl:px-[12px] xl:text-[14px] ${
-            activeSection === id ? "text-[#2575ff]" : "text-[#0c111d]"
+          className={`flex h-[32px] cursor-pointer items-center justify-center whitespace-nowrap px-[6px] py-[4px] font-inter text-[12px] font-medium leading-none transition-colors duration-200 hover:text-primary lg:px-[8px] lg:text-[13px] xl:px-[12px] xl:text-[14px] ${
+            activeSection === id ? "text-primary" : "text-text-heading"
           }`}
         >
           {t(`nav.${id}`)}

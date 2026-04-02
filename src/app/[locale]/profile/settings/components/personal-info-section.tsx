@@ -57,7 +57,7 @@ export function PersonalInfoSection() {
       </SettingsFormField>
 
       <SettingsFormField label={t("personal.userSince")}>
-        <span className="font-roboto text-[16px] leading-[1.4] text-[#667085]">
+        <span className="font-roboto text-[16px] leading-[1.4] text-text-subtle">
           24 {t("personal.october")} 2025
         </span>
       </SettingsFormField>

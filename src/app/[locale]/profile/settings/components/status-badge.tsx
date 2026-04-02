@@ -6,8 +6,8 @@ const STATUS_STYLES: Record<string, { bg: string; dot: string; text: string }> =
   {
     completed: {
       bg: "bg-[rgba(68,186,62,0.1)]",
-      dot: "bg-[#44BA3E]",
-      text: "text-[#44BA3E]",
+      dot: "bg-success",
+      text: "text-success",
     },
     pending: {
       bg: "bg-[rgba(218,152,30,0.1)]",
@@ -16,8 +16,8 @@ const STATUS_STYLES: Record<string, { bg: string; dot: string; text: string }> =
     },
     failed: {
       bg: "bg-[rgba(218,30,40,0.1)]",
-      dot: "bg-[#DA1E28]",
-      text: "text-[#DA1E28]",
+      dot: "bg-error",
+      text: "text-error",
     },
     in_progress: {
       bg: "bg-[rgba(218,152,30,0.1)]",
@@ -26,8 +26,8 @@ const STATUS_STYLES: Record<string, { bg: string; dot: string; text: string }> =
     },
     cancelled: {
       bg: "bg-[rgba(218,30,40,0.1)]",
-      dot: "bg-[#DA1E28]",
-      text: "text-[#DA1E28]",
+      dot: "bg-error",
+      text: "text-error",
     },
     on_hold: {
       bg: "bg-[rgba(218,152,30,0.1)]",
@@ -36,23 +36,23 @@ const STATUS_STYLES: Record<string, { bg: string; dot: string; text: string }> =
     },
     scheduled: {
       bg: "bg-[rgba(102,112,133,0.1)]",
-      dot: "bg-[#667085]",
-      text: "text-[#667085]",
+      dot: "bg-text-subtle",
+      text: "text-text-subtle",
     },
     acknowledged: {
       bg: "bg-[rgba(68,186,62,0.1)]",
-      dot: "bg-[#44BA3E]",
-      text: "text-[#44BA3E]",
+      dot: "bg-success",
+      text: "text-success",
     },
     resolved: {
       bg: "bg-[rgba(68,186,62,0.1)]",
-      dot: "bg-[#44BA3E]",
-      text: "text-[#44BA3E]",
+      dot: "bg-success",
+      text: "text-success",
     },
     not_found: {
       bg: "bg-[rgba(218,30,40,0.1)]",
-      dot: "bg-[#DA1E28]",
-      text: "text-[#DA1E28]",
+      dot: "bg-error",
+      text: "text-error",
     },
     awaiting_feedback: {
       bg: "bg-[rgba(218,152,30,0.1)]",

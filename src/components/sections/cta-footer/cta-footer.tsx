@@ -21,7 +21,7 @@ export async function CtaFooter() {
   return (
     <section
       id="contacts"
-      className="relative w-full overflow-hidden bg-[#dadcff] px-[8px] py-[16px] md:px-[40px] md:pb-[60px] md:pt-0 xl:px-[80px]"
+      className="relative w-full overflow-hidden bg-bg-cta px-[8px] py-[16px] md:px-[40px] md:pb-[60px] md:pt-0 xl:px-[80px]"
     >
       {/* Decorative ellipse blurs (from Figma) */}
       <div
@@ -52,7 +52,7 @@ export async function CtaFooter() {
       </div>
 
       {/* Glass content card */}
-      <SectionReveal className="relative mx-auto flex w-full max-w-[1568px] flex-col items-center gap-[32px] rounded-[32px] border border-[#ebecfe] px-[32px] py-[48px] text-center md:gap-[48px] md:rounded-[48px] md:px-[32px] md:py-[64px]">
+      <SectionReveal className="relative mx-auto flex w-full max-w-[1568px] flex-col items-center gap-[32px] rounded-[32px] border border-border-section px-[32px] py-[48px] text-center md:gap-[48px] md:rounded-[48px] md:px-[32px] md:py-[64px]">
         {/* Glass layers */}
         <GlassOverlay
           gradientSvg={CARD_GLASS_BG}
@@ -65,20 +65,20 @@ export async function CtaFooter() {
             {t("sectionLabel")}
           </GradientLabel>
           {/* Desktop title */}
-          <h2 className="hidden whitespace-pre-line text-[42px] font-bold leading-[1.1] text-[#0c111d] md:block xl:text-[54px]">
+          <h2 className="hidden whitespace-pre-line text-[42px] font-bold leading-[1.1] text-text-heading md:block xl:text-[54px]">
             {t("title")}
           </h2>
           {/* Mobile title */}
-          <h2 className="whitespace-pre-line text-[32px] font-bold leading-[1.1] text-[#0c111d] md:hidden">
+          <h2 className="whitespace-pre-line text-[32px] font-bold leading-[1.1] text-text-heading md:hidden">
             {t("titleMobile")}
           </h2>
         </div>
 
         {/* Subtitle */}
-        <p className="animate-fade-in animate-fill-mode-both animate-delay-150 relative hidden whitespace-pre-line text-[18px] leading-[1.4] text-[#21272a] md:block">
+        <p className="animate-fade-in animate-fill-mode-both animate-delay-150 relative hidden whitespace-pre-line text-[18px] leading-[1.4] text-text-secondary md:block">
           {t("subtitle")}
         </p>
-        <p className="animate-fade-in animate-fill-mode-both animate-delay-150 relative whitespace-pre-line text-[14px] leading-[1.4] text-[#21272a] md:hidden">
+        <p className="animate-fade-in animate-fill-mode-both animate-delay-150 relative whitespace-pre-line text-[14px] leading-[1.4] text-text-secondary md:hidden">
           {t("subtitleMobile")}
         </p>
 
@@ -97,7 +97,7 @@ export async function CtaFooter() {
                   className="flex flex-1 flex-col items-center gap-[8px]"
                 >
                   <Icon />
-                  <span className="text-[10px] leading-[1.3] text-[#475467] md:text-[16px]">
+                  <span className="text-[10px] leading-[1.3] text-text-muted md:text-[16px]">
                     {benefit}
                   </span>
                 </div>

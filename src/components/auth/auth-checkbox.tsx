@@ -43,10 +43,10 @@ export function AuthCheckbox({
           w-5 h-5 rounded-[4px] border-[1.5px] flex items-center justify-center transition-colors
           ${
             isChecked
-              ? "bg-[#2563EB] border-[#2563EB]"
+              ? "bg-checkbox-active border-checkbox-active"
               : error
-                ? "bg-white border-[#DA1E28] shadow-[0_0_0_1px_#DA1E28,0_0_0_4px_rgba(218,30,40,0.2)]"
-                : "bg-white border-[#D0D5DD]"
+                ? "bg-white border-[#DA1E28] shadow-focus-error"
+                : "bg-white border-border"
           }
         `}
       >
@@ -69,7 +69,7 @@ export function AuthCheckbox({
           </svg>
         )}
       </div>
-      <span className="text-[14px] text-[#1B2D45]">{label}</span>
+      <span className="text-[14px] text-text-field">{label}</span>
     </label>
   );
 }

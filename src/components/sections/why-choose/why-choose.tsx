@@ -34,10 +34,10 @@ export async function WhyChoose() {
         <div className="mx-auto max-w-[1280px]">
           {/* Header (tablet/mobile) */}
           <SectionReveal className="mb-[32px] md:mb-[48px] xl:hidden">
-            <h2 className="animate-fade-in-up animate-fill-mode-both max-w-[800px] text-left text-[28px] font-bold leading-[1.1] text-[#0c111d] md:text-[36px]">
+            <h2 className="animate-fade-in-up animate-fill-mode-both max-w-[800px] text-left text-[28px] font-bold leading-[1.1] text-text-heading md:text-[36px]">
               {t("title")}
             </h2>
-            <p className="animate-fade-in-up animate-fill-mode-both animate-delay-150 mt-[12px] max-w-[700px] text-left text-[16px] font-bold leading-[1.4] text-[#21272a] md:text-[20px]">
+            <p className="animate-fade-in-up animate-fill-mode-both animate-delay-150 mt-[12px] max-w-[700px] text-left text-[16px] font-bold leading-[1.4] text-text-secondary md:text-[20px]">
               {t("subtitle")}
             </p>
           </SectionReveal>
@@ -46,10 +46,10 @@ export async function WhyChoose() {
           <div className="hidden xl:grid xl:grid-cols-3 xl:gap-[16px]">
             {/* Header — col 1-2 */}
             <SectionReveal className="col-span-2 mb-[48px]">
-              <h2 className="animate-fade-in-up animate-fill-mode-both max-w-[600px] text-left text-[42px] font-bold leading-[1.1] text-[#0c111d]">
+              <h2 className="animate-fade-in-up animate-fill-mode-both max-w-[600px] text-left text-[42px] font-bold leading-[1.1] text-text-heading">
                 {t("title")}
               </h2>
-              <p className="animate-fade-in-up animate-fill-mode-both animate-delay-150 mt-[12px] max-w-[480px] text-left text-[24px] font-bold leading-[1.4] text-[#21272a]">
+              <p className="animate-fade-in-up animate-fill-mode-both animate-delay-150 mt-[12px] max-w-[480px] text-left text-[24px] font-bold leading-[1.4] text-text-secondary">
                 {t("subtitle")}
               </p>
             </SectionReveal>

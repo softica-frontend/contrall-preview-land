@@ -1,36 +1,7 @@
-@import "tailwindcss";
-@import "tailwind-animations";
+/* ── Height-based breakpoints for auth forms ── */
 
-/* Height-based breakpoints for auth forms */
 @custom-variant h-md (@media (min-height: 800px));
 @custom-variant h-lg (@media (min-height: 950px));
-
-:root {
-  --background: #fcfcfd;
-  --foreground: #1d2939;
-  --blue: #2575ff;
-  --blue-hover: #1a63e0;
-  --text-dark: #0c111d;
-  --text-gray: #475467;
-  --surface: #fcfcfd;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-roboto: var(--font-roboto);
-  --font-inter: var(--font-inter);
-}
-
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: var(--font-roboto), "Roboto", sans-serif;
-}
-
-.font-inter {
-  font-family: var(--font-inter), "Inter", sans-serif;
-}
 
 /* ── Auth form staggered children ── */
 

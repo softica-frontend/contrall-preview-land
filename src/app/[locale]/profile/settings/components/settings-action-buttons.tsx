@@ -18,7 +18,7 @@ export function SettingsActionButtons({
       <button
         type="button"
         onClick={onCancel}
-        className="flex h-8 cursor-pointer items-center justify-center rounded-[40px] px-2.5 py-1 font-roboto text-[14px] font-medium tracking-[0.5px] text-[#667085] transition-opacity hover:opacity-70"
+        className="flex h-8 cursor-pointer items-center justify-center rounded-[40px] px-2.5 py-1 font-roboto text-[14px] font-medium tracking-[0.5px] text-text-subtle transition-opacity hover:opacity-70"
       >
         {cancelLabel}
       </button>
@@ -26,7 +26,7 @@ export function SettingsActionButtons({
         type="button"
         onClick={onSave}
         disabled={disabled}
-        className="flex h-8 items-center justify-center rounded-[1000px] bg-[#2575FF] px-2.5 py-1 font-roboto text-[14px] font-medium tracking-[0.5px] text-[#FCFCFD] transition-colors enabled:cursor-pointer enabled:hover:bg-[#1a63e0] disabled:cursor-not-allowed disabled:opacity-50"
+        className="flex h-8 items-center justify-center rounded-[1000px] bg-primary px-2.5 py-1 font-roboto text-[14px] font-medium tracking-[0.5px] text-surface transition-colors enabled:cursor-pointer enabled:hover:bg-primary-hover disabled:cursor-not-allowed disabled:opacity-50"
       >
         {saveLabel}
       </button>

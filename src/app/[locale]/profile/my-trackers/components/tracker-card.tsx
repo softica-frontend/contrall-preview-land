@@ -24,7 +24,7 @@ export function TrackerCard({ tracker, onDelete, onPause }: TrackerCardProps) {
   const t = useTranslations("MyTrackers");
 
   return (
-    <div className="group relative flex flex-col overflow-hidden rounded-2xl border border-[#E4E7EC] bg-[#FCFCFD] transition-shadow duration-200 hover:shadow-[0_4px_24px_rgba(0,0,0,0.08)]">
+    <div className="group relative flex flex-col overflow-hidden rounded-2xl border border-border-light bg-surface transition-shadow duration-200 hover:shadow-dropdown">
       <div className="flex flex-col gap-3 px-4 pt-4">
         {/* Plan badge */}
         <div className="flex items-center">
@@ -34,7 +34,7 @@ export function TrackerCard({ tracker, onDelete, onPause }: TrackerCardProps) {
         {/* Name + status */}
         <div className="flex flex-col gap-1">
           <div className="flex items-center justify-between">
-            <span className="text-[32px] font-bold leading-[1.1] text-[#0C111D]">
+            <span className="text-[32px] font-bold leading-[1.1] text-text-heading">
               {tracker.name}
             </span>
             <StatusIndicator
@@ -46,12 +46,12 @@ export function TrackerCard({ tracker, onDelete, onPause }: TrackerCardProps) {
 
           {/* Details */}
           <div className="flex flex-col gap-1.5">
-            <div className="flex items-center gap-1.5 text-[16px] leading-[1.4] text-[#475467]">
+            <div className="flex items-center gap-1.5 text-[16px] leading-[1.4] text-text-body">
               <span className="text-[14px]">{tracker.countryCode}</span>
               <span>{t("ip")}:</span>
               <span>{tracker.ip}</span>
             </div>
-            <div className="flex items-center gap-1.5 text-[16px] leading-[1.4] text-[#475467]">
+            <div className="flex items-center gap-1.5 text-[16px] leading-[1.4] text-text-body">
               <BanknoteIcon />
               <span>{t("nextBilling")}:</span>
               <span>{tracker.nextBillingDate}</span>
@@ -105,7 +105,7 @@ function ActionButton({
       type="button"
       title={title}
       onClick={onClick}
-      className="flex size-7 cursor-pointer items-center justify-center rounded-full text-[#667085] transition-colors duration-150 hover:bg-[#F2F4F7] hover:text-[#0C111D]"
+      className="flex size-7 cursor-pointer items-center justify-center rounded-full text-text-subtle transition-colors duration-150 hover:bg-[#F2F4F7] hover:text-text-heading"
     >
       {children}
     </button>
