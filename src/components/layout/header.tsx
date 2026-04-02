@@ -181,7 +181,7 @@ export function Header() {
         <div className="animate-fade-in-down animate-fill-mode-both animate-duration-500 animate-delay-100 flex flex-1 items-center justify-end">
           <button
             type="button"
-            aria-label="Личный кабинет"
+            aria-label={t("account")}
             className="flex size-[50px] items-center justify-center rounded-full bg-[#2575ff] hover:opacity-70 transition-opacity duration-200"
           >
             <UserCircleIcon />

@@ -142,12 +142,10 @@ export async function AboutStats() {
                     </span>
                     <div className="flex flex-col gap-[4px]">
                       <p className="text-[20px] font-bold leading-[1.1] text-[#1d2939]">
-                        Аптайм за 2 года работы
+                        {t("stat3Title")}
                       </p>
                       <p className="text-[16px] leading-[1.4] text-[#344054]">
-                        Менее двух часов простоя
-                        <br />
-                        за все время
+                        {t("stat3Subtitle")}
                       </p>
                     </div>
                   </div>

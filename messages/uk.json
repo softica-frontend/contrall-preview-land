@@ -11,7 +11,10 @@
     "login": "Вхід та реєстрація",
     "loginShort": "Увійти",
     "menu": "Меню",
-    "language": "Uk"
+    "language": "Uk",
+    "account": "Особистий кабінет",
+    "closeMenu": "Закрити меню",
+    "openMenu": "Відкрити меню"
   },
   "Sections": {
     "product": "Про продукт",
@@ -179,7 +182,7 @@
     "ruleUppercase": "1 Велика Літера",
     "ruleDigit": "1 Цифра",
     "agreeWith": "Я погоджуюсь з",
-    "termsLink": "Terms and Rules",
+    "termsLink": "Правилами та умовами",
     "rememberMe": "Запам'ятати мене",
     "forgotPassword": "Забули пароль?",
     "registerButton": "Почати безкоштовний тест",
@@ -283,7 +286,7 @@
     "viewList": "Список",
     "ip": "Ip",
     "noResults": "Трекери не знайдено",
-    "nextBilling": "Next Billing",
+    "nextBilling": "Наступний платіж",
     "status": {
       "active": "Активний",
       "paused": "На паузі",

@@ -50,7 +50,7 @@ export function MobileMenu({
       <button
         ref={closeButtonRef}
         type="button"
-        aria-label="Закрыть меню"
+        aria-label={t("closeMenu")}
         onClick={onToggle}
         className="flex size-[44px] items-center justify-center rounded-full bg-[#2575ff] text-[#fcfcfd] outline-none hover:opacity-70 transition-opacity duration-200"
       >
@@ -88,7 +88,7 @@ export function MobileMenu({
       <div className="flex flex-1 justify-center">
         <button
           type="button"
-          aria-label="Открыть меню"
+          aria-label={t("openMenu")}
           aria-expanded={isOpen}
           onClick={onToggle}
           className="flex h-[32px] items-center justify-center px-[16px] hover:opacity-70 transition-opacity duration-200"
