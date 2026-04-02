@@ -2,6 +2,7 @@
 
 import { useTranslations } from "next-intl";
 import { useState } from "react";
+import { ChevronDownIcon } from "@/components/icons/profile-icons";
 import { Modal } from "@/components/ui/modal";
 
 interface AddTrackerModalProps {
@@ -18,6 +19,8 @@ export function AddTrackerModal({ open, onClose }: AddTrackerModalProps) {
   const handleNext = () => {
     if (currentStep < STEPS.length - 1) {
       setCurrentStep(currentStep + 1);
+    } else {
+      handleClose();
     }
   };
 
@@ -112,7 +115,7 @@ function GeneralStep() {
           <div className="flex gap-2">
             <div className="flex h-11 w-[101px] items-center justify-between rounded-full border border-[rgba(27,45,69,0.3)] bg-white px-6 py-2">
               <span className="text-[20px]">🇦🇩</span>
-              <ChevronDownSmall />
+              <ChevronDownIcon className="shrink-0 stroke-[#667085]" />
             </div>
             <div className="flex h-11 flex-1 items-center rounded-full border border-[rgba(27,45,69,0.3)] bg-white px-6 py-2">
               <input
@@ -120,7 +123,7 @@ function GeneralStep() {
                 placeholder="**** **** **** ****"
                 className="w-full bg-transparent text-[14px] leading-[1.4] text-[#0C111D] outline-none placeholder:text-[rgba(27,45,69,0.5)]"
               />
-              <ChevronDownSmall />
+              <ChevronDownIcon className="shrink-0 stroke-[#667085]" />
             </div>
           </div>
         </div>
@@ -155,7 +158,7 @@ function TeamStep() {
             <span className="flex-1 text-[14px] leading-[1.4] text-[rgba(27,45,69,0.5)]">
               5-10
             </span>
-            <ChevronDownSmall />
+            <ChevronDownIcon className="shrink-0 stroke-[#667085]" />
           </div>
         </div>
       </div>
@@ -169,7 +172,7 @@ function TeamStep() {
             <span className="rounded-full bg-[#D0D5DD] px-3 py-1 text-[14px] font-medium leading-[20px] tracking-[0.5px] text-[#475467]">
               Gambling
             </span>
-            <ChevronDownSmall />
+            <ChevronDownIcon className="shrink-0 stroke-[#667085]" />
           </div>
         </div>
       </div>
@@ -224,24 +227,5 @@ function PaymentStep() {
         </div>
       </div>
     </div>
-  );
-}
-
-function ChevronDownSmall() {
-  return (
-    <svg
-      width="20"
-      height="20"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="#667085"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden="true"
-      className="shrink-0"
-    >
-      <path d="m6 9 6 6 6-6" />
-    </svg>
   );
 }

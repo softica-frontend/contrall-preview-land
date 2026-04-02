@@ -3,6 +3,7 @@
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { MainInput } from "@/components/ui/main-input";
+import { Link } from "@/i18n/navigation";
 import { SettingsActionButtons } from "./settings-action-buttons";
 import { SettingsCard } from "./settings-card";
 import { SettingsFormField } from "./settings-form-field";
@@ -30,12 +31,12 @@ export function PrivacySection() {
       <SettingsFormField
         label={t("privacy.currentPassword")}
         rightContent={
-          <button
-            type="button"
-            className="flex h-7 shrink-0 cursor-pointer items-center justify-center rounded-[40px] px-2.5 py-1 font-roboto text-[14px] font-medium tracking-[0.5px] text-[#2575FF] transition-opacity hover:opacity-70"
+          <Link
+            href="/auth/forgot-password"
+            className="flex h-7 shrink-0 items-center justify-center rounded-[40px] px-2.5 py-1 font-roboto text-[14px] font-medium tracking-[0.5px] text-[#2575FF] transition-opacity hover:opacity-70"
           >
             {t("privacy.forgotPassword")}
-          </button>
+          </Link>
         }
       >
         <MainInput
@@ -68,6 +69,7 @@ export function PrivacySection() {
         cancelLabel={t("personal.cancel")}
         saveLabel={t("privacy.changeButton")}
         onCancel={handleCancel}
+        onSave={() => {}}
         disabled={isDisabled}
       />
     </SettingsCard>

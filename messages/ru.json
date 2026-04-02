@@ -239,7 +239,27 @@
       "tracker": "Трекер",
       "amount": "Сумма",
       "status": "Статус",
-      "description": "Описание"
+      "description": "Описание",
+      "statuses": {
+        "completed": "Завершено",
+        "pending": "Ожидание",
+        "failed": "Ошибка",
+        "cancelled": "Отменено",
+        "in_progress": "В процессе",
+        "on_hold": "На удержании",
+        "scheduled": "Запланировано",
+        "acknowledged": "Подтверждено",
+        "resolved": "Решено",
+        "not_found": "Не найдено",
+        "awaiting_feedback": "Ожидание ответа"
+      },
+      "descriptions": {
+        "monthlySubscription": "Ежемесячная подписка",
+        "additionalDomain": "Доп. домен",
+        "refundCancellation": "Отмена возврата",
+        "refund": "Возврат средств",
+        "trialPeriod": "Пробный период"
+      }
     },
     "comingSoon": "Этот раздел находится в разработке."
   },
@@ -261,6 +281,8 @@
     "searchPlaceholder": "Поиск трекеров...",
     "viewGrid": "Сетка",
     "viewList": "Список",
+    "ip": "Ip",
+    "noResults": "Трекеры не найдены",
     "nextBilling": "Next Billing",
     "status": {
       "active": "Активный",

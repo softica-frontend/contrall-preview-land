@@ -1,30 +1,35 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { MainInput } from "@/components/ui/main-input";
 import { SettingsActionButtons } from "./settings-action-buttons";
 import { SettingsCard } from "./settings-card";
 import { SettingsFormField } from "./settings-form-field";
 import { TimezoneSelect } from "./timezone-select";
 
-interface PersonalInfoSectionProps {
-  email: string;
-}
+const DEFAULT_TIMEZONE = "UTC+2";
 
-export function PersonalInfoSection({ email }: PersonalInfoSectionProps) {
+export function PersonalInfoSection() {
   const t = useTranslations("Settings");
+  const [email, setEmail] = useState("");
   const [name, setName] = useState("");
-  const [currentEmail, setCurrentEmail] = useState(email);
-  const [timezone, setTimezone] = useState("UTC+2");
+  const [currentEmail, setCurrentEmail] = useState("");
+  const [timezone, setTimezone] = useState(DEFAULT_TIMEZONE);
+
+  useEffect(() => {
+    const storedEmail = localStorage.getItem("auth_email") ?? "";
+    setEmail(storedEmail);
+    setCurrentEmail(storedEmail);
+  }, []);
 
   const hasChanges =
-    name !== "" || currentEmail !== email || timezone !== "UTC+2";
+    name !== "" || currentEmail !== email || timezone !== DEFAULT_TIMEZONE;
 
   const handleCancel = () => {
     setName("");
     setCurrentEmail(email);
-    setTimezone("UTC+2");
+    setTimezone(DEFAULT_TIMEZONE);
   };
 
   return (
@@ -61,6 +66,7 @@ export function PersonalInfoSection({ email }: PersonalInfoSectionProps) {
         cancelLabel={t("personal.cancel")}
         saveLabel={t("personal.save")}
         onCancel={handleCancel}
+        onSave={() => {}}
         disabled={!hasChanges}
       />
     </SettingsCard>

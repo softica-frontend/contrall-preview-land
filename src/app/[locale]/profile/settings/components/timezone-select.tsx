@@ -103,6 +103,7 @@ export function TimezoneSelect({ value, onChange }: TimezoneSelectProps) {
         type="button"
         aria-expanded={open}
         aria-haspopup="listbox"
+        aria-label="Select timezone"
         onClick={() => setOpen(!open)}
         className="flex cursor-pointer items-center gap-1.5"
       >
@@ -142,14 +143,21 @@ export function TimezoneSelect({ value, onChange }: TimezoneSelectProps) {
             style={{ top: position.top, left: position.left }}
           >
             {TIMEZONES.map((tz) => (
-              <button
+              <div
                 key={tz.value}
-                type="button"
                 role="option"
+                tabIndex={0}
                 aria-selected={value === tz.value}
                 onClick={() => {
                   onChange(tz.value);
                   setOpen(false);
+                }}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    e.preventDefault();
+                    onChange(tz.value);
+                    setOpen(false);
+                  }
                 }}
                 className={`flex w-full cursor-pointer items-center px-4 py-2.5 text-[14px] transition-colors duration-150 hover:bg-[#f0f4ff] ${
                   value === tz.value
@@ -158,7 +166,7 @@ export function TimezoneSelect({ value, onChange }: TimezoneSelectProps) {
                 }`}
               >
                 {tz.label}
-              </button>
+              </div>
             ))}
           </div>,
           document.body,

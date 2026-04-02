@@ -24,7 +24,7 @@ export function LanguageSwitcher({ className }: { className?: string }) {
     router.replace(pathname, { locale: newLocale });
   };
 
-  // Close on outside click
+  // Close on outside click (mousedown to avoid same-tick conflict with toggle)
   useEffect(() => {
     if (!open) return;
     const handler = (e: MouseEvent) => {
@@ -32,8 +32,8 @@ export function LanguageSwitcher({ className }: { className?: string }) {
         setOpen(false);
       }
     };
-    document.addEventListener("click", handler);
-    return () => document.removeEventListener("click", handler);
+    document.addEventListener("mousedown", handler);
+    return () => document.removeEventListener("mousedown", handler);
   }, [open]);
 
   // Close on Escape

@@ -63,6 +63,8 @@ export function Modal({ open, onClose, children, className }: ModalProps) {
       onClick={handleOverlayClick}
     >
       <div
+        role="dialog"
+        aria-modal="true"
         className={
           className ??
           "flex max-h-[95vh] w-[1051px] max-w-[95vw] flex-col overflow-hidden rounded-xl border border-[#E4E7EC] bg-[#FCFCFD]"

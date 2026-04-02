@@ -1,9 +1,9 @@
-"use client";
+import type { ReactNode } from "react";
 
 interface SettingsFormFieldProps {
   label: string;
-  children: React.ReactNode;
-  rightContent?: React.ReactNode;
+  children: ReactNode;
+  rightContent?: ReactNode;
 }
 
 export function SettingsFormField({
