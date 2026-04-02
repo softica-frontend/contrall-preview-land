@@ -11,7 +11,10 @@
     "login": "Вход и регистрация",
     "loginShort": "Войти",
     "menu": "Меню",
-    "language": "Ru"
+    "language": "Ru",
+    "account": "Личный кабинет",
+    "closeMenu": "Закрыть меню",
+    "openMenu": "Открыть меню"
   },
   "Sections": {
     "product": "О продукте",
@@ -179,11 +182,11 @@
     "ruleUppercase": "1 Заглавная Буква",
     "ruleDigit": "1 Цифра",
     "agreeWith": "Я соглашаюсь с",
-    "termsLink": "Terms and Rules",
+    "termsLink": "Правилами и условиями",
     "rememberMe": "Запомнить меня",
     "forgotPassword": "Забыли пароль?",
     "registerButton": "Начать бесплатный тест",
-    "loginButton": "Ввойти",
+    "loginButton": "Войти",
     "forgotButton": "Выслать ссылку для восстановления",
     "or": "или",
     "hasAccount": "Уже есть аккаунт?",
@@ -283,7 +286,7 @@
     "viewList": "Список",
     "ip": "Ip",
     "noResults": "Трекеры не найдены",
-    "nextBilling": "Next Billing",
+    "nextBilling": "Следующий платеж",
     "status": {
       "active": "Активный",
       "paused": "На паузе",

@@ -11,7 +11,10 @@
     "login": "Sign in",
     "loginShort": "Login",
     "menu": "Menu",
-    "language": "En"
+    "language": "En",
+    "account": "My account",
+    "closeMenu": "Close menu",
+    "openMenu": "Open menu"
   },
   "Sections": {
     "product": "Product",
