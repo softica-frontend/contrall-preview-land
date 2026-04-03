@@ -1,14 +1,16 @@
 import { getTranslations } from "next-intl/server";
 import { TelegramIcon } from "@/components/icons/misc-icons";
 import { GradientLabel } from "@/components/ui/gradient-label";
-import { SectionReveal } from "@/components/ui/section-reveal";
 
 export async function Footer() {
   const t = await getTranslations("Footer");
 
   return (
-    <footer className="w-full px-[16px] py-[32px] md:px-[20px] lg:px-[80px] md:pb-[80px] md:pt-0 overflow-x-clip">
-      <SectionReveal className="mx-auto flex w-full max-w-[1280px] flex-col items-center gap-[16px]">
+    <footer
+      className="w-full px-[16px] py-[32px] md:px-[20px] lg:px-[80px] md:pb-[80px] md:pt-0 overflow-x-clip"
+      data-visible="false"
+    >
+      <div className="mx-auto flex w-full max-w-[1280px] flex-col items-center gap-[16px]">
         {/* Support label */}
         <GradientLabel className="animate-fade-in animate-fill-mode-both text-[16px] md:text-[20px]">
           {t("supportLabel")}
@@ -69,7 +71,7 @@ export async function Footer() {
             </a>
           </div>
         </div>
-      </SectionReveal>
+      </div>
     </footer>
   );
 }

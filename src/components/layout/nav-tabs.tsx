@@ -5,14 +5,12 @@ import { useCallback, useEffect, useRef, useState } from "react";
 
 interface NavTabsProps {
   activeSection: string;
-  onNavigate: (id: string) => void;
   navItems: readonly string[];
   className?: string;
 }
 
 export function NavTabs({
   activeSection,
-  onNavigate,
   navItems,
   className,
 }: NavTabsProps) {
@@ -59,18 +57,18 @@ export function NavTabs({
         style={{ left: indicator.left, width: indicator.width }}
       />
       {navItems.map((id) => (
-        <button
+        <a
           key={id}
-          type="button"
+          href={`#${id}`}
           data-section={id}
           aria-current={activeSection === id ? "true" : undefined}
-          onClick={() => onNavigate(id)}
-          className={`flex h-[32px] cursor-pointer items-center justify-center whitespace-nowrap px-[6px] py-[4px] font-inter text-[12px] font-medium leading-none transition-colors duration-200 hover:text-primary lg:px-[8px] lg:text-[13px] xl:px-[12px] xl:text-[14px] ${
+          onClick={(e) => (e.currentTarget as HTMLElement).blur()}
+          className={`flex h-[32px] cursor-pointer items-center justify-center whitespace-nowrap px-[6px] py-[4px] font-inter text-[12px] font-medium leading-none transition-colors duration-200 hover:text-primary focus:outline-none focus-visible:outline-none lg:px-[8px] lg:text-[13px] xl:px-[12px] xl:text-[14px] ${
             activeSection === id ? "text-primary" : "text-text-heading"
           }`}
         >
           {t(`nav.${id}`)}
-        </button>
+        </a>
       ))}
     </nav>
   );

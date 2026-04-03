@@ -20,7 +20,6 @@ export async function CtaFooter() {
 
   return (
     <section
-      id="contacts"
       className="relative w-full overflow-hidden bg-bg-cta px-[8px] py-[16px] md:px-[40px] md:pb-[60px] md:pt-0 xl:px-[80px]"
     >
       {/* Decorative ellipse blurs (from Figma) */}

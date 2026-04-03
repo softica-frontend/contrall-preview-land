@@ -8,11 +8,12 @@ import {
   GLASS_SHADOW_M,
   GLASS_SHADOW_S,
 } from "@/components/ui/shadows";
+import { Link } from "@/i18n/navigation";
 import { FeatureItem } from "./feature-item";
 
 function GlassButton({ href, label }: { href: string; label: string }) {
   return (
-    <a
+    <Link
       href={href}
       className="relative z-[1] flex h-[44px] items-center justify-center overflow-hidden rounded-[1000px] text-[16px] font-medium tracking-[0.5px] text-primary transition-colors hover:bg-primary hover:text-white active:bg-primary-active focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2575ff] focus-visible:ring-offset-2"
     >
@@ -21,18 +22,18 @@ function GlassButton({ href, label }: { href: string; label: string }) {
         insetShadow={GLASS_SHADOW_S}
       />
       <span className="relative">{label}</span>
-    </a>
+    </Link>
   );
 }
 
 function SolidButton({ href, label }: { href: string; label: string }) {
   return (
-    <a
+    <Link
       href={href}
       className="relative z-[1] flex h-[44px] items-center justify-center rounded-[1000px] bg-primary text-[16px] font-medium tracking-[0.5px] text-surface transition-colors hover:bg-primary-hover active:bg-primary-active focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2575ff] focus-visible:ring-offset-2"
     >
       {label}
-    </a>
+    </Link>
   );
 }
 

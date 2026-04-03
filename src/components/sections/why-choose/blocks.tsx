@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { getTranslations } from "next-intl/server";
 import { GlassCard, GradientCard } from "@/components/ui/glass-card";
+import { Link } from "@/i18n/navigation";
 
 /* ── Profit "30дн" card ── */
 export async function ProfitCard({ className }: { className?: string }) {
@@ -210,12 +211,12 @@ export async function CtaButton({ className }: { className?: string }) {
   const t = await getTranslations("WhyChoose");
   return (
     <div className={`flex justify-center ${className ?? ""}`}>
-      <a
+      <Link
         href="/auth/register"
         className="inline-flex -rotate-[4deg] items-center justify-center rounded-[1000px] bg-primary px-[32px] py-[16px] text-[16px] font-medium tracking-[0.5px] text-white transition-colors hover:bg-primary-hover active:bg-primary-active focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2575ff] focus-visible:ring-offset-2 md:px-[40px] md:py-[20px] md:text-[18px]"
       >
         {t("ctaButton")}
-      </a>
+      </Link>
     </div>
   );
 }

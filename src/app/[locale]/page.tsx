@@ -37,9 +37,11 @@ export default async function Home({
         <Pricing />
         <AboutStats />
         <PaymentMethods />
-        <CtaFooter />
       </main>
-      <Footer />
+      <div id="contacts">
+        <CtaFooter />
+        <Footer />
+      </div>
     </>
   );
 }

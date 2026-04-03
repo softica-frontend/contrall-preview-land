@@ -7,6 +7,7 @@ import { Logomark, LogoText } from "@/components/icons/logo";
 import { MobileMenu } from "@/components/layout/mobile-menu";
 import { NavTabs } from "@/components/layout/nav-tabs";
 import { LanguageSwitcher } from "@/components/ui/language-switcher";
+import { Link } from "@/i18n/navigation";
 
 const NAV_IDS = [
   "product",
@@ -85,32 +86,6 @@ export function Header() {
     };
   }, [mobileMenuOpen]);
 
-  const scrollTo = useCallback((id: string) => {
-    setMobileMenuOpen(false);
-
-    // Instantly reveal all SectionReveal elements that we'll skip past
-    // so they don't animate as we jump through them
-    const target = document.getElementById(id);
-    if (!target) return;
-
-    const reveals = document.querySelectorAll<HTMLElement>(
-      '[data-visible="false"]',
-    );
-    const targetRect = target.getBoundingClientRect();
-
-    for (const el of reveals) {
-      // Skip the target section itself — let it animate normally
-      if (target.contains(el) || el.contains(target)) continue;
-      // Reveal everything above or at the target
-      const elRect = el.getBoundingClientRect();
-      if (elRect.top < targetRect.bottom) {
-        el.dataset.visible = "true";
-      }
-    }
-
-    target.scrollIntoView({ behavior: "instant" });
-  }, []);
-
   const toggleMenu = useCallback(() => {
     setMobileMenuOpen((prev) => !prev);
   }, []);
@@ -122,8 +97,11 @@ export function Header() {
         <button
           type="button"
           aria-label="Go to homepage"
-          onClick={() => window.scrollTo({ top: 0, behavior: "instant" })}
-          className="animate-fade-in-down animate-fill-mode-both animate-duration-500 relative flex h-[50px] w-[155px] shrink-0 cursor-pointer items-center lg:h-[60px] lg:w-[186px] xl:h-[75px] xl:w-[233px] hover:opacity-80 transition-opacity duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2575ff] focus-visible:ring-offset-2 rounded-lg"
+          onClick={(e) => {
+            (e.currentTarget as HTMLElement).blur();
+            window.scrollTo({ top: 0, behavior: "smooth" });
+          }}
+          className="animate-fade-in-down animate-fill-mode-both animate-duration-500 relative flex h-[50px] w-[155px] shrink-0 cursor-pointer items-center lg:h-[60px] lg:w-[186px] xl:h-[75px] xl:w-[233px] hover:opacity-80 transition-opacity duration-200 focus:outline-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2575ff] focus-visible:ring-offset-2 rounded-lg"
         >
           <div className="absolute inset-[14.75%_4.67%] flex items-center gap-[6px]">
             <Logomark className="h-full w-auto shrink-0 text-[#1d2939]" />
@@ -133,19 +111,18 @@ export function Header() {
 
         <NavTabs
           activeSection={activeSection}
-          onNavigate={scrollTo}
           navItems={NAV_IDS}
           className="animate-fade-in animate-fill-mode-both animate-duration-700 animate-delay-200"
         />
 
         <div className="animate-fade-in-down animate-fill-mode-both animate-duration-500 animate-delay-100 flex items-center">
-          <a
+          <Link
             href="/auth/register"
             className="flex shrink-0 items-center justify-center whitespace-nowrap rounded-[1000px] bg-primary-alt px-[12px] py-[10px] text-[12px] font-medium leading-none tracking-[0.5px] text-white transition-colors hover:bg-primary-hover lg:px-[16px] lg:py-[12px] lg:text-[14px] xl:px-[20px] xl:py-[14px] xl:text-[16px]"
           >
             <span className="lg:hidden">{t("loginShort")}</span>
             <span className="hidden lg:inline">{t("login")}</span>
-          </a>
+          </Link>
           <LanguageSwitcher className="hidden lg:block" />
         </div>
       </div>
@@ -162,8 +139,11 @@ export function Header() {
           <button
             type="button"
             aria-label="Go to homepage"
-            onClick={() => window.scrollTo({ top: 0, behavior: "instant" })}
-            className="relative flex h-[75px] w-[81px] shrink-0 cursor-pointer items-center hover:opacity-80 transition-opacity duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2575ff] focus-visible:ring-offset-2 rounded-lg"
+            onClick={(e) => {
+              (e.currentTarget as HTMLElement).blur();
+              window.scrollTo({ top: 0, behavior: "smooth" });
+            }}
+            className="relative flex h-[75px] w-[81px] shrink-0 cursor-pointer items-center hover:opacity-80 transition-opacity duration-200 focus:outline-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2575ff] focus-visible:ring-offset-2 rounded-lg"
           >
             <div className="absolute inset-[14.75%_13.72%]">
               <Logomark className="size-full text-[#1d2939]" />
@@ -174,18 +154,18 @@ export function Header() {
         <MobileMenu
           isOpen={mobileMenuOpen}
           onToggle={toggleMenu}
-          onNavigate={scrollTo}
           navItems={NAV_IDS}
+          activeSection={activeSection}
         />
 
         <div className="animate-fade-in-down animate-fill-mode-both animate-duration-500 animate-delay-100 flex flex-1 items-center justify-end">
-          <button
-            type="button"
+          <Link
+            href="/auth/register"
             aria-label={t("account")}
             className="flex size-[50px] items-center justify-center rounded-full bg-primary hover:opacity-70 transition-opacity duration-200"
           >
             <UserCircleIcon />
-          </button>
+          </Link>
           <LanguageSwitcher />
         </div>
       </div>
