@@ -2,23 +2,15 @@
 
 import { useTranslations } from "next-intl";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { useHeaderContext } from "@/components/layout/header-provider";
+import { NAV_IDS } from "@/hooks/use-active-section";
 
-interface NavTabsProps {
-  activeSection: string;
-  navItems: readonly string[];
-  className?: string;
-}
-
-export function NavTabs({
-  activeSection,
-  navItems,
-  className,
-}: NavTabsProps) {
+export function NavTabs({ className }: { className?: string }) {
   const t = useTranslations("Header");
+  const { activeSection } = useHeaderContext();
   const navRef = useRef<HTMLElement>(null);
   const [indicator, setIndicator] = useState({ left: 0, width: 0 });
 
-  // Sliding indicator position
   const updateIndicator = useCallback(() => {
     if (!navRef.current) return;
     const activeLink = navRef.current.querySelector(
@@ -56,7 +48,7 @@ export function NavTabs({
         className="absolute bottom-[2px] h-[2px] rounded-full bg-primary transition-all duration-300 ease-out"
         style={{ left: indicator.left, width: indicator.width }}
       />
-      {navItems.map((id) => (
+      {NAV_IDS.map((id) => (
         <a
           key={id}
           href={`#${id}`}

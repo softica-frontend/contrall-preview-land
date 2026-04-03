@@ -4,21 +4,12 @@ import { useTranslations } from "next-intl";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { CloseIcon, HamburgerIcon } from "@/components/icons/header-icons";
+import { useHeaderContext } from "@/components/layout/header-provider";
+import { NAV_IDS } from "@/hooks/use-active-section";
 
-interface MobileMenuProps {
-  isOpen: boolean;
-  onToggle: () => void;
-  navItems: readonly string[];
-  activeSection: string;
-}
-
-export function MobileMenu({
-  isOpen,
-  onToggle,
-  navItems,
-  activeSection,
-}: MobileMenuProps) {
+export function MobileMenu() {
   const t = useTranslations("Header");
+  const { activeSection, mobileMenuOpen: isOpen, toggleMenu: onToggle } = useHeaderContext();
   const [mounted, setMounted] = useState(false);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const overlayRef = useRef<HTMLDivElement>(null);
@@ -36,7 +27,6 @@ export function MobileMenu({
     }
   }, [isOpen]);
 
-  // Focus trap: cycle Tab/Shift+Tab within the overlay
   const handleKeyDown = useCallback(
     (e: React.KeyboardEvent) => {
       if (e.key === "Escape") {
@@ -110,7 +100,7 @@ export function MobileMenu({
       </span>
 
       <nav className="flex w-full flex-col gap-[16px]">
-        {navItems.map((id) => (
+        {NAV_IDS.map((id) => (
           <a
             key={id}
             href={`#${id}`}
