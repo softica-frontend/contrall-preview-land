@@ -101,7 +101,7 @@ export function Header() {
             (e.currentTarget as HTMLElement).blur();
             window.scrollTo({ top: 0, behavior: "smooth" });
           }}
-          className="animate-fade-in-down animate-fill-mode-both animate-duration-500 relative flex h-[50px] w-[155px] shrink-0 cursor-pointer items-center lg:h-[60px] lg:w-[186px] xl:h-[75px] xl:w-[233px] hover:opacity-80 transition-opacity duration-200 focus:outline-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2575ff] focus-visible:ring-offset-2 rounded-lg"
+          className="relative flex h-[50px] w-[155px] shrink-0 cursor-pointer items-center lg:h-[60px] lg:w-[186px] xl:h-[75px] xl:w-[233px] hover:opacity-80 transition-opacity duration-200 focus:outline-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2575ff] focus-visible:ring-offset-2 rounded-lg"
         >
           <div className="absolute inset-[14.75%_4.67%] flex items-center gap-[6px]">
             <Logomark className="h-full w-auto shrink-0 text-[#1d2939]" />
@@ -135,7 +135,7 @@ export function Header() {
             : "-translate-y-[200%]"
         }`}
       >
-        <div className="animate-fade-in-down animate-fill-mode-both animate-duration-500 flex flex-1 items-start">
+        <div className="flex flex-1 items-start">
           <button
             type="button"
             aria-label="Go to homepage"

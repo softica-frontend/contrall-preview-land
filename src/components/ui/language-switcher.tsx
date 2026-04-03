@@ -17,12 +17,23 @@ export function LanguageSwitcher({ className }: { className?: string }) {
   const router = useRouter();
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
+  const [activeIndex, setActiveIndex] = useState(-1);
   const ref = useRef<HTMLDivElement>(null);
+  const optionRefs = useRef<(HTMLButtonElement | null)[]>([]);
 
   const switchLocale = (newLocale: "ru" | "en" | "uk") => {
     setOpen(false);
     router.replace(pathname, { locale: newLocale });
   };
+
+  // Reset active index when opening, set to current locale
+  useEffect(() => {
+    if (open) {
+      const idx = LOCALES.findIndex((l) => l.code === locale);
+      setActiveIndex(idx);
+      optionRefs.current[idx]?.focus();
+    }
+  }, [open, locale]);
 
   // Close on outside click (mousedown to avoid same-tick conflict with toggle)
   useEffect(() => {
@@ -46,8 +57,42 @@ export function LanguageSwitcher({ className }: { className?: string }) {
     return () => document.removeEventListener("keydown", handler);
   }, [open]);
 
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (!open) return;
+
+    switch (e.key) {
+      case "ArrowDown": {
+        e.preventDefault();
+        const next = (activeIndex + 1) % LOCALES.length;
+        setActiveIndex(next);
+        optionRefs.current[next]?.focus();
+        break;
+      }
+      case "ArrowUp": {
+        e.preventDefault();
+        const prev = (activeIndex - 1 + LOCALES.length) % LOCALES.length;
+        setActiveIndex(prev);
+        optionRefs.current[prev]?.focus();
+        break;
+      }
+      case "Enter":
+      case " ": {
+        e.preventDefault();
+        if (activeIndex >= 0) {
+          switchLocale(LOCALES[activeIndex].code);
+        }
+        break;
+      }
+    }
+  };
+
   return (
-    <div ref={ref} className={`relative ${className ?? ""}`}>
+    // biome-ignore lint/a11y/noStaticElementInteractions: wrapper needs onKeyDown for arrow key navigation
+    <div
+      ref={ref}
+      className={`relative ${className ?? ""}`}
+      onKeyDown={handleKeyDown}
+    >
       <button
         type="button"
         aria-expanded={open}
@@ -69,24 +114,35 @@ export function LanguageSwitcher({ className }: { className?: string }) {
       <div
         role="listbox"
         aria-label="Select language"
+        tabIndex={-1}
+        aria-activedescendant={
+          open && activeIndex >= 0
+            ? `lang-option-${LOCALES[activeIndex].code}`
+            : undefined
+        }
         className={`absolute right-0 top-full z-50 mt-1 min-w-[140px] origin-top overflow-hidden rounded-[12px] bg-white shadow-dropdown transition-all duration-200 ease-out ${
           open
             ? "scale-y-100 opacity-100"
             : "pointer-events-none scale-y-0 opacity-0"
         }`}
       >
-        {LOCALES.map((item) => (
+        {LOCALES.map((item, i) => (
           <button
             key={item.code}
+            ref={(el) => {
+              optionRefs.current[i] = el;
+            }}
+            id={`lang-option-${item.code}`}
             type="button"
             role="option"
             aria-selected={locale === item.code}
+            tabIndex={-1}
             onClick={() => switchLocale(item.code)}
-            className={`flex w-full cursor-pointer items-center px-[16px] py-[10px] text-[14px] transition-colors duration-150 hover:bg-bg-hover ${
+            className={`flex w-full cursor-pointer items-center px-[16px] py-[10px] text-[14px] transition-colors duration-150 hover:bg-bg-hover focus:outline-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset focus-visible:rounded-[12px] ${
               locale === item.code
                 ? "font-medium text-primary"
                 : "text-text-primary"
-            }`}
+            } ${activeIndex === i ? "bg-bg-hover" : ""}`}
           >
             {item.label}
           </button>

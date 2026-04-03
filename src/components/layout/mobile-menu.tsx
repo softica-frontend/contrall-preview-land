@@ -1,7 +1,7 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { CloseIcon, HamburgerIcon } from "@/components/icons/header-icons";
 
@@ -21,6 +21,8 @@ export function MobileMenu({
   const t = useTranslations("Header");
   const [mounted, setMounted] = useState(false);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const overlayRef = useRef<HTMLDivElement>(null);
+  const triggerRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     setMounted(true);
@@ -29,14 +31,53 @@ export function MobileMenu({
   useEffect(() => {
     if (isOpen) {
       closeButtonRef.current?.focus();
+    } else {
+      triggerRef.current?.focus();
     }
   }, [isOpen]);
 
+  // Focus trap: cycle Tab/Shift+Tab within the overlay
+  const handleKeyDown = useCallback(
+    (e: React.KeyboardEvent) => {
+      if (e.key === "Escape") {
+        onToggle();
+        return;
+      }
+      if (e.key !== "Tab") return;
+
+      const overlay = overlayRef.current;
+      if (!overlay) return;
+
+      const focusable = overlay.querySelectorAll<HTMLElement>(
+        'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])',
+      );
+      if (focusable.length === 0) return;
+
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+
+      if (e.shiftKey) {
+        if (document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        }
+      } else {
+        if (document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        }
+      }
+    },
+    [onToggle],
+  );
+
   const overlay = (
     <div
+      ref={overlayRef}
       role="dialog"
       aria-modal="true"
       aria-label="Navigation menu"
+      onKeyDown={handleKeyDown}
       className={`fixed inset-0 z-100 flex flex-col items-center gap-[32px] overflow-y-auto px-[24px] pb-[32px] pt-[32px] transition-all duration-300 ease-out md:hidden ${
         isOpen
           ? "opacity-100 translate-y-0"
@@ -89,6 +130,7 @@ export function MobileMenu({
     <>
       <div className="flex flex-1 justify-center">
         <button
+          ref={triggerRef}
           type="button"
           aria-label={t("openMenu")}
           aria-expanded={isOpen}
