@@ -19,9 +19,7 @@ export async function CtaFooter() {
   const benefits = [t("benefit1"), t("benefit2"), t("benefit3")];
 
   return (
-    <section
-      className="relative w-full overflow-hidden bg-bg-cta px-[8px] py-[16px] md:px-[40px] md:pb-[60px] md:pt-0 xl:px-[80px]"
-    >
+    <section className="relative w-full overflow-hidden bg-bg-cta px-[8px] py-[16px] md:px-[40px] md:pb-[60px] md:pt-0 xl:px-[80px]">
       {/* Decorative ellipse blurs (from Figma) */}
       <div
         className="pointer-events-none absolute left-1/2 top-0 h-[283px] w-[574px] -translate-x-1/2 -translate-y-1/2 mix-blend-lighten md:h-[545px] md:w-[2400px]"

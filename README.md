@@ -1,36 +1,92 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Contrall Landing
+
+SaaS platform landing page for **Contrall** — a tracking system management platform.
+
+## Tech Stack
+
+- **Framework:** Next.js 16 (App Router, React Compiler)
+- **Language:** TypeScript (strict mode)
+- **Styling:** Tailwind CSS v4 + CSS variables
+- **i18n:** next-intl (EN, UK, RU)
+- **Animations:** tailwind-animations + custom CSS keyframes
+- **Linting/Formatting:** Biome 2.2
+- **Package Manager:** pnpm
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
+
+- Node.js 20+
+- pnpm 9+
+
+### Installation
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+pnpm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Development
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+pnpm dev
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-## Learn More
+### Available Scripts
 
-To learn more about Next.js, take a look at the following resources:
+| Command        | Description                        |
+|----------------|------------------------------------|
+| `pnpm dev`     | Start development server           |
+| `pnpm build`   | Production build                   |
+| `pnpm start`   | Start production server            |
+| `pnpm lint`    | Run Biome check (lint + format)    |
+| `pnpm format`  | Run Biome format with auto-fix     |
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Project Structure
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```
+src/
+├── app/
+│   ├── [locale]/              # Localized routes
+│   │   ├── auth/              # Authentication pages (login, register, forgot-password)
+│   │   ├── profile/           # Profile pages (settings, my-trackers)
+│   │   ├── page.tsx           # Landing page
+│   │   └── layout.tsx         # Locale layout
+│   └── layout.tsx             # Root layout
+├── components/
+│   ├── auth/                  # Auth form components
+│   ├── icons/                 # SVG icon components
+│   ├── layout/                # Header, footer, nav, mobile menu
+│   ├── sections/              # Landing page sections
+│   └── ui/                    # Design system (buttons, inputs, glass effects)
+├── hooks/                     # Shared React hooks
+├── i18n/                      # next-intl config (routing, navigation)
+├── styles/                    # Global CSS, variables, animations
+└── proxy.ts                   # Auth middleware
+messages/
+├── en.json                    # English translations
+├── uk.json                    # Ukrainian translations
+└── ru.json                    # Russian translations
+```
 
-## Deploy on Vercel
+## Internationalization
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Three locales supported: **Russian** (default), **English**, **Ukrainian**.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Translations are stored in `messages/*.json` and accessed via `useTranslations` (client) or `getTranslations` (server) from `next-intl`.
+
+## Architecture
+
+- **Server Components** are the default — `"use client"` only on interactive components
+- **Header** is a Server Component with client sub-components via Context (`HeaderProvider`)
+- **Section reveal animations** are powered by a global IntersectionObserver inline script
+- **CSS variables** define the full design token system (colors, shadows, spacing) in `src/styles/variables.css`
+
+## Code Conventions
+
+- **Biome** for all linting and formatting (not ESLint/Prettier)
+- **2-space** indentation
+- **`import type`** for type-only imports
+- **PascalCase** for components, **camelCase** for functions/variables
+- Path alias: `@/*` maps to `./src/*`

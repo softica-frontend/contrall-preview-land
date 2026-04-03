@@ -9,7 +9,11 @@ import { NAV_IDS } from "@/hooks/use-active-section";
 
 export function MobileMenu() {
   const t = useTranslations("Header");
-  const { activeSection, mobileMenuOpen: isOpen, toggleMenu: onToggle } = useHeaderContext();
+  const {
+    activeSection,
+    mobileMenuOpen: isOpen,
+    toggleMenu: onToggle,
+  } = useHeaderContext();
   const [mounted, setMounted] = useState(false);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const overlayRef = useRef<HTMLDivElement>(null);

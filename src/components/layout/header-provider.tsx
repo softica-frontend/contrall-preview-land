@@ -1,6 +1,12 @@
 "use client";
 
-import { createContext, useCallback, useContext, useEffect, useState } from "react";
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import { useActiveSection } from "@/hooks/use-active-section";
 import { useMobileHeaderVisibility } from "@/hooks/use-mobile-header-visibility";
 
@@ -15,7 +21,8 @@ const HeaderContext = createContext<HeaderContextValue | null>(null);
 
 export function useHeaderContext() {
   const ctx = useContext(HeaderContext);
-  if (!ctx) throw new Error("useHeaderContext must be used within HeaderProvider");
+  if (!ctx)
+    throw new Error("useHeaderContext must be used within HeaderProvider");
   return ctx;
 }
 
@@ -36,7 +43,9 @@ export function HeaderProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   return (
-    <HeaderContext value={{ activeSection, mobileMenuOpen, mobileVisible, toggleMenu }}>
+    <HeaderContext
+      value={{ activeSection, mobileMenuOpen, mobileVisible, toggleMenu }}
+    >
       {children}
     </HeaderContext>
   );
