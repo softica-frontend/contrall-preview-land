@@ -1,14 +1,20 @@
 "use client";
 
 import { useLocale, useTranslations } from "next-intl";
+import type { ComponentType } from "react";
 import { useEffect, useRef, useState } from "react";
+import { EnFlag, RuFlag, UkFlag } from "@/components/icons/flag-icons";
 import { ChevronDownIcon } from "@/components/icons/header-icons";
 import { usePathname, useRouter } from "@/i18n/navigation";
 
-const LOCALES = [
-  { code: "ru" as const, label: "Русский" },
-  { code: "en" as const, label: "English" },
-  { code: "uk" as const, label: "Українська" },
+const LOCALES: {
+  code: "ru" | "en" | "uk";
+  label: string;
+  Flag: ComponentType;
+}[] = [
+  { code: "ru", label: "Русский", Flag: RuFlag },
+  { code: "en", label: "English", Flag: EnFlag },
+  { code: "uk", label: "Українська", Flag: UkFlag },
 ];
 
 export function LanguageSwitcher({ className }: { className?: string }) {
@@ -138,12 +144,13 @@ export function LanguageSwitcher({ className }: { className?: string }) {
             aria-selected={locale === item.code}
             tabIndex={-1}
             onClick={() => switchLocale(item.code)}
-            className={`flex w-full cursor-pointer items-center px-[16px] py-[10px] text-[14px] transition-colors duration-150 hover:bg-bg-hover focus:outline-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset focus-visible:rounded-[12px] ${
+            className={`flex w-full cursor-pointer items-center gap-[8px] px-[16px] py-[10px] text-[14px] transition-colors duration-150 hover:bg-bg-hover focus:outline-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset focus-visible:rounded-[12px] ${
               locale === item.code
                 ? "font-medium text-primary"
                 : "text-text-primary"
             } ${activeIndex === i ? "bg-bg-hover" : ""}`}
           >
+            <item.Flag />
             {item.label}
           </button>
         ))}
