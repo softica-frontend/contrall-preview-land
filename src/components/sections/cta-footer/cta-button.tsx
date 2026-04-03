@@ -32,7 +32,7 @@ export function CtaButton({ label }: CtaButtonProps) {
 
     setTimeout(() => {
       router.push("/auth/register");
-    }, 1200);
+    }, 1100);
   };
 
   return (

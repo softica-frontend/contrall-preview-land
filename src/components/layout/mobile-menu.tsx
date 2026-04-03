@@ -8,15 +8,15 @@ import { CloseIcon, HamburgerIcon } from "@/components/icons/header-icons";
 interface MobileMenuProps {
   isOpen: boolean;
   onToggle: () => void;
-  onNavigate: (id: string) => void;
   navItems: readonly string[];
+  activeSection: string;
 }
 
 export function MobileMenu({
   isOpen,
   onToggle,
-  onNavigate,
   navItems,
+  activeSection,
 }: MobileMenuProps) {
   const t = useTranslations("Header");
   const [mounted, setMounted] = useState(false);
@@ -70,14 +70,16 @@ export function MobileMenu({
 
       <nav className="flex w-full flex-col gap-[16px]">
         {navItems.map((id) => (
-          <button
+          <a
             key={id}
-            type="button"
-            onClick={() => onNavigate(id)}
-            className="cursor-pointer text-center text-[18px] leading-[1.4] text-text-primary transition-colors hover:text-primary active:text-primary-hover"
+            href={`#${id}`}
+            onClick={() => onToggle()}
+            className={`cursor-pointer text-center text-[18px] leading-[1.4] transition-colors hover:text-primary active:text-primary-hover ${
+              activeSection === id ? "text-primary" : "text-text-primary"
+            }`}
           >
             {t(`nav.${id}`)}
-          </button>
+          </a>
         ))}
       </nav>
     </div>

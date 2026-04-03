@@ -1,4 +1,5 @@
 import { getTranslations } from "next-intl/server";
+import { Link } from "@/i18n/navigation";
 import { CounterCard } from "./counter-card";
 import { CtrlKey } from "./ctrl-key";
 import { HeroCards } from "./hero-cards";
@@ -35,12 +36,12 @@ export async function Hero() {
           text={t("title")}
           className="text-center text-[42px] font-bold leading-[1.1] text-text-heading"
         />
-        <a
+        <Link
           href="/auth/register"
           className="hero-cta mt-[32px] inline-flex items-center justify-center rounded-[1000px] bg-primary-alt px-[54px] py-[24px] text-[20px] font-medium leading-none tracking-[0.5px] text-white transition-colors duration-200 hover:bg-primary-hover active:bg-primary-active focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2575ff] focus-visible:ring-offset-2"
         >
           {t("cta")}
-        </a>
+        </Link>
 
         {/* 3D Ctrl key */}
         <div className="hero-key relative z-20 mt-[140px]">
@@ -108,12 +109,12 @@ export async function Hero() {
           text={t("title")}
           className="text-center text-[24px] font-bold leading-[1.1] text-text-heading"
         />
-        <a
+        <Link
           href="/auth/register"
           className="hero-cta flex items-center gap-[4px] h-[44px] rounded-[1000px] bg-primary-alt px-[24px] text-[14px] font-medium leading-none tracking-[0.5px] text-white transition-colors duration-200 hover:bg-primary-hover active:bg-primary-active focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2575ff] focus-visible:ring-offset-2"
         >
           {t("cta")}
-        </a>
+        </Link>
 
         {/* 3D Ctrl key */}
         <div className="hero-key mt-[40px]">
