@@ -18,15 +18,15 @@ export function Modal({ open, onClose, children, className }: ModalProps) {
     if (open) {
       setMounted(true);
       requestAnimationFrame(() => {
-        requestAnimationFrame(() => {
-          setVisible(true);
-        });
+        requestAnimationFrame(() => setVisible(true));
       });
       document.body.style.overflow = "hidden";
     } else {
       setVisible(false);
-      const timeout = setTimeout(() => setMounted(false), 200);
-      document.body.style.overflow = "";
+      const timeout = setTimeout(() => {
+        setMounted(false);
+        document.body.style.overflow = "";
+      }, 200);
       return () => clearTimeout(timeout);
     }
   }, [open]);
@@ -75,6 +75,8 @@ export function Modal({ open, onClose, children, className }: ModalProps) {
             ? "scale(1) translateY(0)"
             : "scale(0.95) translateY(8px)",
           transition: "opacity 200ms ease-out, transform 200ms ease-out",
+          willChange: "transform, opacity",
+          backfaceVisibility: "hidden",
         }}
       >
         {children}
@@ -186,7 +188,7 @@ function ConfirmModal({
 
       {/* Body */}
       <div className="flex w-full flex-1 items-center justify-center px-[12px]">
-        <p className="flex-1 text-[12px] leading-[16px] tracking-[0.5px] text-text-muted">
+        <p className="flex-1 text-[14px] leading-[16px] tracking-[0.5px] text-text-muted">
           {message}
         </p>
       </div>

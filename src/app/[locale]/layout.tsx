@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, Roboto } from "next/font/google";
 import { notFound } from "next/navigation";
+import Script from "next/script";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
 import {
   getMessages,
@@ -71,8 +72,9 @@ export default async function LocaleLayout({
         <NextIntlClientProvider messages={messages}>
           {children}
         </NextIntlClientProvider>
-        {/** biome-ignore lint/security/noDangerouslySetInnerHtml: need to set inner html */}
-        <script dangerouslySetInnerHTML={{ __html: SECTION_REVEAL_SCRIPT }} />
+        <Script id="section-reveal" strategy="afterInteractive">
+          {SECTION_REVEAL_SCRIPT}
+        </Script>
       </body>
     </html>
   );

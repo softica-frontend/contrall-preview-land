@@ -21,6 +21,7 @@ export default function MyTrackersPage() {
   const [confirmAction, setConfirmAction] = useState<{
     type: "delete" | "pause";
     trackerId: string;
+    trackerStatus?: Tracker["status"];
   } | null>(null);
 
   const handleConfirm = useCallback(() => {
@@ -44,8 +45,14 @@ export default function MyTrackersPage() {
   const onDelete = (id: string) =>
     setConfirmAction({ type: "delete", trackerId: id });
 
-  const onPause = (id: string) =>
-    setConfirmAction({ type: "pause", trackerId: id });
+  const onPause = (id: string) => {
+    const tracker = trackers.find((tr) => tr.id === id);
+    setConfirmAction({
+      type: "pause",
+      trackerId: id,
+      trackerStatus: tracker?.status,
+    });
+  };
 
   const filteredTrackers = searchQuery
     ? trackers.filter((tr) =>
@@ -102,17 +109,23 @@ export default function MyTrackersPage() {
           title={
             confirmAction.type === "delete"
               ? t("confirm.deleteTitle")
-              : t("confirm.pauseTitle")
+              : confirmAction.trackerStatus === "paused"
+                ? t("confirm.resumeTitle")
+                : t("confirm.pauseTitle")
           }
           message={
             confirmAction.type === "delete"
               ? t("confirm.deleteMessage")
-              : t("confirm.pauseMessage")
+              : confirmAction.trackerStatus === "paused"
+                ? t("confirm.resumeMessage")
+                : t("confirm.pauseMessage")
           }
           confirmLabel={
             confirmAction.type === "delete"
               ? t("confirm.deleteConfirm")
-              : t("confirm.pauseConfirm")
+              : confirmAction.trackerStatus === "paused"
+                ? t("confirm.resumeConfirm")
+                : t("confirm.pauseConfirm")
           }
           cancelLabel={t("confirm.cancel")}
         />

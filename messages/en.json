@@ -271,6 +271,12 @@
     "welcome": "Welcome, {email}",
     "placeholder": "This section is under development. Stay tuned for updates!",
     "logout": "Sign out",
+    "logoutConfirm": {
+      "title": "Sign out",
+      "message": "Are you sure you want to sign out?",
+      "confirm": "Sign out",
+      "cancel": "Cancel"
+    },
     "nav": {
       "profile": "Profile",
       "my-trackers": "My Trackers",
@@ -338,6 +344,9 @@
       "pauseTitle": "Pause tracker?",
       "pauseMessage": "By clicking pause you stop the tracker from working, billing will also be paused",
       "pauseConfirm": "Pause",
+      "resumeTitle": "Resume tracker?",
+      "resumeMessage": "By clicking resume the tracker will start working again and billing will be restored",
+      "resumeConfirm": "Resume",
       "cancel": "Cancel"
     }
   }

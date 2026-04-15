@@ -7,6 +7,7 @@ import { CloseIcon, HamburgerIcon } from "@/components/icons/header-icons";
 import { Logomark, LogoText } from "@/components/icons/logo";
 import { LogoutIcon } from "@/components/icons/profile-icons";
 import { LanguageSwitcher } from "@/components/ui/language-switcher";
+import { Modal } from "@/components/ui/modal";
 import { Link, usePathname, useRouter } from "@/i18n/navigation";
 
 const NAV_ITEMS = [
@@ -20,6 +21,7 @@ export function ProfileHeader() {
   const pathname = usePathname();
   const router = useRouter();
   const [menuOpen, setMenuOpen] = useState(false);
+  const [logoutConfirmOpen, setLogoutConfirmOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
@@ -81,6 +83,11 @@ export function ProfileHeader() {
     localStorage.removeItem("auth_token");
     localStorage.removeItem("auth_email");
     router.push("/auth/login");
+  };
+
+  const handleLogoutConfirm = () => {
+    setLogoutConfirmOpen(false);
+    handleLogout();
   };
 
   const overlay = (
@@ -173,7 +180,7 @@ export function ProfileHeader() {
           <LanguageSwitcher />
           <button
             type="button"
-            onClick={handleLogout}
+            onClick={() => setLogoutConfirmOpen(true)}
             aria-label={t("logout")}
             className="flex size-[40px] cursor-pointer items-center justify-center rounded-xl border border-border-light text-text-subtle transition-colors duration-200 hover:border-[#DA1E28] hover:text-[#DA1E28]"
           >
@@ -207,6 +214,16 @@ export function ProfileHeader() {
       </div>
 
       {mounted && createPortal(overlay, document.body)}
+
+      <Modal.Confirm
+        open={logoutConfirmOpen}
+        onClose={() => setLogoutConfirmOpen(false)}
+        onConfirm={handleLogoutConfirm}
+        title={t("logoutConfirm.title")}
+        message={t("logoutConfirm.message")}
+        confirmLabel={t("logoutConfirm.confirm")}
+        cancelLabel={t("logoutConfirm.cancel")}
+      />
     </header>
   );
 }
