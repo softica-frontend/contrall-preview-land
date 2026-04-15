@@ -287,6 +287,7 @@
     "ip": "Ip",
     "noResults": "No trackers found",
     "nextBilling": "Next Billing",
+    "users": "users",
     "status": {
       "active": "Active",
       "paused": "Paused",
@@ -296,6 +297,7 @@
       "upgrade": "Upgrade Plan",
       "settings": "Settings",
       "pause": "Pause",
+      "resume": "Resume",
       "users": "Users",
       "delete": "Delete",
       "open": "Open"

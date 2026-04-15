@@ -12,13 +12,15 @@ export interface Tracker {
   ip: string;
   countryCode: string;
   nextBillingDate: string;
+  description?: string;
+  usersCount?: number;
 }
 
 export const PLAN_COLORS: Record<TrackerPlan, string> = {
-  FREE: "#afafaf",
+  FREE: "#ff5125",
   PRO: "#2575ff",
-  BUSINESS: "#e225ff",
-  ENTERPRISE: "#00ba1f",
+  BUSINESS: "#ff257c",
+  ENTERPRISE: "#75d346",
 };
 
 export const STATUS_COLORS: Record<TrackerStatus, string> = {

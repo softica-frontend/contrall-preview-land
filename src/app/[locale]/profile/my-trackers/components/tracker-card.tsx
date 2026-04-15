@@ -1,18 +1,12 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import {
-  BanknoteIcon,
-  ChevronsUpIcon,
-  ExternalLinkIcon,
-  PauseIcon,
-  SettingsGearIcon,
-  TrashIcon,
-  UsersIcon,
-} from "@/components/icons/profile-icons";
-import { PlanBadge } from "@/components/ui/plan-badge";
+import ReactCountryFlag from "react-country-flag";
+import { BanknoteIcon } from "@/components/icons/profile-icons";
 import { StatusIndicator } from "@/components/ui/status-indicator";
+import { TrackerActionsMenu } from "./tracker-actions-menu";
 import type { Tracker } from "./types";
+import { PLAN_COLORS } from "./types";
 
 interface TrackerCardProps {
   tracker: Tracker;
@@ -22,19 +16,59 @@ interface TrackerCardProps {
 
 export function TrackerCard({ tracker, onDelete, onPause }: TrackerCardProps) {
   const t = useTranslations("MyTrackers");
+  const accentColor = PLAN_COLORS[tracker.plan];
 
   return (
-    <div className="group relative flex flex-col overflow-hidden rounded-2xl border border-border-light bg-surface transition-shadow duration-200 hover:shadow-dropdown">
-      <div className="flex flex-col gap-3 px-4 pt-4">
-        {/* Plan badge */}
-        <div className="flex items-center">
-          <PlanBadge plan={tracker.plan} className="text-[18px]" />
-        </div>
+    <div
+      className="group relative flex overflow-hidden rounded-[21px] transition-shadow duration-200 hover:shadow-elevated"
+      style={{
+        background:
+          "radial-gradient(50% 50% at 50% 50%, rgba(252,252,253,0) 0%, rgba(37,117,255,0.10) 100%), #FCFCFD",
+        backgroundBlendMode: "screen, screen",
+        // boxShadow: "0 0 10px 0 rgba(0, 0, 0, 0.1)",
+        border: "1px solid #E4E7EC",
+      }}
+    >
+      {/* Left accent bar */}
+      <div
+        className="w-2 shrink-0 self-stretch rounded-l-none"
+        style={{ backgroundColor: accentColor }}
+      />
 
-        {/* Name + status */}
+      {/* Content */}
+      <div className="flex min-w-0 flex-1 flex-col gap-4 px-4 pb-3 pt-4">
+        {/* Header */}
         <div className="flex flex-col gap-1">
-          <div className="flex items-center justify-between">
-            <span className="text-[32px] font-bold leading-[1.1] text-text-heading">
+          {/* IP row + burger (top-right, hover only) */}
+          <div className="flex items-center gap-2">
+            <ReactCountryFlag
+              countryCode={tracker.countryCode}
+              svg
+              style={{ width: "24px", height: "18px", borderRadius: "2px" }}
+              aria-hidden="true"
+            />
+            <a
+              href={`https://${tracker.ip}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex-1 text-[16px] leading-[1.4] text-text-primary transition-colors duration-150 hover:text-primary hover:underline"
+            >
+              {tracker.ip}
+            </a>
+            <div className="opacity-0 transition-opacity duration-200 group-hover:opacity-100">
+              <TrackerActionsMenu
+                trackerId={tracker.id}
+                trackerStatus={tracker.status}
+                onDelete={onDelete}
+                onPause={onPause}
+                variant="card"
+              />
+            </div>
+          </div>
+
+          {/* Name + status row */}
+          <div className="flex items-center justify-between gap-2">
+            <span className="truncate text-[32px] font-bold leading-[1.1] text-text-heading">
               {tracker.name}
             </span>
             <StatusIndicator
@@ -44,70 +78,45 @@ export function TrackerCard({ tracker, onDelete, onPause }: TrackerCardProps) {
             />
           </div>
 
-          {/* Details */}
-          <div className="flex flex-col gap-1.5">
-            <div className="flex items-center gap-1.5 text-[16px] leading-[1.4] text-text-body">
-              <span className="text-[14px]">{tracker.countryCode}</span>
-              <span>{t("ip")}:</span>
-              <span>{tracker.ip}</span>
-            </div>
-            <div className="flex items-center gap-1.5 text-[16px] leading-[1.4] text-text-body">
-              <BanknoteIcon />
-              <span>{t("nextBilling")}:</span>
-              <span>{tracker.nextBillingDate}</span>
+          {/* Description */}
+          {tracker.description && (
+            <p
+              className="overflow-hidden text-[16px] leading-[1.4] text-text-subtle"
+              style={{
+                display: "-webkit-box",
+                WebkitLineClamp: 4,
+                WebkitBoxOrient: "vertical",
+              }}
+            >
+              {tracker.description}
+            </p>
+          )}
+        </div>
+
+        {/* Divider */}
+        <div className="h-px w-full bg-border-light" />
+
+        {/* Footer metadata */}
+        <div className="flex gap-1.5">
+          {/* Left column */}
+          <div className="flex flex-1 flex-col gap-1.5">
+            <div className="flex items-center gap-1 text-[14px] leading-[1.4] text-text-primary">
+              <BanknoteIcon size={16} className="shrink-0 text-text-subtle" />
+              <span className="truncate">{tracker.nextBillingDate}</span>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Action buttons */}
-      <div className="flex items-center justify-center gap-1.5 px-4 py-3 transition-opacity duration-200 lg:opacity-0 lg:group-hover:opacity-100">
-        <ActionButton title={t("actions.upgrade")} onClick={() => {}}>
-          <ChevronsUpIcon />
-        </ActionButton>
-        <ActionButton title={t("actions.settings")} onClick={() => {}}>
-          <SettingsGearIcon />
-        </ActionButton>
-        <ActionButton
-          title={t("actions.pause")}
-          onClick={() => onPause(tracker.id)}
-        >
-          <PauseIcon />
-        </ActionButton>
-        <ActionButton title={t("actions.users")} onClick={() => {}}>
-          <UsersIcon />
-        </ActionButton>
-        <ActionButton
-          title={t("actions.delete")}
-          onClick={() => onDelete(tracker.id)}
-        >
-          <TrashIcon />
-        </ActionButton>
-        <ActionButton title={t("actions.open")} onClick={() => {}}>
-          <ExternalLinkIcon />
-        </ActionButton>
-      </div>
+      {/* Inset glow overlay — renders on top of all content including accent bar */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 rounded-[inherit]"
+        // style={{
+        //   boxShadow:
+        //     "-0.5px -1px 1px 0px rgba(37,117,255,0.80) inset, 0.5px 1px 1px 0px rgba(37,117,255,0.80) inset",
+        // }}
+      />
     </div>
-  );
-}
-
-function ActionButton({
-  children,
-  title,
-  onClick,
-}: {
-  children: React.ReactNode;
-  title: string;
-  onClick: () => void;
-}) {
-  return (
-    <button
-      type="button"
-      title={title}
-      onClick={onClick}
-      className="flex size-7 cursor-pointer items-center justify-center rounded-full text-text-subtle transition-colors duration-150 hover:bg-[#F2F4F7] hover:text-text-heading"
-    >
-      {children}
-    </button>
   );
 }

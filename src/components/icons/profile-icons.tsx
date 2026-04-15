@@ -73,6 +73,18 @@ export function MenuIcon({ size = 12, className }: IconProps) {
   return icon(size, className, <path d="M4 6h16M4 12h16M4 18h16" />);
 }
 
+export function DotsVerticalIcon({ size = 18, className }: IconProps) {
+  return icon(
+    size,
+    className,
+    <>
+      <circle cx="12" cy="5" r="2" fill="currentColor" stroke="none" />
+      <circle cx="12" cy="12" r="2" fill="currentColor" stroke="none" />
+      <circle cx="12" cy="19" r="2" fill="currentColor" stroke="none" />
+    </>,
+  );
+}
+
 export function BanknoteIcon({ size = 14, className }: IconProps) {
   return icon(
     size,
@@ -87,6 +99,18 @@ export function BanknoteIcon({ size = 14, className }: IconProps) {
 
 export function ChevronsUpIcon({ size = 12, className }: IconProps) {
   return icon(size, className, <path d="m7 11 5-5 5 5M7 17l5-5 5 5" />);
+}
+
+export function UpgradeIcon({ size = 12, className }: IconProps) {
+  return icon(
+    size,
+    className,
+    <path d="M5 15h14M5 19h14M17 6v12M14 9l3-3 3 3" />,
+  );
+}
+
+export function PlayIcon({ size = 12, className }: IconProps) {
+  return icon(size, className, <path d="M6 3l13 9-13 9V3z" />);
 }
 
 export function SettingsGearIcon({ size = 12, className }: IconProps) {
