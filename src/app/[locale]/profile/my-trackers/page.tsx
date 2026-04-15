@@ -22,6 +22,7 @@ export default function MyTrackersPage() {
     type: "delete" | "pause";
     trackerId: string;
     trackerStatus?: Tracker["status"];
+    trackerName?: string;
   } | null>(null);
 
   const handleConfirm = useCallback(() => {
@@ -42,8 +43,14 @@ export default function MyTrackersPage() {
     setConfirmAction(null);
   }, [confirmAction]);
 
-  const onDelete = (id: string) =>
-    setConfirmAction({ type: "delete", trackerId: id });
+  const onDelete = (id: string) => {
+    const tracker = trackers.find((tr) => tr.id === id);
+    setConfirmAction({
+      type: "delete",
+      trackerId: id,
+      trackerName: tracker?.name,
+    });
+  };
 
   const onPause = (id: string) => {
     const tracker = trackers.find((tr) => tr.id === id);
@@ -128,6 +135,26 @@ export default function MyTrackersPage() {
                 : t("confirm.pauseConfirm")
           }
           cancelLabel={t("confirm.cancel")}
+          requiredInput={
+            confirmAction.type === "delete"
+              ? confirmAction.trackerName
+              : undefined
+          }
+          inputHint={
+            confirmAction.type === "delete" && confirmAction.trackerName ? (
+              <>
+                {t("confirm.deleteInputHint")}:{" "}
+                <strong className="font-semibold text-text-body">
+                  {confirmAction.trackerName}
+                </strong>
+              </>
+            ) : undefined
+          }
+          inputPlaceholder={
+            confirmAction.type === "delete"
+              ? t("confirm.deleteInputPlaceholder")
+              : undefined
+          }
         />
       )}
     </>

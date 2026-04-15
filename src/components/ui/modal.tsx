@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
+import { MainInput } from "@/components/ui/main-input";
 
 interface ModalProps {
   open: boolean;
@@ -142,6 +143,9 @@ interface ConfirmModalProps {
   message: string;
   confirmLabel: string;
   cancelLabel: string;
+  requiredInput?: string;
+  inputHint?: React.ReactNode;
+  inputPlaceholder?: string;
 }
 
 function ConfirmModal({
@@ -152,7 +156,18 @@ function ConfirmModal({
   message,
   confirmLabel,
   cancelLabel,
+  requiredInput,
+  inputHint,
+  inputPlaceholder,
 }: ConfirmModalProps) {
+  const [inputValue, setInputValue] = useState("");
+
+  useEffect(() => {
+    if (!open) setInputValue("");
+  }, [open]);
+
+  const canConfirm = !requiredInput || inputValue === requiredInput;
+
   return (
     <Modal
       open={open}
@@ -187,10 +202,30 @@ function ConfirmModal({
       </div>
 
       {/* Body */}
-      <div className="flex w-full flex-1 items-center justify-center px-[12px]">
-        <p className="flex-1 text-[14px] leading-[16px] tracking-[0.5px] text-text-muted">
+      <div className="flex w-full flex-1 flex-col gap-[10px] px-[12px]">
+        <p className="text-[14px] leading-[16px] tracking-[0.5px] text-text-muted">
           {message}
         </p>
+        {requiredInput && (
+          <div className="flex flex-col gap-[8px]">
+            {inputHint && (
+              <p className="text-[12px] leading-[1.4] tracking-[0.3px] text-text-subtle">
+                {inputHint}
+              </p>
+            )}
+            <div className="rounded-[6px] border border-border px-[10px] py-[8px]">
+              <MainInput
+                value={inputValue}
+                onChange={(e) => setInputValue(e.target.value)}
+                placeholder={inputPlaceholder}
+                autoFocus
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" && canConfirm) onConfirm();
+                }}
+              />
+            </div>
+          </div>
+        )}
       </div>
 
       {/* Footer */}
@@ -205,7 +240,8 @@ function ConfirmModal({
         <button
           type="button"
           onClick={onConfirm}
-          className="flex h-[32px] cursor-pointer items-center justify-center rounded-[1000px] bg-primary px-[10px] py-[4px] text-[14px] font-medium leading-none tracking-[0.5px] text-surface transition-colors duration-200 hover:bg-primary-hover"
+          disabled={!canConfirm}
+          className="flex h-[32px] cursor-pointer items-center justify-center rounded-[1000px] bg-primary px-[10px] py-[4px] text-[14px] font-medium leading-none tracking-[0.5px] text-surface transition-colors duration-200 hover:bg-primary-hover disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-primary"
         >
           {confirmLabel}
         </button>
