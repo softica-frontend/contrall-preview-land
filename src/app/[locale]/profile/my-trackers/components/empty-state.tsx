@@ -11,7 +11,7 @@ export function EmptyState({ onAdd }: EmptyStateProps) {
   const t = useTranslations("MyTrackers");
 
   return (
-    <div className="flex flex-1 flex-col items-center justify-center gap-3 py-36">
+    <div className="flex flex-1 flex-col items-center justify-center gap-3 py-8">
       {/* Nested bordered plus icon */}
       <div className="p-6">
         <div className="rounded-xl border border-border-light p-6">

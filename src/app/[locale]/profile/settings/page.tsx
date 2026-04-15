@@ -4,19 +4,24 @@ import { useState } from "react";
 import { BillingSection } from "./components/billing-section";
 import { PersonalInfoSection } from "./components/personal-info-section";
 import { PrivacySection } from "./components/privacy-section";
+import { SettingsMobileNav } from "./components/settings-mobile-nav";
 import { SettingsSidebar } from "./components/settings-sidebar";
 
 export default function SettingsPage() {
   const [activeSection, setActiveSection] = useState("personal");
 
   return (
-    <div className="flex h-[calc(100dvh-107px)] items-start justify-center overflow-hidden px-4 py-8 md:h-[calc(100dvh-82px)] lg:h-[calc(100dvh-92px)] xl:h-[calc(100dvh-107px)]">
-      <div className="flex h-full w-full max-w-[1366px] items-start gap-6">
+    <div className="px-4 py-6 lg:flex lg:h-[calc(100dvh-92px)] lg:items-start lg:justify-center lg:overflow-hidden lg:py-8 xl:h-[calc(100dvh-107px)]">
+      <div className="flex w-full flex-col gap-4 lg:h-full lg:max-w-[1366px] lg:flex-row lg:items-start lg:gap-6">
         <SettingsSidebar
           activeSection={activeSection}
           onSectionChange={setActiveSection}
         />
-        <div className="h-full min-h-0 min-w-0 flex-1">
+        <SettingsMobileNav
+          activeSection={activeSection}
+          onSectionChange={setActiveSection}
+        />
+        <div className="min-w-0 flex-1 lg:h-full lg:min-h-0">
           {activeSection === "personal" && <PersonalInfoSection />}
           {activeSection === "privacy" && <PrivacySection />}
           {activeSection === "billing" && <BillingSection />}

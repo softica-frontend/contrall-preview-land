@@ -8,7 +8,7 @@ interface MainInputProps extends InputHTMLAttributes<HTMLInputElement> {
 
 export function MainInput({ className, ...props }: MainInputProps) {
   return (
-    <div className={`relative min-w-[375px] max-w-[500px] ${className ?? ""}`}>
+    <div className={`relative w-full ${className ?? ""}`}>
       <input
         {...props}
         className="peer w-full bg-transparent pb-1.5 font-roboto text-[16px] leading-[1.4] text-text-body placeholder:text-text-subtle outline-none"

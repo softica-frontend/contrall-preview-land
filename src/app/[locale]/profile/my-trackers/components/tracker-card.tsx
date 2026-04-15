@@ -61,7 +61,7 @@ export function TrackerCard({ tracker, onDelete, onPause }: TrackerCardProps) {
       </div>
 
       {/* Action buttons */}
-      <div className="flex items-center justify-center gap-1.5 px-4 py-3 opacity-0 transition-opacity duration-200 group-hover:opacity-100">
+      <div className="flex items-center justify-center gap-1.5 px-4 py-3 transition-opacity duration-200 lg:opacity-0 lg:group-hover:opacity-100">
         <ActionButton title={t("actions.upgrade")} onClick={() => {}}>
           <ChevronsUpIcon />
         </ActionButton>

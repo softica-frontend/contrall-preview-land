@@ -13,6 +13,15 @@ interface TrackerTableProps {
   onPause: (id: string) => void;
 }
 
+const COL = {
+  name: "min-w-[140px] flex-1",
+  team: "w-[120px] shrink-0",
+  nextBilling: "w-[170px] shrink-0",
+  plan: "w-[160px] shrink-0",
+  status: "w-[140px] shrink-0",
+  actions: "w-[80px] shrink-0",
+} as const;
+
 export function TrackerTable({
   trackers,
   onDelete,
@@ -21,27 +30,37 @@ export function TrackerTable({
   const t = useTranslations("MyTrackers");
 
   return (
-    <div className="w-full pt-6">
+    <div className="w-full overflow-x-auto pt-6">
       {/* Header */}
-      <div className="flex h-[36px] border-b border-border-light">
-        <div className="flex flex-[2] items-center p-2 text-[14px] leading-[1.4] text-text-subtle">
-          {t("table.name")}
+      <div className="flex h-[36px] min-w-[810px] border-b border-border-light">
+        <div
+          className={`flex items-center p-2 text-[14px] leading-[1.4] text-text-subtle ${COL.name}`}
+        >
+          <span className="whitespace-nowrap">{t("table.name")}</span>
         </div>
-        <div className="flex w-[160px] shrink-0 items-center p-2 text-[14px] leading-[1.4] text-text-subtle">
-          {t("table.team")}
+        <div
+          className={`flex items-center p-2 text-[14px] leading-[1.4] text-text-subtle ${COL.team}`}
+        >
+          <span className="whitespace-nowrap">{t("table.team")}</span>
         </div>
-        <div className="flex flex-[2] items-center p-2 text-[14px] leading-[1.4] text-text-subtle">
-          {t("table.nextBilling")}
+        <div
+          className={`flex items-center p-2 text-[14px] leading-[1.4] text-text-subtle ${COL.nextBilling}`}
+        >
+          <span className="whitespace-nowrap">{t("table.nextBilling")}</span>
         </div>
-        <div className="flex w-[200px] shrink-0 items-center p-2 text-[14px] leading-[1.4] text-text-subtle">
-          {t("table.plan")}
+        <div
+          className={`flex items-center p-2 text-[14px] leading-[1.4] text-text-subtle ${COL.plan}`}
+        >
+          <span className="whitespace-nowrap">{t("table.plan")}</span>
         </div>
-        <div className="flex flex-[2] items-center p-2 text-[14px] leading-[1.4] text-text-subtle">
-          {t("table.status")}
+        <div
+          className={`flex items-center p-2 text-[14px] leading-[1.4] text-text-subtle ${COL.status}`}
+        >
+          <span className="whitespace-nowrap">{t("table.status")}</span>
         </div>
-        <div className="flex w-[100px] shrink-0 items-center p-2 text-[14px] leading-[1.4] text-text-subtle">
-          {t("table.actions")}
-        </div>
+        <div
+          className={`flex items-center p-2 text-[14px] leading-[1.4] text-text-subtle ${COL.actions}`}
+        />
       </div>
 
       {/* Rows */}
@@ -72,28 +91,32 @@ function TableRow({
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <div className="relative flex h-[48px] border-b border-border-light">
-      <div className="flex flex-[2] items-center p-2">
+    <div className="relative flex h-[48px] min-w-[810px] border-b border-border-light">
+      <div className={`flex items-center p-2 ${COL.name}`}>
         <span className="block overflow-hidden text-ellipsis whitespace-nowrap text-[16px] leading-[1.4] text-text-body">
           {tracker.name}
         </span>
       </div>
-      <div className="flex w-[160px] shrink-0 items-center p-2 text-[16px] leading-[1.4] text-text-body">
+      <div
+        className={`flex items-center p-2 text-[16px] leading-[1.4] text-text-body ${COL.team}`}
+      >
         —
       </div>
-      <div className="flex flex-[2] items-center p-2 text-[16px] leading-[1.4] text-text-body">
+      <div
+        className={`flex items-center p-2 text-[16px] leading-[1.4] text-text-body ${COL.nextBilling}`}
+      >
         {tracker.nextBillingDate}
       </div>
-      <div className="flex w-[200px] shrink-0 items-center p-2">
+      <div className={`flex items-center p-2 ${COL.plan}`}>
         <PlanBadge plan={tracker.plan} />
       </div>
-      <div className="flex flex-[2] items-center p-2">
+      <div className={`flex items-center p-2 ${COL.status}`}>
         <StatusIndicator
           status={tracker.status}
           label={t(`status.${tracker.status}`)}
         />
       </div>
-      <div className="flex w-[100px] shrink-0 items-center justify-end p-2">
+      <div className={`flex items-center justify-end p-2 ${COL.actions}`}>
         <button
           type="button"
           onClick={() => setMenuOpen(!menuOpen)}

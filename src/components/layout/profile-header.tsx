@@ -1,7 +1,11 @@
 "use client";
 
 import { useTranslations } from "next-intl";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
+import { CloseIcon, HamburgerIcon } from "@/components/icons/header-icons";
 import { Logomark, LogoText } from "@/components/icons/logo";
+import { LogoutIcon } from "@/components/icons/profile-icons";
 import { LanguageSwitcher } from "@/components/ui/language-switcher";
 import { Link, usePathname, useRouter } from "@/i18n/navigation";
 
@@ -12,14 +16,127 @@ const NAV_ITEMS = [
 
 export function ProfileHeader() {
   const t = useTranslations("Profile");
+  const tHeader = useTranslations("Header");
   const pathname = usePathname();
   const router = useRouter();
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const triggerRef = useRef<HTMLButtonElement>(null);
+  const overlayRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (menuOpen) {
+      closeButtonRef.current?.focus();
+    } else {
+      triggerRef.current?.focus();
+    }
+  }, [menuOpen]);
+
+  useEffect(() => {
+    if (!menuOpen) return;
+    const handler = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setMenuOpen(false);
+    };
+    document.addEventListener("keydown", handler);
+    return () => document.removeEventListener("keydown", handler);
+  }, [menuOpen]);
+
+  const handleKeyDown = useCallback((e: React.KeyboardEvent) => {
+    if (e.key === "Escape") {
+      setMenuOpen(false);
+      return;
+    }
+    if (e.key !== "Tab") return;
+
+    const overlay = overlayRef.current;
+    if (!overlay) return;
+
+    const focusable = overlay.querySelectorAll<HTMLElement>(
+      'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])',
+    );
+    if (focusable.length === 0) return;
+
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+
+    if (e.shiftKey) {
+      if (document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      }
+    } else {
+      if (document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    }
+  }, []);
 
   const handleLogout = () => {
     localStorage.removeItem("auth_token");
     localStorage.removeItem("auth_email");
     router.push("/auth/login");
   };
+
+  const overlay = (
+    <div
+      ref={overlayRef}
+      role="dialog"
+      aria-modal="true"
+      aria-label="Navigation menu"
+      onKeyDown={handleKeyDown}
+      className={`fixed inset-0 z-[100] flex flex-col items-center gap-[32px] overflow-y-auto px-[24px] pb-[32px] pt-[32px] transition-all duration-300 ease-out md:hidden ${
+        menuOpen
+          ? "translate-y-0 opacity-100"
+          : "pointer-events-none -translate-y-full opacity-0"
+      }`}
+      style={{
+        background:
+          "linear-gradient(180deg, #e8eeff 0%, #edeefa 30%, #f4f2fd 60%, #fcfcfd 100%)",
+      }}
+    >
+      <button
+        ref={closeButtonRef}
+        type="button"
+        aria-label={tHeader("closeMenu")}
+        onClick={() => setMenuOpen(false)}
+        className="flex size-[44px] items-center justify-center rounded-full bg-primary text-surface outline-none transition-opacity duration-200 hover:opacity-70"
+      >
+        <CloseIcon />
+      </button>
+
+      <span
+        className="flex h-[44px] items-center justify-center rounded-[1000px] px-[24px] py-[8px] text-[14px] font-medium leading-none tracking-[0.5px] text-primary"
+        style={{
+          background: "rgba(252,252,253,0.5)",
+          boxShadow:
+            "inset -0.5px -1px 1px 0px rgba(37,117,255,0.8), inset 0.5px 1px 1px 0px rgba(37,117,255,0.8)",
+        }}
+      >
+        {tHeader("menu")}
+      </span>
+
+      <nav className="flex w-full flex-col gap-[16px]">
+        {NAV_ITEMS.map((item) => (
+          <Link
+            key={item.key}
+            href={item.href}
+            onClick={() => setMenuOpen(false)}
+            className={`cursor-pointer text-center text-[18px] leading-[1.4] transition-colors hover:text-primary active:text-primary-hover ${
+              pathname === item.href ? "text-primary" : "text-text-primary"
+            }`}
+          >
+            {t(`nav.${item.key}`)}
+          </Link>
+        ))}
+      </nav>
+    </div>
+  );
 
   return (
     <header className="sticky top-0 z-50 w-full">
@@ -58,81 +175,38 @@ export function ProfileHeader() {
             type="button"
             onClick={handleLogout}
             aria-label={t("logout")}
-            className="flex size-[40px] cursor-pointer items-center justify-center rounded-lg border border-border text-text-subtle hover:border-[#DA1E28] hover:text-[#DA1E28] transition-colors duration-200"
+            className="flex size-[40px] cursor-pointer items-center justify-center rounded-xl border border-border-light text-text-subtle transition-colors duration-200 hover:border-[#DA1E28] hover:text-[#DA1E28]"
           >
-            <svg
-              width="20"
-              height="20"
-              viewBox="0 0 20 20"
-              fill="none"
-              aria-hidden="true"
-            >
-              <path
-                d="M7.5 17.5H4.167A1.667 1.667 0 0 1 2.5 15.833V4.167A1.667 1.667 0 0 1 4.167 2.5H7.5M13.333 14.167 17.5 10l-4.167-4.167M17.5 10H7.5"
-                stroke="currentColor"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
+            <LogoutIcon size={20} />
           </button>
         </div>
       </div>
 
       {/* Mobile (<768px) */}
-      <div className="flex items-center justify-between px-[16px] pb-[12px] pt-[16px] backdrop-blur-md md:hidden">
+      <div className="flex items-center justify-between px-[16px] pb-[16px] pt-[16px] backdrop-blur-md md:hidden">
         <div className="relative flex h-[75px] w-[81px] shrink-0 items-center">
           <div className="absolute inset-[14.75%_13.72%]">
             <Logomark className="size-full text-[#1d2939]" />
           </div>
         </div>
 
-        <nav className="flex items-center gap-1">
-          {NAV_ITEMS.map((item) => {
-            const isActive = pathname === item.href;
-            return (
-              <Link
-                key={item.key}
-                href={item.href}
-                className={`relative flex shrink-0 items-center justify-center whitespace-nowrap px-[10px] py-[8px] font-inter text-[13px] font-medium leading-none transition-colors duration-200 hover:text-primary ${
-                  isActive ? "text-primary" : "text-text-heading"
-                }`}
-              >
-                {t(`nav.${item.key}`)}
-                {isActive && (
-                  <span className="absolute bottom-0 left-0 h-[2px] w-full rounded-full bg-primary" />
-                )}
-              </Link>
-            );
-          })}
-        </nav>
-
-        <div className="flex items-center">
-          <LanguageSwitcher />
+        <div className="flex flex-1 justify-center">
           <button
+            ref={triggerRef}
             type="button"
-            onClick={handleLogout}
-            aria-label={t("logout")}
-            className="flex size-[36px] cursor-pointer items-center justify-center rounded-lg border border-border text-text-subtle hover:border-[#DA1E28] hover:text-[#DA1E28] transition-colors duration-200"
+            aria-label={tHeader("openMenu")}
+            aria-expanded={menuOpen}
+            onClick={() => setMenuOpen(true)}
+            className="flex h-[32px] items-center justify-center px-[16px] transition-opacity duration-200 hover:opacity-70"
           >
-            <svg
-              width="20"
-              height="20"
-              viewBox="0 0 20 20"
-              fill="none"
-              aria-hidden="true"
-            >
-              <path
-                d="M7.5 17.5H4.167A1.667 1.667 0 0 1 2.5 15.833V4.167A1.667 1.667 0 0 1 4.167 2.5H7.5M13.333 14.167 17.5 10l-4.167-4.167M17.5 10H7.5"
-                stroke="currentColor"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
+            <HamburgerIcon />
           </button>
         </div>
+
+        <LanguageSwitcher />
       </div>
+
+      {mounted && createPortal(overlay, document.body)}
     </header>
   );
 }

@@ -139,14 +139,14 @@ export function BillingSection() {
   const t = useTranslations("Settings");
 
   return (
-    <div className="flex h-full max-h-full flex-col overflow-hidden rounded-xl border border-border-light bg-surface p-6">
-      <h2 className="mb-4 shrink-0 font-roboto text-[32px] font-bold leading-tight text-text-heading">
+    <div className="flex flex-col overflow-hidden rounded-xl border border-border-light bg-surface p-4 lg:h-full lg:max-h-full lg:p-6">
+      <h2 className="mb-4 shrink-0 font-roboto text-2xl font-bold leading-tight text-text-heading md:text-[32px]">
         {t("billing.title")}
       </h2>
 
-      <div className="flex min-h-0 flex-1 flex-col overflow-x-auto">
+      <div className="overflow-x-auto lg:flex lg:min-h-0 lg:flex-1 lg:flex-col">
         {/* Header */}
-        <div className="sticky top-0 z-10 shrink-0 border-b border-border-light bg-surface">
+        <div className="shrink-0 border-b border-border-light bg-surface lg:sticky lg:top-0 lg:z-10">
           <div className="flex h-9 min-w-[700px]">
             {COLUMNS.map((col) => (
               <div
@@ -162,7 +162,7 @@ export function BillingSection() {
         </div>
 
         {/* Body */}
-        <div className="min-h-0 flex-1 overflow-y-auto">
+        <div className="lg:min-h-0 lg:flex-1 lg:overflow-y-auto">
           {MOCK_DATA.map((tx) => (
             <div
               key={`${tx.date}-${tx.time}-${tx.tracker}`}

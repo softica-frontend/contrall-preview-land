@@ -25,7 +25,7 @@ export function SettingsSidebar({
   const t = useTranslations("Settings");
 
   return (
-    <aside className="hidden w-[278px] shrink-0 rounded-xl border border-border-light bg-surface p-3 md:block">
+    <aside className="hidden w-[278px] shrink-0 rounded-xl border border-border-light bg-surface p-3 lg:block">
       <nav className="flex flex-col gap-1">
         {SECTIONS.map(({ key, icon: Icon }) => {
           const isActive = activeSection === key;

@@ -55,7 +55,7 @@ export default function MyTrackersPage() {
 
   return (
     <>
-      <div className="flex flex-1 flex-col px-4 pb-5 md:px-10 xl:px-20">
+      <div className="flex flex-1 flex-col px-4 pb-5 lg:px-10 xl:px-20">
         <TrackersToolbar
           viewMode={viewMode}
           searchOpen={searchOpen}

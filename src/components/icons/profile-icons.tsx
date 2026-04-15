@@ -143,6 +143,18 @@ export function ChevronDownIcon({ size = 20, className }: IconProps) {
   return icon(size, className, <path d="m6 9 6 6 6-6" />);
 }
 
+export function LogoutIcon({ size = 20, className }: IconProps) {
+  return icon(
+    size,
+    className,
+    <>
+      <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+      <path d="m16 17 5-5-5-5" />
+      <path d="M21 12H9" />
+    </>,
+  );
+}
+
 /* ── Settings sidebar icons (14×14 viewBox) ── */
 
 interface SidebarIconProps {
