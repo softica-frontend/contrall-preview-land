@@ -1,9 +1,10 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { useState } from "react";
+import { useState, useTransition } from "react";
 import { MainInput } from "@/components/ui/main-input";
 import { Link } from "@/i18n/navigation";
+import { changePassword } from "../actions";
 import { SettingsActionButtons } from "./settings-action-buttons";
 import { SettingsCard } from "./settings-card";
 import { SettingsFormField } from "./settings-form-field";
@@ -13,6 +14,7 @@ export function PrivacySection() {
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [isPending, startTransition] = useTransition();
 
   const handleCancel = () => {
     setCurrentPassword("");
@@ -20,7 +22,15 @@ export function PrivacySection() {
     setConfirmPassword("");
   };
 
+  const handleSave = () => {
+    startTransition(async () => {
+      await changePassword({ currentPassword, newPassword });
+      handleCancel();
+    });
+  };
+
   const isDisabled =
+    isPending ||
     !currentPassword ||
     !newPassword ||
     !confirmPassword ||
@@ -69,7 +79,7 @@ export function PrivacySection() {
         cancelLabel={t("personal.cancel")}
         saveLabel={t("privacy.changeButton")}
         onCancel={handleCancel}
-        onSave={() => {}}
+        onSave={handleSave}
         disabled={isDisabled}
       />
     </SettingsCard>

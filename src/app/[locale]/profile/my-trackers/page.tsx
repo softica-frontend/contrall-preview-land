@@ -2,26 +2,29 @@
 
 import { useTranslations } from "next-intl";
 import { useRef, useState } from "react";
+import useSWR from "swr";
 import { Modal } from "@/components/ui/modal";
+import { getTrackers } from "./actions";
 import { AddTrackerModal } from "./components/add-tracker-modal";
 import { EmptyState } from "./components/empty-state";
-import { MOCK_TRACKERS } from "./components/mock-data";
 import { TrackerCard } from "./components/tracker-card";
 import { TrackerTable } from "./components/tracker-table";
 import { TrackersToolbar } from "./components/trackers-toolbar";
-import type { Tracker, ViewMode } from "./components/types";
+import type { ViewMode } from "./components/types";
 import { useConfirmAction } from "./hooks/use-confirm-action";
 
 export default function MyTrackersPage() {
   const t = useTranslations("MyTrackers");
-  const [trackers, setTrackers] = useState<Tracker[]>(MOCK_TRACKERS);
+  const { data: trackers = [], mutate } = useSWR("trackers", getTrackers);
   const [viewMode, setViewMode] = useState<ViewMode>("grid");
   const [modalOpen, setModalOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
 
   const { confirmAction, setConfirmAction, handleConfirm, onDelete, onPause } =
-    useConfirmAction(trackers, setTrackers);
+    useConfirmAction(trackers, (updater) => {
+      mutate((prev) => updater(prev ?? []), { revalidate: false });
+    });
 
   // Keep the last non-null value so modal content stays correct during the close animation
   const lastConfirmRef = useRef(confirmAction);

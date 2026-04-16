@@ -1,131 +1,9 @@
 "use client";
 
 import { useTranslations } from "next-intl";
+import useSWR from "swr";
+import { getBillingHistory } from "../actions";
 import { StatusBadge } from "./status-badge";
-
-interface Transaction {
-  date: string;
-  time: string;
-  tracker: string;
-  amount: string;
-  statusKey: string;
-  descriptionKey: string;
-}
-
-const MOCK_DATA: Transaction[] = [
-  {
-    date: "28.03.2026",
-    time: "14:32",
-    tracker: "Contrall Pro",
-    amount: "$99.00",
-    statusKey: "completed",
-    descriptionKey: "monthlySubscription",
-  },
-  {
-    date: "28.02.2026",
-    time: "14:30",
-    tracker: "Contrall Pro",
-    amount: "$99.00",
-    statusKey: "completed",
-    descriptionKey: "monthlySubscription",
-  },
-  {
-    date: "28.01.2026",
-    time: "14:28",
-    tracker: "Contrall Pro",
-    amount: "$99.00",
-    statusKey: "completed",
-    descriptionKey: "monthlySubscription",
-  },
-  {
-    date: "28.12.2025",
-    time: "09:15",
-    tracker: "Contrall Pro",
-    amount: "$99.00",
-    statusKey: "completed",
-    descriptionKey: "monthlySubscription",
-  },
-  {
-    date: "15.12.2025",
-    time: "11:42",
-    tracker: "Contrall Pro",
-    amount: "$29.00",
-    statusKey: "completed",
-    descriptionKey: "additionalDomain",
-  },
-  {
-    date: "28.11.2025",
-    time: "14:30",
-    tracker: "Contrall Pro",
-    amount: "$99.00",
-    statusKey: "completed",
-    descriptionKey: "monthlySubscription",
-  },
-  {
-    date: "28.10.2025",
-    time: "14:33",
-    tracker: "Contrall Pro",
-    amount: "$99.00",
-    statusKey: "completed",
-    descriptionKey: "monthlySubscription",
-  },
-  {
-    date: "28.09.2025",
-    time: "10:05",
-    tracker: "Contrall Starter",
-    amount: "$49.00",
-    statusKey: "completed",
-    descriptionKey: "monthlySubscription",
-  },
-  {
-    date: "15.09.2025",
-    time: "16:20",
-    tracker: "Contrall Pro",
-    amount: "$99.00",
-    statusKey: "cancelled",
-    descriptionKey: "refundCancellation",
-  },
-  {
-    date: "28.08.2025",
-    time: "14:30",
-    tracker: "Contrall Starter",
-    amount: "$49.00",
-    statusKey: "completed",
-    descriptionKey: "monthlySubscription",
-  },
-  {
-    date: "10.08.2025",
-    time: "08:45",
-    tracker: "Contrall Starter",
-    amount: "$49.00",
-    statusKey: "resolved",
-    descriptionKey: "refund",
-  },
-  {
-    date: "28.07.2025",
-    time: "14:31",
-    tracker: "Contrall Starter",
-    amount: "$49.00",
-    statusKey: "completed",
-    descriptionKey: "monthlySubscription",
-  },
-  {
-    date: "28.06.2025",
-    time: "14:29",
-    tracker: "Contrall Starter",
-    amount: "$49.00",
-    statusKey: "completed",
-    descriptionKey: "monthlySubscription",
-  },
-  {
-    date: "01.06.2025",
-    time: "12:00",
-    tracker: "Contrall Starter",
-    amount: "$0.00",
-    statusKey: "completed",
-    descriptionKey: "trialPeriod",
-  },
-];
 
 const COLUMNS = [
   { key: "date", width: "w-[170px] shrink-0" },
@@ -137,6 +15,7 @@ const COLUMNS = [
 
 export function BillingSection() {
   const t = useTranslations("Settings");
+  const { data: transactions = [] } = useSWR("billing", getBillingHistory);
 
   return (
     <div className="flex flex-col overflow-hidden rounded-xl border border-border-light bg-surface p-4 lg:h-full lg:max-h-full lg:p-6">
@@ -163,7 +42,7 @@ export function BillingSection() {
 
         {/* Body */}
         <div className="lg:min-h-0 lg:flex-1 lg:overflow-y-auto">
-          {MOCK_DATA.map((tx) => (
+          {transactions.map((tx) => (
             <div
               key={`${tx.date}-${tx.time}-${tx.tracker}`}
               className="flex h-12 min-w-[700px] border-b border-border-light last:border-b-0"

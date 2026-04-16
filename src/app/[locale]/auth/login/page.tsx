@@ -2,12 +2,13 @@
 
 import Link from "next/link";
 import { useTranslations } from "next-intl";
-import { useCallback, useState } from "react";
+import { useCallback, useState, useTransition } from "react";
 import { AuthCheckbox } from "@/components/auth/auth-checkbox";
 import { AuthInput } from "@/components/auth/auth-input";
 import { Divider, SocialButtons } from "@/components/auth/social-buttons";
 import { Toast, type ToastData } from "@/components/auth/toast";
 import { useRouter } from "@/i18n/navigation";
+import { login } from "./actions";
 
 export default function LoginPage() {
   const t = useTranslations("Auth");
@@ -17,6 +18,7 @@ export default function LoginPage() {
   const [remember, setRemember] = useState(false);
   const [toast, setToast] = useState<ToastData | null>(null);
   const [errors, setErrors] = useState<Record<string, boolean>>({});
+  const [isPending, startTransition] = useTransition();
 
   const clearToast = useCallback(() => setToast(null), []);
 
@@ -42,16 +44,17 @@ export default function LoginPage() {
       return;
     }
 
-    localStorage.setItem("auth_token", "mock-token");
-    localStorage.setItem("auth_email", email);
-
-    setToast({
-      type: "success",
-      title: t("successLogin"),
-      description: t("successLoginDesc"),
+    startTransition(async () => {
+      const result = await login(email, password);
+      if (result.ok) {
+        setToast({
+          type: "success",
+          title: t("successLogin"),
+          description: t("successLoginDesc"),
+        });
+        setTimeout(() => router.push("/profile"), 1000);
+      }
     });
-
-    setTimeout(() => router.push("/profile"), 1000);
   };
 
   return (
@@ -113,7 +116,8 @@ export default function LoginPage() {
 
         <button
           type="submit"
-          className="mt-1 h-lg:mt-2 h-10 h-lg:h-12 w-full rounded-full bg-primary cursor-pointer text-[13px] h-lg:text-[14px] font-medium tracking-[0.5px] text-surface hover:bg-primary-hover active:scale-[0.98] transition-all duration-200"
+          disabled={isPending}
+          className="mt-1 h-lg:mt-2 h-10 h-lg:h-12 w-full rounded-full bg-primary cursor-pointer text-[13px] h-lg:text-[14px] font-medium tracking-[0.5px] text-surface hover:bg-primary-hover active:scale-[0.98] transition-all duration-200 disabled:opacity-60 disabled:cursor-not-allowed"
         >
           {t("loginButton")}
         </button>

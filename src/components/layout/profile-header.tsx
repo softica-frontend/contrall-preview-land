@@ -1,8 +1,9 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState, useTransition } from "react";
 import { createPortal } from "react-dom";
+import { logout } from "@/app/[locale]/auth/login/actions";
 import { CloseIcon, HamburgerIcon } from "@/components/icons/header-icons";
 import { Logomark, LogoText } from "@/components/icons/logo";
 import { LogoutIcon } from "@/components/icons/profile-icons";
@@ -22,6 +23,7 @@ export function ProfileHeader() {
   const router = useRouter();
   const [menuOpen, setMenuOpen] = useState(false);
   const [logoutConfirmOpen, setLogoutConfirmOpen] = useState(false);
+  const [isLoggingOut, startLogoutTransition] = useTransition();
   const [mounted, setMounted] = useState(false);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
@@ -79,15 +81,13 @@ export function ProfileHeader() {
     }
   }, []);
 
-  const handleLogout = () => {
-    localStorage.removeItem("auth_token");
-    localStorage.removeItem("auth_email");
-    router.push("/auth/login");
-  };
-
   const handleLogoutConfirm = () => {
     setLogoutConfirmOpen(false);
-    handleLogout();
+    startLogoutTransition(async () => {
+      await logout();
+      router.push("/auth/login");
+      router.refresh();
+    });
   };
 
   const overlay = (
@@ -181,8 +181,9 @@ export function ProfileHeader() {
           <button
             type="button"
             onClick={() => setLogoutConfirmOpen(true)}
+            disabled={isLoggingOut}
             aria-label={t("logout")}
-            className="flex size-[40px] cursor-pointer items-center justify-center rounded-xl border border-border-light text-text-subtle transition-colors duration-200 hover:border-[#DA1E28] hover:text-[#DA1E28]"
+            className="flex size-[40px] cursor-pointer items-center justify-center rounded-xl border border-border-light text-text-subtle transition-colors duration-200 hover:border-[#DA1E28] hover:text-[#DA1E28] disabled:opacity-50 disabled:cursor-not-allowed"
           >
             <LogoutIcon size={20} />
           </button>

@@ -1,35 +1,48 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useTransition } from "react";
+import useSWR from "swr";
 import { MainInput } from "@/components/ui/main-input";
+import { getProfileInfo, updateProfileInfo } from "../actions";
 import { SettingsActionButtons } from "./settings-action-buttons";
 import { SettingsCard } from "./settings-card";
 import { SettingsFormField } from "./settings-form-field";
 import { TimezoneSelect } from "./timezone-select";
 
-const DEFAULT_TIMEZONE = "UTC+2";
-
 export function PersonalInfoSection() {
   const t = useTranslations("Settings");
-  const [email, setEmail] = useState("");
+  const { data, mutate } = useSWR("profile-info", getProfileInfo);
+
   const [name, setName] = useState("");
-  const [currentEmail, setCurrentEmail] = useState("");
-  const [timezone, setTimezone] = useState(DEFAULT_TIMEZONE);
+  const [email, setEmail] = useState("");
+  const [timezone, setTimezone] = useState("UTC+2");
+  const [isPending, startTransition] = useTransition();
 
   useEffect(() => {
-    const storedEmail = localStorage.getItem("auth_email") ?? "";
-    setEmail(storedEmail);
-    setCurrentEmail(storedEmail);
-  }, []);
+    if (data) {
+      setName(data.name);
+      setEmail(data.email);
+      setTimezone(data.timezone);
+    }
+  }, [data]);
 
   const hasChanges =
-    name !== "" || currentEmail !== email || timezone !== DEFAULT_TIMEZONE;
+    !!data &&
+    (name !== data.name || email !== data.email || timezone !== data.timezone);
 
   const handleCancel = () => {
-    setName("");
-    setCurrentEmail(email);
-    setTimezone(DEFAULT_TIMEZONE);
+    if (!data) return;
+    setName(data.name);
+    setEmail(data.email);
+    setTimezone(data.timezone);
+  };
+
+  const handleSave = () => {
+    startTransition(async () => {
+      await updateProfileInfo({ name, email, timezone });
+      await mutate();
+    });
   };
 
   return (
@@ -40,15 +53,17 @@ export function PersonalInfoSection() {
           value={name}
           onChange={(e) => setName(e.target.value)}
           placeholder={t("personal.name")}
+          disabled={!data || isPending}
         />
       </SettingsFormField>
 
       <SettingsFormField label="Email">
         <MainInput
           type="email"
-          value={currentEmail}
-          onChange={(e) => setCurrentEmail(e.target.value)}
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
           placeholder="email@gmail.com"
+          disabled={!data || isPending}
         />
       </SettingsFormField>
 
@@ -58,7 +73,7 @@ export function PersonalInfoSection() {
 
       <SettingsFormField label={t("personal.userSince")}>
         <span className="font-roboto text-[16px] leading-[1.4] text-text-subtle">
-          24 {t("personal.october")} 2025
+          {data?.userSince ?? "—"}
         </span>
       </SettingsFormField>
 
@@ -66,8 +81,8 @@ export function PersonalInfoSection() {
         cancelLabel={t("personal.cancel")}
         saveLabel={t("personal.save")}
         onCancel={handleCancel}
-        onSave={() => {}}
-        disabled={!hasChanges}
+        onSave={handleSave}
+        disabled={!hasChanges || isPending}
       />
     </SettingsCard>
   );

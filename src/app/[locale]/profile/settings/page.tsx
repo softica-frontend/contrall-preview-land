@@ -1,6 +1,7 @@
 "use client";
 
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { Suspense } from "react";
 import { BillingSection } from "./components/billing-section";
 import { PersonalInfoSection } from "./components/personal-info-section";
 import { PrivacySection } from "./components/privacy-section";
@@ -14,7 +15,7 @@ function isValidSection(value: string | null): value is Section {
   return VALID_SECTIONS.includes(value as Section);
 }
 
-export default function SettingsPage() {
+function SettingsContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const pathname = usePathname();
@@ -48,5 +49,13 @@ export default function SettingsPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function SettingsPage() {
+  return (
+    <Suspense>
+      <SettingsContent />
+    </Suspense>
   );
 }

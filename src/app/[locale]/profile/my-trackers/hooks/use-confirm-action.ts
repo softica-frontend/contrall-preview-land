@@ -8,9 +8,11 @@ interface ConfirmAction {
   trackerName?: string;
 }
 
+type TrackersUpdater = (updater: (prev: Tracker[]) => Tracker[]) => void;
+
 export function useConfirmAction(
   trackers: Tracker[],
-  setTrackers: React.Dispatch<React.SetStateAction<Tracker[]>>,
+  updateTrackers: TrackersUpdater,
 ) {
   const [confirmAction, setConfirmAction] = useState<ConfirmAction | null>(
     null,
@@ -19,11 +21,11 @@ export function useConfirmAction(
   const handleConfirm = useCallback(() => {
     if (!confirmAction) return;
     if (confirmAction.type === "delete") {
-      setTrackers((prev) =>
+      updateTrackers((prev) =>
         prev.filter((tr) => tr.id !== confirmAction.trackerId),
       );
     } else {
-      setTrackers((prev) =>
+      updateTrackers((prev) =>
         prev.map((tr) =>
           tr.id === confirmAction.trackerId
             ? { ...tr, status: tr.status === "paused" ? "active" : "paused" }
@@ -32,7 +34,7 @@ export function useConfirmAction(
       );
     }
     setConfirmAction(null);
-  }, [confirmAction, setTrackers]);
+  }, [confirmAction, updateTrackers]);
 
   const onDelete = useCallback(
     (id: string) => {
