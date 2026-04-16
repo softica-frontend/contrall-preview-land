@@ -68,7 +68,7 @@ export function TimezoneSelect({ value, onChange }: TimezoneSelectProps) {
       };
     }
     setVisible(false);
-    const timer = setTimeout(() => setMounted(false), 200);
+    const timer = setTimeout(() => setMounted(false), 150);
     return () => clearTimeout(timer);
   }, [open, updatePosition]);
 
@@ -137,8 +137,10 @@ export function TimezoneSelect({ value, onChange }: TimezoneSelectProps) {
             ref={dropdownRef}
             role="listbox"
             aria-label="Select timezone"
-            className={`fixed z-[9999] max-h-[240px] min-w-[140px] origin-top overflow-y-auto rounded-xl bg-white shadow-dropdown transition-all duration-200 ease-out ${
-              visible ? "scale-y-100 opacity-100" : "scale-y-0 opacity-0"
+            className={`fixed z-[9999] max-h-[240px] min-w-[140px] overflow-y-auto rounded-xl bg-white shadow-dropdown ${
+              visible
+                ? "animate-[dropdown-in_220ms_cubic-bezier(0.16,1,0.3,1)_both]"
+                : "animate-[dropdown-out_150ms_ease-in_both]"
             }`}
             style={{ top: position.top, left: position.left }}
           >

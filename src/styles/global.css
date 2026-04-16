@@ -12,3 +12,39 @@ body {
 .font-inter {
   font-family: var(--font-inter), "Inter", sans-serif;
 }
+
+/* ── Custom scrollbar — branded blue, appears on hover ── */
+
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+  border-radius: 9999px;
+  margin: 3px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(37, 117, 255, 0.2);
+  border-radius: 9999px;
+}
+
+*:hover::-webkit-scrollbar-track {
+  background: var(--color-bg-light-blue);
+}
+
+*:hover::-webkit-scrollbar-thumb {
+  background: rgba(37, 117, 255, 0.55);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(37, 117, 255, 0.55);
+}
+
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(37, 117, 255, 0.2) transparent;
+}

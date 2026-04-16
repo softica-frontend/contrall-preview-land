@@ -46,6 +46,8 @@ export function TrackerActionsMenu({
 }: TrackerActionsMenuProps) {
   const t = useTranslations("MyTrackers");
   const [open, setOpen] = useState(false);
+  const [panelMounted, setPanelMounted] = useState(false);
+  const [panelVisible, setPanelVisible] = useState(false);
   const [mounted, setMounted] = useState(false);
   const [coords, setCoords] = useState<DropdownCoords>({
     right: 0,
@@ -60,8 +62,15 @@ export function TrackerActionsMenu({
   useEffect(() => {
     if (open) {
       document.body.style.overflow = "hidden";
+      setPanelMounted(true);
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => setPanelVisible(true));
+      });
     } else {
       document.body.style.overflow = "";
+      setPanelVisible(false);
+      const t = setTimeout(() => setPanelMounted(false), 150);
+      return () => clearTimeout(t);
     }
     return () => {
       document.body.style.overflow = "";
@@ -136,7 +145,7 @@ export function TrackerActionsMenu({
         </button>
       )}
 
-      {open &&
+      {panelMounted &&
         mounted &&
         createPortal(
           <>
@@ -150,7 +159,11 @@ export function TrackerActionsMenu({
             <div
               role="menu"
               style={dropdownStyle}
-              className="flex flex-col gap-[6px] rounded-[8px] border border-border-light bg-surface p-[6px] shadow-card"
+              className={`flex flex-col gap-[6px] rounded-[8px] border border-border-light bg-surface p-[6px] shadow-card ${
+                panelVisible
+                  ? "animate-[dropdown-in_220ms_cubic-bezier(0.16,1,0.3,1)_both]"
+                  : "animate-[dropdown-out_150ms_ease-in_both]"
+              }`}
               onKeyDown={(e) => {
                 if (e.key === "Escape") setOpen(false);
               }}

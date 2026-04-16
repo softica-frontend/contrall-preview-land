@@ -97,7 +97,7 @@ export function ProfileHeader() {
       aria-modal="true"
       aria-label="Navigation menu"
       onKeyDown={handleKeyDown}
-      className={`fixed inset-0 z-100 flex flex-col items-center gap-[32px] overflow-y-auto px-[24px] pb-[32px] pt-[32px] transition-all duration-300 ease-out md:hidden ${
+      className={`fixed inset-0 z-100 flex flex-col items-center gap-[32px] overflow-y-auto px-[24px] pb-[32px] pt-[32px] transition-[transform,opacity] duration-300 ease-out md:hidden ${
         menuOpen
           ? "translate-y-0 opacity-100"
           : "pointer-events-none -translate-y-full opacity-0"

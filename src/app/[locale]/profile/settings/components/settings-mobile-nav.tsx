@@ -1,7 +1,7 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   CreditCardIcon,
   ShieldIcon,
@@ -25,9 +25,24 @@ export function SettingsMobileNav({
 }: SettingsMobileNavProps) {
   const t = useTranslations("Settings");
   const [open, setOpen] = useState(false);
+  const [panelMounted, setPanelMounted] = useState(false);
+  const [panelVisible, setPanelVisible] = useState(false);
 
   const active = SECTIONS.find((s) => s.key === activeSection) ?? SECTIONS[0];
   const ActiveIcon = active.icon;
+
+  useEffect(() => {
+    if (open) {
+      setPanelMounted(true);
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => setPanelVisible(true));
+      });
+    } else {
+      setPanelVisible(false);
+      const timer = setTimeout(() => setPanelMounted(false), 150);
+      return () => clearTimeout(timer);
+    }
+  }, [open]);
 
   return (
     <div className="relative lg:hidden">
@@ -56,8 +71,14 @@ export function SettingsMobileNav({
         </svg>
       </button>
 
-      {open && (
-        <div className="absolute left-0 right-0 top-full z-10 mt-1 overflow-hidden rounded-xl border border-border-light bg-surface shadow-dropdown">
+      {panelMounted && (
+        <div
+          className={`absolute left-0 right-0 top-full z-10 mt-1 overflow-hidden rounded-xl border border-border-light bg-surface shadow-dropdown ${
+            panelVisible
+              ? "animate-[dropdown-in_220ms_cubic-bezier(0.16,1,0.3,1)_both]"
+              : "animate-[dropdown-out_150ms_ease-in_both]"
+          }`}
+        >
           {SECTIONS.map(({ key, icon: Icon }) => (
             <button
               key={key}
