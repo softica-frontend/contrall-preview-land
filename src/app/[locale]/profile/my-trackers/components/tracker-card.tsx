@@ -55,7 +55,7 @@ export function TrackerCard({ tracker, onDelete, onPause }: TrackerCardProps) {
             >
               {tracker.ip}
             </a>
-            <div className="opacity-0 transition-opacity duration-200 group-hover:opacity-100">
+            <div className="opacity-100 transition-opacity duration-200 sm:opacity-0 sm:group-hover:opacity-100">
               <TrackerActionsMenu
                 trackerId={tracker.id}
                 trackerStatus={tracker.status}

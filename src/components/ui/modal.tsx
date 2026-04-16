@@ -14,23 +14,41 @@ export function Modal({ open, onClose, children, className }: ModalProps) {
   const overlayRef = useRef<HTMLDivElement>(null);
   const [mounted, setMounted] = useState(false);
   const [visible, setVisible] = useState(false);
+  const lockedRef = useRef(false);
 
+  const releaseOverflow = () => {
+    if (!lockedRef.current) return;
+    lockedRef.current = false;
+    const count = Math.max(0, Number(document.body.dataset.modalCount ?? 1) - 1);
+    document.body.dataset.modalCount = String(count);
+    if (count === 0) document.body.style.overflow = "";
+  };
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: releaseOverflow is not a dependency
   useEffect(() => {
     if (open) {
+      lockedRef.current = true;
+      const count = Number(document.body.dataset.modalCount ?? 0) + 1;
+      document.body.dataset.modalCount = String(count);
+      document.body.style.overflow = "hidden";
       setMounted(true);
       requestAnimationFrame(() => {
         requestAnimationFrame(() => setVisible(true));
       });
-      document.body.style.overflow = "hidden";
     } else {
       setVisible(false);
       const timeout = setTimeout(() => {
         setMounted(false);
-        document.body.style.overflow = "";
+        releaseOverflow();
       }, 200);
       return () => clearTimeout(timeout);
     }
   }, [open]);
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: releaseOverflow is not a dependency
+    useEffect(() => {
+    return () => releaseOverflow();
+  }, []);
 
   useEffect(() => {
     if (!open) return;
