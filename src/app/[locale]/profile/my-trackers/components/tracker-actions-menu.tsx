@@ -14,6 +14,7 @@ import {
   UpgradeIcon,
   UsersIcon,
 } from "@/components/icons/profile-icons";
+import { useDropdownPanel } from "@/hooks/use-dropdown-panel";
 
 // 6 items × 40px + 2 × 6px padding + 5 × 6px gaps = 282px
 const DROPDOWN_NATURAL_HEIGHT = 282;
@@ -45,10 +46,8 @@ export function TrackerActionsMenu({
   variant = "table",
 }: TrackerActionsMenuProps) {
   const t = useTranslations("MyTrackers");
-  const [open, setOpen] = useState(false);
-  const [panelMounted, setPanelMounted] = useState(false);
-  const [panelVisible, setPanelVisible] = useState(false);
-  const [mounted, setMounted] = useState(false);
+  const { open, setOpen, panelMounted, panelVisible } = useDropdownPanel();
+  const [clientMounted, setClientMounted] = useState(false);
   const [coords, setCoords] = useState<DropdownCoords>({
     right: 0,
     maxHeight: DROPDOWN_NATURAL_HEIGHT,
@@ -56,26 +55,8 @@ export function TrackerActionsMenu({
   const buttonRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
-    setMounted(true);
+    setClientMounted(true);
   }, []);
-
-  useEffect(() => {
-    if (open) {
-      document.body.style.overflow = "hidden";
-      setPanelMounted(true);
-      requestAnimationFrame(() => {
-        requestAnimationFrame(() => setPanelVisible(true));
-      });
-    } else {
-      document.body.style.overflow = "";
-      setPanelVisible(false);
-      const t = setTimeout(() => setPanelMounted(false), 150);
-      return () => clearTimeout(t);
-    }
-    return () => {
-      document.body.style.overflow = "";
-    };
-  }, [open]);
 
   const handleOpen = () => {
     if (buttonRef.current) {
@@ -146,7 +127,7 @@ export function TrackerActionsMenu({
       )}
 
       {panelMounted &&
-        mounted &&
+        clientMounted &&
         createPortal(
           <>
             {/* biome-ignore lint/a11y/noStaticElementInteractions: click-away dismiss */}
@@ -162,7 +143,7 @@ export function TrackerActionsMenu({
               className={`flex flex-col gap-[6px] rounded-[8px] border border-border-light bg-surface p-[6px] shadow-card ${
                 panelVisible
                   ? "animate-[dropdown-in_220ms_cubic-bezier(0.16,1,0.3,1)_both]"
-                  : "animate-[dropdown-out_150ms_ease-in_both]"
+                  : "opacity-0 animate-[dropdown-out_150ms_ease-in_both]"
               }`}
               onKeyDown={(e) => {
                 if (e.key === "Escape") setOpen(false);

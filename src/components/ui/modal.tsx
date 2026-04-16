@@ -19,7 +19,10 @@ export function Modal({ open, onClose, children, className }: ModalProps) {
   const releaseOverflow = () => {
     if (!lockedRef.current) return;
     lockedRef.current = false;
-    const count = Math.max(0, Number(document.body.dataset.modalCount ?? 1) - 1);
+    const count = Math.max(
+      0,
+      Number(document.body.dataset.modalCount ?? 1) - 1,
+    );
     document.body.dataset.modalCount = String(count);
     if (count === 0) document.body.style.overflow = "";
   };
@@ -46,7 +49,7 @@ export function Modal({ open, onClose, children, className }: ModalProps) {
   }, [open]);
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: releaseOverflow is not a dependency
-    useEffect(() => {
+  useEffect(() => {
     return () => releaseOverflow();
   }, []);
 
@@ -94,7 +97,6 @@ export function Modal({ open, onClose, children, className }: ModalProps) {
             ? "scale(1) translateY(0)"
             : "scale(0.95) translateY(8px)",
           transition: "opacity 200ms ease-out, transform 200ms ease-out",
-          willChange: "transform, opacity",
           backfaceVisibility: "hidden",
         }}
       >

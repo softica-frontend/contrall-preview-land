@@ -1,14 +1,34 @@
 "use client";
 
-import { useState } from "react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { BillingSection } from "./components/billing-section";
 import { PersonalInfoSection } from "./components/personal-info-section";
 import { PrivacySection } from "./components/privacy-section";
 import { SettingsMobileNav } from "./components/settings-mobile-nav";
 import { SettingsSidebar } from "./components/settings-sidebar";
 
+const VALID_SECTIONS = ["personal", "privacy", "billing"] as const;
+type Section = (typeof VALID_SECTIONS)[number];
+
+function isValidSection(value: string | null): value is Section {
+  return VALID_SECTIONS.includes(value as Section);
+}
+
 export default function SettingsPage() {
-  const [activeSection, setActiveSection] = useState("personal");
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const pathname = usePathname();
+
+  const sectionParam = searchParams.get("section");
+  const activeSection: Section = isValidSection(sectionParam)
+    ? sectionParam
+    : "personal";
+
+  const setActiveSection = (section: string) => {
+    const params = new URLSearchParams(searchParams.toString());
+    params.set("section", section);
+    router.replace(`${pathname}?${params.toString()}`);
+  };
 
   return (
     <div className="px-4 py-6 lg:flex lg:h-[calc(100dvh-92px)] lg:items-start lg:justify-center lg:overflow-hidden lg:py-8 xl:h-[calc(100dvh-107px)]">

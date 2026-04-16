@@ -1,12 +1,12 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { useEffect, useState } from "react";
 import {
   CreditCardIcon,
   ShieldIcon,
   UserIcon,
 } from "@/components/icons/profile-icons";
+import { useDropdownPanel } from "@/hooks/use-dropdown-panel";
 
 const SECTIONS = [
   { key: "personal", icon: UserIcon },
@@ -24,25 +24,10 @@ export function SettingsMobileNav({
   onSectionChange,
 }: SettingsMobileNavProps) {
   const t = useTranslations("Settings");
-  const [open, setOpen] = useState(false);
-  const [panelMounted, setPanelMounted] = useState(false);
-  const [panelVisible, setPanelVisible] = useState(false);
+  const { open, setOpen, panelMounted, panelVisible } = useDropdownPanel();
 
   const active = SECTIONS.find((s) => s.key === activeSection) ?? SECTIONS[0];
   const ActiveIcon = active.icon;
-
-  useEffect(() => {
-    if (open) {
-      setPanelMounted(true);
-      requestAnimationFrame(() => {
-        requestAnimationFrame(() => setPanelVisible(true));
-      });
-    } else {
-      setPanelVisible(false);
-      const timer = setTimeout(() => setPanelMounted(false), 150);
-      return () => clearTimeout(timer);
-    }
-  }, [open]);
 
   return (
     <div className="relative lg:hidden">
@@ -76,7 +61,7 @@ export function SettingsMobileNav({
           className={`absolute left-0 right-0 top-full z-10 mt-1 overflow-hidden rounded-xl border border-border-light bg-surface shadow-dropdown ${
             panelVisible
               ? "animate-[dropdown-in_220ms_cubic-bezier(0.16,1,0.3,1)_both]"
-              : "animate-[dropdown-out_150ms_ease-in_both]"
+              : "opacity-0 animate-[dropdown-out_150ms_ease-in_both]"
           }`}
         >
           {SECTIONS.map(({ key, icon: Icon }) => (

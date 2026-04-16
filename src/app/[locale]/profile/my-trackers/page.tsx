@@ -1,7 +1,7 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { useCallback, useState } from "react";
+import { useRef, useState } from "react";
 import { Modal } from "@/components/ui/modal";
 import { AddTrackerModal } from "./components/add-tracker-modal";
 import { EmptyState } from "./components/empty-state";
@@ -10,6 +10,7 @@ import { TrackerCard } from "./components/tracker-card";
 import { TrackerTable } from "./components/tracker-table";
 import { TrackersToolbar } from "./components/trackers-toolbar";
 import type { Tracker, ViewMode } from "./components/types";
+import { useConfirmAction } from "./hooks/use-confirm-action";
 
 export default function MyTrackersPage() {
   const t = useTranslations("MyTrackers");
@@ -18,48 +19,14 @@ export default function MyTrackersPage() {
   const [modalOpen, setModalOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
-  const [confirmAction, setConfirmAction] = useState<{
-    type: "delete" | "pause";
-    trackerId: string;
-    trackerStatus?: Tracker["status"];
-    trackerName?: string;
-  } | null>(null);
 
-  const handleConfirm = useCallback(() => {
-    if (!confirmAction) return;
-    if (confirmAction.type === "delete") {
-      setTrackers((prev) =>
-        prev.filter((tr) => tr.id !== confirmAction.trackerId),
-      );
-    } else {
-      setTrackers((prev) =>
-        prev.map((tr) =>
-          tr.id === confirmAction.trackerId
-            ? { ...tr, status: tr.status === "paused" ? "active" : "paused" }
-            : tr,
-        ),
-      );
-    }
-    setConfirmAction(null);
-  }, [confirmAction]);
+  const { confirmAction, setConfirmAction, handleConfirm, onDelete, onPause } =
+    useConfirmAction(trackers, setTrackers);
 
-  const onDelete = (id: string) => {
-    const tracker = trackers.find((tr) => tr.id === id);
-    setConfirmAction({
-      type: "delete",
-      trackerId: id,
-      trackerName: tracker?.name,
-    });
-  };
-
-  const onPause = (id: string) => {
-    const tracker = trackers.find((tr) => tr.id === id);
-    setConfirmAction({
-      type: "pause",
-      trackerId: id,
-      trackerStatus: tracker?.status,
-    });
-  };
+  // Keep the last non-null value so modal content stays correct during the close animation
+  const lastConfirmRef = useRef(confirmAction);
+  if (confirmAction !== null) lastConfirmRef.current = confirmAction;
+  const displayedAction = lastConfirmRef.current;
 
   const filteredTrackers = searchQuery
     ? trackers.filter((tr) =>
@@ -108,55 +75,53 @@ export default function MyTrackersPage() {
 
       <AddTrackerModal open={modalOpen} onClose={() => setModalOpen(false)} />
 
-      {confirmAction && (
-        <Modal.Confirm
-          open
-          onClose={() => setConfirmAction(null)}
-          onConfirm={handleConfirm}
-          title={
-            confirmAction.type === "delete"
-              ? t("confirm.deleteTitle")
-              : confirmAction.trackerStatus === "paused"
-                ? t("confirm.resumeTitle")
-                : t("confirm.pauseTitle")
-          }
-          message={
-            confirmAction.type === "delete"
-              ? t("confirm.deleteMessage")
-              : confirmAction.trackerStatus === "paused"
-                ? t("confirm.resumeMessage")
-                : t("confirm.pauseMessage")
-          }
-          confirmLabel={
-            confirmAction.type === "delete"
-              ? t("confirm.deleteConfirm")
-              : confirmAction.trackerStatus === "paused"
-                ? t("confirm.resumeConfirm")
-                : t("confirm.pauseConfirm")
-          }
-          cancelLabel={t("confirm.cancel")}
-          requiredInput={
-            confirmAction.type === "delete"
-              ? confirmAction.trackerName
-              : undefined
-          }
-          inputHint={
-            confirmAction.type === "delete" && confirmAction.trackerName ? (
-              <>
-                {t("confirm.deleteInputHint")}:{" "}
-                <strong className="font-semibold text-text-body">
-                  {confirmAction.trackerName}
-                </strong>
-              </>
-            ) : undefined
-          }
-          inputPlaceholder={
-            confirmAction.type === "delete"
-              ? t("confirm.deleteInputPlaceholder")
-              : undefined
-          }
-        />
-      )}
+      <Modal.Confirm
+        open={!!confirmAction}
+        onClose={() => setConfirmAction(null)}
+        onConfirm={handleConfirm}
+        title={
+          displayedAction?.type === "delete"
+            ? t("confirm.deleteTitle")
+            : displayedAction?.trackerStatus === "paused"
+              ? t("confirm.resumeTitle")
+              : t("confirm.pauseTitle")
+        }
+        message={
+          displayedAction?.type === "delete"
+            ? t("confirm.deleteMessage")
+            : displayedAction?.trackerStatus === "paused"
+              ? t("confirm.resumeMessage")
+              : t("confirm.pauseMessage")
+        }
+        confirmLabel={
+          displayedAction?.type === "delete"
+            ? t("confirm.deleteConfirm")
+            : displayedAction?.trackerStatus === "paused"
+              ? t("confirm.resumeConfirm")
+              : t("confirm.pauseConfirm")
+        }
+        cancelLabel={t("confirm.cancel")}
+        requiredInput={
+          displayedAction?.type === "delete"
+            ? displayedAction.trackerName
+            : undefined
+        }
+        inputHint={
+          displayedAction?.type === "delete" && displayedAction.trackerName ? (
+            <>
+              {t("confirm.deleteInputHint")}:{" "}
+              <strong className="font-semibold text-text-body">
+                {displayedAction.trackerName}
+              </strong>
+            </>
+          ) : undefined
+        }
+        inputPlaceholder={
+          displayedAction?.type === "delete"
+            ? t("confirm.deleteInputPlaceholder")
+            : undefined
+        }
+      />
     </>
   );
 }

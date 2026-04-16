@@ -112,10 +112,6 @@ export function TrackerCard({ tracker, onDelete, onPause }: TrackerCardProps) {
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 rounded-[inherit]"
-        // style={{
-        //   boxShadow:
-        //     "-0.5px -1px 1px 0px rgba(37,117,255,0.80) inset, 0.5px 1px 1px 0px rgba(37,117,255,0.80) inset",
-        // }}
       />
     </div>
   );
