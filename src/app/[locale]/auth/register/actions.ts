@@ -1,26 +1,34 @@
 "use server";
 
 import { cookies } from "next/headers";
+import type { ApiResult } from "@/lib/api-client";
+import { apiAction } from "@/lib/api-client";
 
-export async function register(email: string, _password: string) {
-  await new Promise((resolve) => setTimeout(resolve, 1000));
+export async function register(
+  email: string,
+  password: string,
+): Promise<ApiResult<undefined>> {
+  const result = await apiAction<{
+    access_token: string;
+    refresh_token: string;
+  }>("POST", "/auth/register", { email, password });
 
-  // TODO: replace mock with real call
-  // return apiAction("POST", "/auth/register", { email, password });
+  if (!result.ok) return result;
 
   const cookieStore = await cookies();
+  const secure = process.env.NODE_ENV === "production";
 
-  cookieStore.set("access_token", "mock-access-token", {
+  cookieStore.set("access_token", result.data.access_token, {
     httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
+    secure,
     sameSite: "lax",
     path: "/",
     maxAge: 60 * 15,
   });
 
-  cookieStore.set("refresh_token", "mock-refresh-token", {
+  cookieStore.set("refresh_token", result.data.refresh_token, {
     httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
+    secure,
     sameSite: "lax",
     path: "/",
     maxAge: 60 * 60 * 24 * 30,
@@ -28,11 +36,11 @@ export async function register(email: string, _password: string) {
 
   cookieStore.set("auth_email", email, {
     httpOnly: false,
-    secure: process.env.NODE_ENV === "production",
+    secure,
     sameSite: "lax",
     path: "/",
     maxAge: 60 * 60 * 24 * 30,
   });
 
-  return { ok: true as const, data: undefined };
+  return { ok: true, data: undefined };
 }

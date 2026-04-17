@@ -61,6 +61,12 @@ export default function RegisterPage() {
           description: t("successRegisterDesc"),
         });
         setTimeout(() => router.push("/profile"), 1000);
+      } else {
+        setToast({
+          type: "error",
+          title: t("errorRegister"),
+          description: result.error.message,
+        });
       }
     });
   };

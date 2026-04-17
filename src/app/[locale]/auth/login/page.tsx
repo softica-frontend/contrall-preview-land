@@ -53,6 +53,12 @@ export default function LoginPage() {
           description: t("successLoginDesc"),
         });
         setTimeout(() => router.push("/profile"), 1000);
+      } else {
+        setToast({
+          type: "error",
+          title: t("errorLogin"),
+          description: result.error.message,
+        });
       }
     });
   };
