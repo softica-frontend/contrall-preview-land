@@ -1,4 +1,5 @@
-import { useCallback, useState } from "react";
+import { useCallback, useState, useTransition } from "react";
+import { deleteTracker, pauseTracker } from "../actions";
 import type { Tracker } from "../components/types";
 
 interface ConfirmAction {
@@ -17,24 +18,33 @@ export function useConfirmAction(
   const [confirmAction, setConfirmAction] = useState<ConfirmAction | null>(
     null,
   );
+  const [isPending, startTransition] = useTransition();
 
   const handleConfirm = useCallback(() => {
     if (!confirmAction) return;
-    if (confirmAction.type === "delete") {
-      updateTrackers((prev) =>
-        prev.filter((tr) => tr.id !== confirmAction.trackerId),
-      );
-    } else {
-      updateTrackers((prev) =>
-        prev.map((tr) =>
-          tr.id === confirmAction.trackerId
-            ? { ...tr, status: tr.status === "paused" ? "active" : "paused" }
-            : tr,
-        ),
-      );
-    }
-    setConfirmAction(null);
-  }, [confirmAction, updateTrackers]);
+
+    const action = confirmAction;
+
+    startTransition(async () => {
+      if (action.type === "delete") {
+        await deleteTracker(action.trackerId);
+        updateTrackers((prev) =>
+          prev.filter((tr) => tr.id !== action.trackerId),
+        );
+      } else {
+        const tracker = trackers.find((tr) => tr.id === action.trackerId);
+        await pauseTracker(action.trackerId, tracker?.status ?? "active");
+        updateTrackers((prev) =>
+          prev.map((tr) =>
+            tr.id === action.trackerId
+              ? { ...tr, status: tr.status === "paused" ? "active" : "paused" }
+              : tr,
+          ),
+        );
+      }
+      setConfirmAction(null);
+    });
+  }, [confirmAction, updateTrackers, trackers]);
 
   const onDelete = useCallback(
     (id: string) => {
@@ -60,5 +70,12 @@ export function useConfirmAction(
     [trackers],
   );
 
-  return { confirmAction, setConfirmAction, handleConfirm, onDelete, onPause };
+  return {
+    confirmAction,
+    setConfirmAction,
+    handleConfirm,
+    isPending,
+    onDelete,
+    onPause,
+  };
 }

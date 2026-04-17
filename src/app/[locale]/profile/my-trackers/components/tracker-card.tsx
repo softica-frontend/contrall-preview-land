@@ -20,12 +20,11 @@ export function TrackerCard({ tracker, onDelete, onPause }: TrackerCardProps) {
 
   return (
     <div
-      className="group relative flex overflow-hidden rounded-[21px] transition-shadow duration-200 hover:shadow-elevated"
+      className="group relative flex h-[268px] overflow-hidden rounded-[21px] transition-shadow duration-200 hover:shadow-elevated"
       style={{
         background:
           "radial-gradient(50% 50% at 50% 50%, rgba(252,252,253,0) 0%, rgba(37,117,255,0.10) 100%), #FCFCFD",
         backgroundBlendMode: "screen, screen",
-        // boxShadow: "0 0 10px 0 rgba(0, 0, 0, 0.1)",
         border: "1px solid #E4E7EC",
       }}
     >
@@ -36,10 +35,10 @@ export function TrackerCard({ tracker, onDelete, onPause }: TrackerCardProps) {
       />
 
       {/* Content */}
-      <div className="flex min-w-0 flex-1 flex-col gap-4 px-4 pb-3 pt-4">
-        {/* Header */}
-        <div className="flex flex-col gap-1">
-          {/* IP row + burger (top-right, hover only) */}
+      <div className="flex min-w-0 flex-1 flex-col px-4 pt-4">
+        {/* Top section — grows to fill available space */}
+        <div className="flex flex-1 flex-col gap-1 overflow-hidden">
+          {/* IP row + burger */}
           <div className="flex items-center gap-2">
             <ReactCountryFlag
               countryCode={tracker.countryCode}
@@ -78,27 +77,16 @@ export function TrackerCard({ tracker, onDelete, onPause }: TrackerCardProps) {
             />
           </div>
 
-          {/* Description */}
+          {/* Description — fills remaining space */}
           {tracker.description && (
-            <p
-              className="overflow-hidden text-[16px] leading-[1.4] text-text-subtle"
-              style={{
-                display: "-webkit-box",
-                WebkitLineClamp: 4,
-                WebkitBoxOrient: "vertical",
-              }}
-            >
+            <p className="mt-1 flex-1 overflow-hidden text-[16px] leading-[1.4] text-text-subtle">
               {tracker.description}
             </p>
           )}
         </div>
 
-        {/* Divider */}
-        <div className="h-px w-full bg-border-light" />
-
-        {/* Footer metadata */}
-        <div className="flex gap-1.5">
-          {/* Left column */}
+        {/* Footer — pinned to bottom with top border */}
+        <div className="flex gap-1.5 border-t border-border-light py-3">
           <div className="flex flex-1 flex-col gap-1.5">
             <div className="flex items-center gap-1 text-[14px] leading-[1.4] text-text-primary">
               <BanknoteIcon size={16} className="shrink-0 text-text-subtle" />
@@ -108,7 +96,7 @@ export function TrackerCard({ tracker, onDelete, onPause }: TrackerCardProps) {
         </div>
       </div>
 
-      {/* Inset glow overlay — renders on top of all content including accent bar */}
+      {/* Inset glow overlay */}
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 rounded-[inherit]"

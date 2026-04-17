@@ -1,26 +1,44 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { useState } from "react";
+import { useState, useTransition } from "react";
 import { ChevronDownIcon } from "@/components/icons/profile-icons";
 import { Modal } from "@/components/ui/modal";
+import { Spinner } from "@/components/ui/spinner";
+import { createTracker } from "../actions";
+import type { Tracker } from "./types";
 
 interface AddTrackerModalProps {
   open: boolean;
   onClose: () => void;
+  mutate: () => void;
 }
 
 const STEPS = ["general", "team", "configuration", "payment"] as const;
 
-export function AddTrackerModal({ open, onClose }: AddTrackerModalProps) {
+export function AddTrackerModal({
+  open,
+  onClose,
+  mutate,
+}: AddTrackerModalProps) {
   const t = useTranslations("MyTrackers");
   const [currentStep, setCurrentStep] = useState(0);
+  const [isSubmitting, startSubmit] = useTransition();
 
   const handleNext = () => {
     if (currentStep < STEPS.length - 1) {
       setCurrentStep(currentStep + 1);
     } else {
-      handleClose();
+      startSubmit(async () => {
+        // TODO: pass real form data when form state is implemented
+        await createTracker({
+          name: "",
+          domain: "",
+          plan: "basic" as Tracker["plan"],
+        });
+        mutate();
+        handleClose();
+      });
     }
   };
 
@@ -34,6 +52,8 @@ export function AddTrackerModal({ open, onClose }: AddTrackerModalProps) {
     setCurrentStep(0);
     onClose();
   };
+
+  const isLastStep = currentStep === STEPS.length - 1;
 
   return (
     <Modal
@@ -84,18 +104,24 @@ export function AddTrackerModal({ open, onClose }: AddTrackerModalProps) {
         <button
           type="button"
           onClick={currentStep === 0 ? handleClose : handleBack}
-          className="flex h-8 cursor-pointer items-center justify-center rounded-[40px] px-2.5 py-1 text-[14px] font-medium tracking-[0.5px] text-text-subtle transition-colors duration-150 hover:text-text-heading"
+          disabled={isSubmitting}
+          className="flex h-8 cursor-pointer items-center justify-center rounded-[40px] px-2.5 py-1 text-[14px] font-medium tracking-[0.5px] text-text-subtle transition-colors duration-150 hover:text-text-heading disabled:cursor-not-allowed disabled:opacity-50"
         >
           {currentStep === 0 ? t("modal.cancel") : t("modal.back")}
         </button>
         <button
           type="button"
           onClick={handleNext}
-          className="flex h-8 cursor-pointer items-center justify-center rounded-full bg-primary px-3 py-1 text-[14px] font-medium tracking-[0.5px] text-surface transition-colors duration-200 hover:bg-primary-hover"
+          disabled={isSubmitting}
+          className="flex h-8 min-w-[80px] cursor-pointer items-center justify-center gap-2 rounded-full bg-primary px-3 py-1 text-[14px] font-medium tracking-[0.5px] text-surface transition-colors duration-200 hover:bg-primary-hover disabled:cursor-not-allowed disabled:opacity-50"
         >
-          {currentStep === STEPS.length - 1
-            ? t("modal.finish")
-            : t("modal.next")}
+          {isLastStep && isSubmitting ? (
+            <Spinner size={14} />
+          ) : isLastStep ? (
+            t("modal.finish")
+          ) : (
+            t("modal.next")
+          )}
         </button>
       </Modal.Footer>
     </Modal>

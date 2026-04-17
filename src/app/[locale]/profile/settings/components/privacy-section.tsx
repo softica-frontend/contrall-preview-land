@@ -81,6 +81,7 @@ export function PrivacySection() {
         onCancel={handleCancel}
         onSave={handleSave}
         disabled={isDisabled}
+        isPending={isPending}
       />
     </SettingsCard>
   );

@@ -1,6 +1,7 @@
 "use client";
 
 import { useTranslations } from "next-intl";
+import Skeleton from "react-loading-skeleton";
 import useSWR from "swr";
 import { getBillingHistory } from "../actions";
 import { StatusBadge } from "./status-badge";
@@ -13,9 +14,26 @@ const COLUMNS = [
   { key: "description", width: "min-w-[120px] flex-[2]" },
 ] as const;
 
+const SKELETON_WIDTHS = [80, 100, 60, 72, 120] as const;
+
+function BillingSkeletonRow() {
+  return (
+    <div className="flex h-12 min-w-[700px] border-b border-border-light last:border-b-0">
+      {COLUMNS.map((col, i) => (
+        <div key={col.key} className={`flex items-center px-2 ${col.width}`}>
+          <Skeleton width={SKELETON_WIDTHS[i]} height={16} borderRadius={4} />
+        </div>
+      ))}
+    </div>
+  );
+}
+
 export function BillingSection() {
   const t = useTranslations("Settings");
-  const { data: transactions = [] } = useSWR("billing", getBillingHistory);
+  const { data: transactions = [], isLoading } = useSWR(
+    "billing",
+    getBillingHistory,
+  );
 
   return (
     <div className="flex flex-col overflow-hidden rounded-xl border border-border-light bg-surface p-4 lg:h-full lg:max-h-full lg:p-6">
@@ -42,33 +60,37 @@ export function BillingSection() {
 
         {/* Body */}
         <div className="lg:min-h-0 lg:flex-1 lg:overflow-y-auto">
-          {transactions.map((tx) => (
-            <div
-              key={`${tx.date}-${tx.time}-${tx.tracker}`}
-              className="flex h-12 min-w-[700px] border-b border-border-light last:border-b-0"
-            >
-              <div className="flex w-[170px] shrink-0 flex-col justify-center px-2">
-                <div className="font-roboto text-[14px] leading-[1.4] text-text-body">
-                  {tx.date}
+          {isLoading
+            ? Array.from({ length: 6 }).map((_, i) => (
+                <BillingSkeletonRow key={i} />
+              ))
+            : transactions.map((tx) => (
+                <div
+                  key={`${tx.date}-${tx.time}-${tx.tracker}`}
+                  className="flex h-12 min-w-[700px] border-b border-border-light last:border-b-0"
+                >
+                  <div className="flex w-[170px] shrink-0 flex-col justify-center px-2">
+                    <div className="font-roboto text-[14px] leading-[1.4] text-text-body">
+                      {tx.date}
+                    </div>
+                    <div className="font-roboto text-[12px] leading-[1.4] text-text-subtle">
+                      {tx.time}
+                    </div>
+                  </div>
+                  <div className="flex min-w-[140px] flex-[2] items-center truncate px-2 font-roboto text-[14px] leading-[1.4] text-text-body">
+                    {tx.tracker}
+                  </div>
+                  <div className="flex w-[160px] shrink-0 items-center px-2 font-roboto text-[14px] leading-[1.4] text-success">
+                    {tx.amount}
+                  </div>
+                  <div className="flex w-[150px] shrink-0 items-center px-2">
+                    <StatusBadge statusKey={tx.statusKey} />
+                  </div>
+                  <div className="flex min-w-[120px] flex-[2] items-center truncate px-2 font-roboto text-[14px] leading-[1.4] text-text-body">
+                    {t(`billing.descriptions.${tx.descriptionKey}`)}
+                  </div>
                 </div>
-                <div className="font-roboto text-[12px] leading-[1.4] text-text-subtle">
-                  {tx.time}
-                </div>
-              </div>
-              <div className="flex min-w-[140px] flex-[2] items-center truncate px-2 font-roboto text-[14px] leading-[1.4] text-text-body">
-                {tx.tracker}
-              </div>
-              <div className="flex w-[160px] shrink-0 items-center px-2 font-roboto text-[14px] leading-[1.4] text-success">
-                {tx.amount}
-              </div>
-              <div className="flex w-[150px] shrink-0 items-center px-2">
-                <StatusBadge statusKey={tx.statusKey} />
-              </div>
-              <div className="flex min-w-[120px] flex-[2] items-center truncate px-2 font-roboto text-[14px] leading-[1.4] text-text-body">
-                {t(`billing.descriptions.${tx.descriptionKey}`)}
-              </div>
-            </div>
-          ))}
+              ))}
         </div>
       </div>
     </div>

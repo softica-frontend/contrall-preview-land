@@ -2,6 +2,7 @@
 
 import { useTranslations } from "next-intl";
 import { useEffect, useState, useTransition } from "react";
+import Skeleton from "react-loading-skeleton";
 import useSWR from "swr";
 import { MainInput } from "@/components/ui/main-input";
 import { getProfileInfo, updateProfileInfo } from "../actions";
@@ -12,7 +13,7 @@ import { TimezoneSelect } from "./timezone-select";
 
 export function PersonalInfoSection() {
   const t = useTranslations("Settings");
-  const { data, mutate } = useSWR("profile-info", getProfileInfo);
+  const { data, isLoading, mutate } = useSWR("profile-info", getProfileInfo);
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -44,6 +45,32 @@ export function PersonalInfoSection() {
       await mutate();
     });
   };
+
+  if (isLoading) {
+    return (
+      <SettingsCard>
+        <SettingsFormField label={t("personal.name")}>
+          <Skeleton width={180} height={25.5} borderRadius={4} />
+        </SettingsFormField>
+        <SettingsFormField label="Email">
+          <Skeleton width={220} height={25.5} borderRadius={4} />
+        </SettingsFormField>
+        <SettingsFormField label={t("personal.timezone")}>
+          <Skeleton width={80} height={24} borderRadius={100} />
+        </SettingsFormField>
+        <SettingsFormField label={t("personal.userSince")}>
+          <Skeleton width={120} height={17} borderRadius={4} />
+        </SettingsFormField>
+        <SettingsActionButtons
+          cancelLabel={t("personal.cancel")}
+          saveLabel={t("personal.save")}
+          onCancel={() => {}}
+          onSave={() => {}}
+          disabled
+        />
+      </SettingsCard>
+    );
+  }
 
   return (
     <SettingsCard>
@@ -82,7 +109,8 @@ export function PersonalInfoSection() {
         saveLabel={t("personal.save")}
         onCancel={handleCancel}
         onSave={handleSave}
-        disabled={!hasChanges || isPending}
+        disabled={!hasChanges}
+        isPending={isPending}
       />
     </SettingsCard>
   );

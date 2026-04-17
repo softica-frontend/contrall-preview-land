@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { MainInput } from "@/components/ui/main-input";
+import { Spinner } from "@/components/ui/spinner";
 
 interface ModalProps {
   open: boolean;
@@ -163,6 +164,7 @@ interface ConfirmModalProps {
   message: string;
   confirmLabel: string;
   cancelLabel: string;
+  isPending?: boolean;
   requiredInput?: string;
   inputHint?: React.ReactNode;
   inputPlaceholder?: string;
@@ -176,6 +178,7 @@ function ConfirmModal({
   message,
   confirmLabel,
   cancelLabel,
+  isPending = false,
   requiredInput,
   inputHint,
   inputPlaceholder,
@@ -186,7 +189,8 @@ function ConfirmModal({
     if (!open) setInputValue("");
   }, [open]);
 
-  const canConfirm = !requiredInput || inputValue === requiredInput;
+  const canConfirm =
+    !isPending && (!requiredInput || inputValue === requiredInput);
 
   return (
     <Modal
@@ -253,7 +257,8 @@ function ConfirmModal({
         <button
           type="button"
           onClick={onClose}
-          className="flex h-[32px] cursor-pointer items-center justify-center rounded-[40px] px-[10px] py-[4px] text-[14px] font-medium leading-none tracking-[0.5px] text-text-body"
+          disabled={isPending}
+          className="flex h-[32px] cursor-pointer items-center justify-center rounded-[40px] px-[10px] py-[4px] text-[14px] font-medium leading-none tracking-[0.5px] text-text-body disabled:cursor-not-allowed disabled:opacity-50"
         >
           {cancelLabel}
         </button>
@@ -261,9 +266,9 @@ function ConfirmModal({
           type="button"
           onClick={onConfirm}
           disabled={!canConfirm}
-          className="flex h-[32px] cursor-pointer items-center justify-center rounded-[1000px] bg-primary px-[10px] py-[4px] text-[14px] font-medium leading-none tracking-[0.5px] text-surface transition-colors duration-200 hover:bg-primary-hover disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-primary"
+          className="flex h-[32px] min-w-[80px] cursor-pointer items-center justify-center gap-2 rounded-[1000px] bg-primary px-[10px] py-[4px] text-[14px] font-medium leading-none tracking-[0.5px] text-surface transition-colors duration-200 hover:bg-primary-hover disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-primary"
         >
-          {confirmLabel}
+          {isPending ? <Spinner size={14} /> : confirmLabel}
         </button>
       </div>
     </Modal>

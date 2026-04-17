@@ -9,6 +9,7 @@ import { Logomark, LogoText } from "@/components/icons/logo";
 import { LogoutIcon } from "@/components/icons/profile-icons";
 import { LanguageSwitcher } from "@/components/ui/language-switcher";
 import { Modal } from "@/components/ui/modal";
+import { Spinner } from "@/components/ui/spinner";
 import { Link, usePathname, useRouter } from "@/i18n/navigation";
 
 const NAV_ITEMS = [
@@ -185,7 +186,7 @@ export function ProfileHeader() {
             aria-label={t("logout")}
             className="flex size-[40px] cursor-pointer items-center justify-center rounded-xl border border-border-light text-text-subtle transition-colors duration-200 hover:border-[#DA1E28] hover:text-[#DA1E28] disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            <LogoutIcon size={20} />
+            {isLoggingOut ? <Spinner size={18} /> : <LogoutIcon size={20} />}
           </button>
         </div>
       </div>
